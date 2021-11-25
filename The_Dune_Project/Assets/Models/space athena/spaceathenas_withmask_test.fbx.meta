@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: e359530ba4402764a812c872a84e30f2
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'Hips' not found\n"
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: spaceathenas_withmask_test(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Boots.L
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: 12.971815, y: 1.7765656, z: -0.74097604}
+      rotation: {x: -0.0033166609, y: 0.7070991, z: -0.70709896, w: 0.0033166613}
+      scale: {x: -7706.765, y: -8578.556, z: -9119.214}
+    - name: Jacket
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -1.1146035, y: -2.6536865, z: -0.9606907}
+      rotation: {x: -0.0073394594, y: 0.7070687, z: 0.7070688, w: 0.007339458}
+      scale: {x: 6059.261, y: 6744.169, z: 7169.61}
+    - name: boots.R
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: 21.86908, y: 1.7765656, z: -0.74097604}
+      rotation: {x: -0.0033166609, y: 0.7070991, z: -0.70709896, w: 0.0033166613}
+      scale: {x: -7706.765, y: -8578.556, z: -9119.214}
+    - name: Torus
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -0.06712961, y: 104.20041, z: 0.7036477}
+      rotation: {x: -0.78214234, y: -0.011626988, z: 0.013944219, w: 0.6228352}
+      scale: {x: 628.15436, y: 948.8197, z: 1002.2561}
+    - name: Cube
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -0.8527283, y: 108.26404, z: -0.82600325}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 3367.5264, y: 3748.5237, z: 3984.8254}
+    - name: Cube.001
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -0.39152762, y: 111.4949, z: -3.6839104}
+      rotation: {x: -0.63658154, y: -0.006103971, z: -0.016757453, w: 0.77100325}
+      scale: {x: 1439.2612, y: 283.78177, z: 300.37686}
+    - name: mesh2.001
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: 83.863846, y: 0.20035553, z: 0.08012017}
+      rotation: {x: 3.4872105e-10, y: 0.9999909, z: -0.0000000814596, w: 0.0042808685}
+      scale: {x: 6929.818, y: 8200.047, z: 7713.7256}
+    - name: Plane
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -0.39373824, y: 104.41873, z: -0.5759961}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 628.535, y: 699.64655, z: 743.7513}
+    - name: Plane.001
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -0.39373824, y: 97.42482, z: -0.5759961}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 628.535, y: 699.64655, z: 743.7513}
+    - name: Plane.002
+      parentName: spaceathenas_withmask_test(Clone)
+      position: {x: -0.76712644, y: 75.2967, z: 4.5040007}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 4335.4844, y: 4825.995, z: 5130.219}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 0
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

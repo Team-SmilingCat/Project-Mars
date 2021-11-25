@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2772537069140048bb6ccd2d6b5f77a, type: 3}
+  m_Name: 1H-sword
+  m_EditorClassIdentifier: 
+  itemName: desert carver
+  isInCombat: 0
+  damage: 0
+  weaponMesh: {fileID: 234576111256210880, guid: e37dab2bb6c055149a847acd8741296a, type: 3}
+  atk1: atk1
+  atk2: atk2
+  atk3: atk3
