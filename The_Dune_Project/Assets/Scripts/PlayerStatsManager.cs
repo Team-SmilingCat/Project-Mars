@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatsManager : MonoBehaviour
+public class PlayerStatsManager : EntityStatsManager
 {
     [Header("player stats info")]
     [SerializeField] private PlayerStats playerStats;
@@ -18,15 +18,19 @@ public class PlayerStatsManager : MonoBehaviour
 
     private void Start()
     {
+        InitStats();
+    }
+
+    public override void InitStats()
+    {
         healthLevel = playerStats.maxHealth;
         maxHealth = healthLevel * healthScale;
         currHealth = maxHealth;
-        
         playerUIManager.setMaxHealth(maxHealth);
     }
-    
+
     //public methods
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int d)
     {
         currHealth -= damage;
         playerUIManager.SetHealth(currHealth);
@@ -37,5 +41,10 @@ public class PlayerStatsManager : MonoBehaviour
             animatorManager.PlayTargetAnimation("death", true);
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
+    }
+
+    public override void gainHealth(int healthBonus)
+    {
+        return;
     }
 }
