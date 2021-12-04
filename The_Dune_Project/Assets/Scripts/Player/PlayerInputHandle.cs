@@ -12,10 +12,12 @@ public class PlayerInputHandle : MonoBehaviour
     public float mouseX;
     public float mouseY;
 
+    [Header("action flags")]
     public bool isSprintEnabled;
     public bool isWalkEnabled;
     public bool jumpInput;
     public bool leftClickInput;
+    public bool rightClickInput;
 
     private PlayerControls playerControls;
     [SerializeField] private AnimatorManager animatorManager;
@@ -49,6 +51,9 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.JumpButton.performed += i => jumpInput = true;
             playerControls.PlayerActions.JumpButton.canceled += i => jumpInput = false;
             playerControls.PlayerActions.Lclick.performed += i => leftClickInput = true;
+            playerControls.PlayerActions.Rclick.performed += i => rightClickInput = true;
+            playerControls.PlayerActions.Rclick.canceled += i => rightClickInput = false;
+
         }
         playerControls.Enable();
     }
@@ -75,6 +80,7 @@ public class PlayerInputHandle : MonoBehaviour
         HandleSprint();
         HandleForcedWalk();
         //HandleJumping();
+        HandleAimingInput();
         HandleAttackInput();
   
     }
@@ -148,6 +154,11 @@ public class PlayerInputHandle : MonoBehaviour
             //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
          
+    }
+
+    private void HandleAimingInput()
+    {
+        
     }
 
 

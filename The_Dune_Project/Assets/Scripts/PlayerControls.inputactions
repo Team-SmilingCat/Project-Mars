@@ -148,6 +148,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Rclick",
+                    "type": "Button",
+                    "id": "595379ae-d61c-48fb-85ec-75d64ec798fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -192,6 +200,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Lclick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aabef1c1-63b8-497f-ac7f-22faeaa0bfab",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rclick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
