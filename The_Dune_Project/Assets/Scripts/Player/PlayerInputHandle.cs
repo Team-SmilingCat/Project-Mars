@@ -25,6 +25,7 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private RangedShootingHandler rangedShootingHandler;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
@@ -132,7 +133,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleAttackInput()
     {
-        if (leftClickInput && !playerMovement.isJumping)
+        if (leftClickInput && !rightClickInput && !playerMovement.isJumping)
         {
             if (playerManager.canCombo)
             {
@@ -158,7 +159,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleAimingInput()
     {
-        
+        rangedShootingHandler.HandleShootingAttack();
     }
 
 

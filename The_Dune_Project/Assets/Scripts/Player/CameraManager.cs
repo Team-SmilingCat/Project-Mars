@@ -31,9 +31,9 @@ public class CameraManager : MonoBehaviour
 
     [Header("Camera Aim")] [SerializeField]
     private CinemachineVirtualCamera aimCamera;
-    
-    
-    
+
+
+
     public void Awake()
     {
         originalCamSpeed = camSpeed;
