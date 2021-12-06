@@ -52,6 +52,7 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.JumpButton.performed += i => jumpInput = true;
             playerControls.PlayerActions.JumpButton.canceled += i => jumpInput = false;
             playerControls.PlayerActions.Lclick.performed += i => leftClickInput = true;
+            playerControls.PlayerActions.Lclick.canceled += i => leftClickInput = false;
             playerControls.PlayerActions.Rclick.performed += i => rightClickInput = true;
             playerControls.PlayerActions.Rclick.canceled += i => rightClickInput = false;
 
@@ -146,15 +147,11 @@ public class PlayerInputHandle : MonoBehaviour
             {
                 if (playerManager.isInteracting) return;
                 if (playerManager.canCombo) return;
-                playerAttack.handleAttack(playerInventoryManager.weapon);   
+                playerAttack.handleAttack(playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
         }
-        else
-        {
-            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-        }
-         
+
     }
 
     private void HandleAimingInput()

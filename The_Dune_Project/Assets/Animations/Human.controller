@@ -501,7 +501,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: aa3440ba06979a64dbc930d5c5a6db7d, type: 2}
+  m_Motion: {fileID: 7400000, guid: d65fc5909aa3faf4eb8aded8903f0a5e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -515,7 +515,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: atk1
-  m_Speed: 2
+  m_Speed: 2.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8489912144243867138}
