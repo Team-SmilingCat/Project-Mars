@@ -8342,15 +8342,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8358,7 +8358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -133.4
+      value: -184.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8402,7 +8402,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f72e087322c8e614fbdde3cd09573b6e, type: 2}
     - target: {fileID: 919132149155446097, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_Name
-      value: Mutant Idle
+      value: boss_1
       objectReference: {fileID: 0}
     - target: {fileID: 2236237030686087061, guid: 916bcb6f6a424fa48a2d3d306053615e, type: 3}
       propertyPath: m_Materials.Array.data[0]
