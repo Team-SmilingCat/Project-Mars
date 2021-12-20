@@ -7,18 +7,24 @@ using UnityEngine.InputSystem.Interactions;
 
 public class RangedShootingHandler : MonoBehaviour
 {
+    [Header("character manager scripts accessor")]
     [SerializeField] private PlayerInputHandle playerInputHandle;
+    [SerializeField] private AnimatorManager animatorManager;
     
     [Header("range of the ranged attack")] [SerializeField]
     private float rangedDistance;
     [SerializeField] private LayerMask hittableEntities;
-    [SerializeField] private float gunRotationSpeed;
+
+    [SerializeField] public float gunRotationSpeed { get; set; }
     [SerializeField] private GameObject particle;
     [SerializeField] private bool leftClickisHeldDownWithRight;
 
     [Header("Debug")] [SerializeField] private Transform rayConfirmer;
-    
-    
+
+    [Header("settings for movement with aiming")] [SerializeField]
+    public bool isAiming;
+    [SerializeField] public Quaternion aimVector { get; set; }
+
     public void HandleShootingAttack()
     {
         Vector3 worldTarget = Vector3.zero;
@@ -31,24 +37,32 @@ public class RangedShootingHandler : MonoBehaviour
             rayConfirmer.position = hit.point;
             if (playerInputHandle.rightClickInput)
             {
+                gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
                 worldTarget = hit.point;
                 //worldTarget.y = gameObject.transform.position.y;
                 Vector3 aimDirection = (worldTarget - gameObject.transform.position).normalized;
 
                 var rotation = Quaternion.LookRotation(aimDirection);
+                aimVector = rotation;
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
-            
+                isAiming = true;
                 if(playerInputHandle.leftClickInput)
                 {
+                    Debug.Log("only shooting");
+                    animatorManager.PlayTargetAnimation("shoot", true);
                     GameObject clone = (GameObject) Instantiate(particle, rayConfirmer.position, Quaternion.identity);
                     Destroy(clone, 1.5f);
-                    Debug.Log("only shooting");
                     //checks if the target of the raycast is a attackable emnemy
                     if (hit.collider.gameObject.tag.Equals("Mob"))
                     {
                         hit.collider.gameObject.GetComponent<EntityStatsManager>().TakeDamage(10);
                     }
                 }
+            }
+            else
+            {
+                gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
+                isAiming = false;
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Scriptable_Objects;
 using TMPro;
 using UnityEngine;
 
@@ -139,7 +140,7 @@ public class PlayerInputHandle : MonoBehaviour
             if (playerManager.canCombo)
             {
                 flagCombo = true;
-                playerAttack.handleAttackSequence(playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttackSequence((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 flagCombo = false;
             }
@@ -147,7 +148,7 @@ public class PlayerInputHandle : MonoBehaviour
             {
                 if (playerManager.isInteracting) return;
                 if (playerManager.canCombo) return;
-                playerAttack.handleAttack(playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
         }

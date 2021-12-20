@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private RangedShootingHandler rangedShootingHandler;
 
     public bool isInteracting;
     public bool canCombo;
@@ -23,6 +24,8 @@ public class PlayerManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerInputHandle.HandleAllInputs();
+        rangedShootingHandler.HandleShootingAttack();
+        
     }
 
     private void LateUpdate()

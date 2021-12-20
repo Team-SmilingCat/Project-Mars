@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private AnimatorManager animatorManager;
+    [SerializeField] private RangedShootingHandler rangedShootingHandler;
     private Transform camera;
     private PlayerInputHandle playerInputHandle;
     private Vector3 moveVector;
@@ -115,6 +116,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 moveVector *= sprint;
             }
+            else if(rangedShootingHandler.isAiming){
+                moveVector *= walkSpeed;
+            }
             else if (isWalking)
             {
                 moveVector *= walkSpeed;
@@ -142,6 +146,13 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+
+        if (rangedShootingHandler.isAiming)
+        {
+            transform.rotation = rangedShootingHandler.aimVector;
+            return;
+        }
+        
         Vector3 targetDir = Vector3.zero;
         targetDir = camera.forward * playerInputHandle.vertical;
         targetDir = targetDir + camera.right * playerInputHandle.horizontal;
@@ -156,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
+
     }
     
 

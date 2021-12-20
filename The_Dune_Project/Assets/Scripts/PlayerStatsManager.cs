@@ -9,7 +9,7 @@ public class PlayerStatsManager : EntityStatsManager
     [SerializeField] private PlayerStats playerStats;
     [SerializeField] private PlayerUIManager playerUIManager;
     [SerializeField] private int healthScale;
-    
+
     private int healthLevel;
     private int maxHealth;
     [SerializeField] private int currHealth;

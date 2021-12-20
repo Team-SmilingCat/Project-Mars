@@ -14,11 +14,6 @@ public class WeaponDamage : MonoBehaviour
         weaponHitBox.isTrigger = true;
     }
 
-    private void Start()
-    {
-        
-    }
-
     public void OnEnableWeapon()
     {
         gameObject.GetComponent<Collider>().enabled = true;

@@ -56,7 +56,7 @@ Material:
     - _FlatRimSize: 0.402
     - _FlatSpecularEdgeSmoothness: 0.638
     - _FlatSpecularSize: 0.381
-    - _Flatness: 0
+    - _Flatness: 1
     - _FlatnessExtra: 0.34
     - _GradientAngle: 180
     - _GradientCenterX: 0
@@ -67,16 +67,16 @@ Material:
     - _LightFalloffSize: 0.0001
     - _LightmapDirectionPitch: 0
     - _LightmapDirectionYaw: 0
-    - _OutlineDepthOffset: 1
+    - _OutlineDepthOffset: 0
     - _OutlineEnabled: 1
     - _OutlineScale: 1
-    - _OutlineWidth: 2.02
+    - _OutlineWidth: 0.29
     - _OverrideLightmapDir: 0
     - _QueueOffset: 0
     - _RimEnabled: 0
-    - _SelfShadingSize: 1
+    - _SelfShadingSize: 0.168
     - _SelfShadingSizeExtra: 0.013
-    - _ShadowEdgeSize: 0.098
+    - _ShadowEdgeSize: 0
     - _ShadowEdgeSizeExtra: 0
     - _SpecularEnabled: 0
     - _SrcBlend: 1
