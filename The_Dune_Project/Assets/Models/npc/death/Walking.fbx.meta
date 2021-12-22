@@ -1,8 +1,14 @@
 fileFormatVersion: 2
-guid: 9150a6259ea24864e97b98b886803758
+guid: 2c6d92958de94c541bd945f04307edf0
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -748227595952066773
+    second: Plane005|Plane005Action.001
+  - first:
+      74: -203655887218126122
+    second: mixamo.com
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -15,8 +21,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
-      human bone 'Hips' not found\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -78,37 +83,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton:
-    - name: traveler_with_cyl(Clone)
-      parentName: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: boots.R
-      parentName: traveler_with_cyl(Clone)
-      position: {x: 4.3661556, y: 10.027332, z: -2.0071976}
-      rotation: {x: -0.0033166313, y: 0.7070993, z: -0.7070987, w: 0.003316691}
-      scale: {x: -3583.7202, y: -3583.7188, z: -3583.7202}
-    - name: Torus
-      parentName: traveler_with_cyl(Clone)
-      position: {x: 0.10698276, y: 56.38571, z: -0.115316235}
-      rotation: {x: -0.7328017, y: -0.0000000011182296, z: 0.0000000012344862, w: 0.6804423}
-      scale: {x: 594.33484, y: 507.94916, z: 593.8937}
-    - name: Boots.L
-      parentName: traveler_with_cyl(Clone)
-      position: {x: -5.2193236, y: 10.049916, z: -1.9607452}
-      rotation: {x: -0.0033166313, y: 0.7070993, z: -0.7070987, w: 0.003316691}
-      scale: {x: -3583.7202, y: -3583.7188, z: -3583.7202}
-    - name: Cylinder.006
-      parentName: traveler_with_cyl(Clone)
-      position: {x: -2.177421, y: 62.47001, z: -5.2761207}
-      rotation: {x: 0.88420177, y: 0.3017903, z: -0.18938424, w: -0.3020654}
-      scale: {x: 51.30212, y: 51.334564, z: 44.547062}
-    - name: Cube
-      parentName: traveler_with_cyl(Clone)
-      position: {x: -1.4605408e-14, y: 47.802723, z: 9.55539}
-      rotation: {x: 0.0012092384, y: 0.707504, z: -0.7067073, w: 0.0012106017}
-      scale: {x: 595.7617, y: 595.7617, z: 595.7617}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -123,9 +98,9 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 
