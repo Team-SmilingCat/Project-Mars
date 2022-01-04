@@ -2160,37 +2160,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555938367}
   m_Mesh: {fileID: -1550514412580984892, guid: 8313ee46ada952d4fbfbb99ef0bbd0cc, type: 3}
---- !u!114 &575440521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148234084950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 919132148234084951}
-  isHittable: 0
-  isBeingHit: 0
---- !u!114 &575440522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148234084950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 919132148234084951}
 --- !u!143 &575440523
 CharacterController:
   m_ObjectHideFlags: 0
@@ -7012,7 +6981,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148234084950}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 385.1879, y: 26.399994, z: -37.090088}
+  m_LocalPosition: {x: 384.8, y: 26.399994, z: -37.090088}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 7895278140871287888}
@@ -7369,9 +7338,8 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652505946348}
   - component: {fileID: 575440523}
-  - component: {fileID: 575440521}
-  - component: {fileID: 575440522}
   - component: {fileID: 919132148234084951}
+  - component: {fileID: 919132148234084952}
   m_Layer: 0
   m_Name: Rifle Idle (2)
   m_TagString: Mob
@@ -7398,6 +7366,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &919132148234084952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148234084950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
+  animator: {fileID: 919132148234084951}
+  curTarget: {fileID: 0}
 --- !u!1 &965253911988366751
 GameObject:
   m_ObjectHideFlags: 0
@@ -16892,9 +16876,9 @@ GameObject:
   - component: {fileID: 8917788880274924398}
   - component: {fileID: 8917788880274924397}
   - component: {fileID: 8917788880274924396}
-  - component: {fileID: 8917788880274924395}
   - component: {fileID: 8917788880274924402}
   - component: {fileID: 8917788880274924394}
+  - component: {fileID: 8917788880274924403}
   m_Layer: 6
   m_Name: traveler_ver3
   m_TagString: Player
@@ -16932,25 +16916,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8917788880274924395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8917788880274924393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576ab1ff21fe4f6479c063bb4ad43068, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  playerStats: {fileID: 11400000, guid: f653259cf4ff9064183c47c004212b63, type: 2}
-  playerUIManager: {fileID: 1734104181}
-  healthScale: 10
-  currHealth: 0
-  animatorManager: {fileID: 8575751360378808630}
 --- !u!114 &8917788880274924396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17110,6 +17075,25 @@ MonoBehaviour:
   leftClickisHeldDownWithRight: 0
   rayConfirmer: {fileID: 692857122}
   isAiming: 0
+--- !u!114 &8917788880274924403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917788880274924393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8007ae5b3ec4486d8afe161c6551ec5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: f653259cf4ff9064183c47c004212b63, type: 2}
+  isHittable: 1
+  animator: {fileID: 2767925711145182121}
+  curTarget: {fileID: 0}
+  animatorManager: {fileID: 8575751360378808630}
+  playerUIManager: {fileID: 1734104181}
+  healthScale: 1
 --- !u!1 &8932621592598225144
 GameObject:
   m_ObjectHideFlags: 0
