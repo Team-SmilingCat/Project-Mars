@@ -140,7 +140,7 @@ public class PlayerInputHandle : MonoBehaviour
             if (playerManager.canCombo)
             {
                 flagCombo = true;
-                playerAttack.handleMeleeAttackSequence((MeleeWeapon)playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttackSequence((Scriptable_Objects.MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 flagCombo = false;
             }
@@ -148,7 +148,7 @@ public class PlayerInputHandle : MonoBehaviour
             {
                 if (playerManager.isInteracting) return;
                 if (playerManager.canCombo) return;
-                playerAttack.handleMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttack((Scriptable_Objects.MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
         }
