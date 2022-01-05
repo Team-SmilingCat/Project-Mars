@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Scriptable_Objects;
 using TMPro;
 using UnityEngine;
 
@@ -12,10 +13,12 @@ public class PlayerInputHandle : MonoBehaviour
     public float mouseX;
     public float mouseY;
 
-    public bool isSprintEnabled;
+    [Header("action flags")]
     public bool isWalkEnabled;
     public bool jumpInput;
     public bool leftClickInput;
+    public bool rightClickInput;
+    public bool dashInput;
 
     private PlayerControls playerControls;
     [SerializeField] private AnimatorManager animatorManager;
@@ -23,6 +26,7 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private RangedShootingHandler rangedShootingHandler;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
@@ -42,13 +46,17 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += playerControls => movementInput = playerControls.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
             //sets sprint bool to true when we press it
-            playerControls.PlayerActions.SprintButton.performed += i => isSprintEnabled = true;
-            playerControls.PlayerActions.SprintButton.canceled += i => isSprintEnabled = false;
             playerControls.PlayerActions.WalkButton.performed += i => isWalkEnabled = true;
             playerControls.PlayerActions.WalkButton.canceled += i => isWalkEnabled = false;
             playerControls.PlayerActions.JumpButton.performed += i => jumpInput = true;
             playerControls.PlayerActions.JumpButton.canceled += i => jumpInput = false;
             playerControls.PlayerActions.Lclick.performed += i => leftClickInput = true;
+            playerControls.PlayerActions.Lclick.canceled += i => leftClickInput = false;
+            playerControls.PlayerActions.Rclick.performed += i => rightClickInput = true;
+            playerControls.PlayerActions.Rclick.canceled += i => rightClickInput = false;
+            playerControls.PlayerActions.DashButton.performed += i => dashInput = true;
+            playerControls.PlayerActions.DashButton.canceled += i => dashInput = false;
+
         }
         playerControls.Enable();
     }
@@ -72,9 +80,9 @@ public class PlayerInputHandle : MonoBehaviour
     {
         //call all input functions in here
         MoveInput();
-        HandleSprint();
         HandleForcedWalk();
-        //HandleJumping();
+        HandleDashInput();
+        HandleAimingInput();
         HandleAttackInput();
   
     }
@@ -90,17 +98,6 @@ public class PlayerInputHandle : MonoBehaviour
         mouseY = cameraInput.y;
     }
 
-    private void HandleSprint()
-    {
-        if (isSprintEnabled && moveValue > 0.5f)
-        {
-            playerMovement.isSprinting = true;
-        }
-        else
-        {
-            playerMovement.isSprinting = false;
-        }
-    }
 
     private void HandleForcedWalk()
     {
@@ -118,20 +115,18 @@ public class PlayerInputHandle : MonoBehaviour
     {
         if (jumpInput)
         {
-            jumpInput = false;
-
-            
+            jumpInput = false;            
         }   
     }
 
     private void HandleAttackInput()
     {
-        if (leftClickInput && !playerMovement.isJumping)
+        if (leftClickInput && !rightClickInput && playerMovement.isGrounded)
         {
             if (playerManager.canCombo)
             {
                 flagCombo = true;
-                playerAttack.handleAttackSequence(playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttackSequence((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 flagCombo = false;
             }
@@ -139,15 +134,27 @@ public class PlayerInputHandle : MonoBehaviour
             {
                 if (playerManager.isInteracting) return;
                 if (playerManager.canCombo) return;
-                playerAttack.handleAttack(playerInventoryManager.weapon);   
+                playerAttack.handleMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
         }
-        else
-        {
-            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
+    }
+
+    private void HandleAimingInput()
+    {
+        if(!playerMovement.isJumping){
+            rangedShootingHandler.HandleShootingAttack();
         }
-         
+    }
+
+    private void HandleDashInput()
+    {
+        if(dashInput){
+            dashInput = false;
+            playerMovement.HandleDash();
+        }
+
     }
 
 

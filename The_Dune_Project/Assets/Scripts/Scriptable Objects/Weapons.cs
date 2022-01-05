@@ -6,10 +6,8 @@ using UnityEngine;
 public class Weapons : Items
 {
    public bool isInCombat;
+   public string type;
    public int damage;
    public GameObject weaponMesh;
 
-   public string atk1;
-   public string atk2;
-   public string atk3;
 }

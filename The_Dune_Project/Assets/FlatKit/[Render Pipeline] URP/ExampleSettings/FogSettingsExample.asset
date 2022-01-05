@@ -81,3 +81,4 @@ MonoBehaviour:
   heightFogIntensity: 0.5
   useHeightFogOnSky: 1
   distanceHeightBlend: 0.5
+  renderEvent: 500

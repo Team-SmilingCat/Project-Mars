@@ -12,7 +12,7 @@ public class WeaponController : MonoBehaviour
         DestroyOldWeapon();
         if (weapon == null)
         {
-            unLoadWeapon();
+            unloadWeapon();
             return;
         }
         
@@ -38,7 +38,7 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    public void unLoadWeapon()
+    public void unloadWeapon()
     {
         if (weaponMesh != null)
         {

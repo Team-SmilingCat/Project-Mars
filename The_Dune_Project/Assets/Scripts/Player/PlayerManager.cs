@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private RangedShootingHandler rangedShootingHandler;
 
     public bool isInteracting;
     public bool canCombo;
@@ -23,6 +24,9 @@ public class PlayerManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerInputHandle.HandleAllInputs();
+        playerMovement.HandleAllPlayerMovement();
+        rangedShootingHandler.HandleShootingAttack();
+        
     }
 
     private void LateUpdate()
@@ -38,7 +42,6 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         //movement should be fixed update -> unity specific rule
-        playerMovement.HandleAllPlayerMovement();
 
     }
 }

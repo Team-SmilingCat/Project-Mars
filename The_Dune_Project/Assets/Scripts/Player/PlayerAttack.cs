@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Scriptable_Objects;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -9,13 +10,13 @@ public class PlayerAttack : MonoBehaviour
     
     [Header("attack settings")] private string prevAtk;
     
-    public void handleAttack(Weapons weapon)
+    public void handleMeleeAttack(MeleeWeapon weapon)
     {
         animatorManager.PlayTargetAnimation(weapon.atk1, true);
-        prevAtk = weapon.atk1;
+            prevAtk = weapon.atk1;
     }
 
-    public void handleAttackSequence(Weapons weapon)
+    public void handleMeleeAttackSequence(MeleeWeapon weapon)
     {
         if (playerInputHandle.flagCombo)
         {
