@@ -67,12 +67,7 @@ public class AnimatorManager : MonoBehaviour
         }
         #endregion
         
-        if (isSprinting) 
-        {
-            snapHorizontal = horizontal;
-            snapVertical = 2;
-            
-        } else if (isWalking)
+        if (isWalking)
         {
             snapHorizontal = horizontal;
             snapVertical = 0.5f;

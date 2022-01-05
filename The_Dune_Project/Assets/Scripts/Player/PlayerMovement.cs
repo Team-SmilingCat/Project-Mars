@@ -15,19 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform camera;
     private PlayerInputHandle playerInputHandle;
     private Vector3 moveVector;
-    Rigidbody rigidbody;
-
     public Transform transform;
-    public GameObject normalCamera;
-
-    [Header("falling settings")] 
-    public float airTime;
-    public float jumpVelocity;
-    public float fallSpeed;
-    public LayerMask layers;
-    public float rayCastHeightOffset;
-    public float debugRadius;
-    public float maxDist;
     
     [Header("movement flags")]
     public bool isSprinting;
@@ -39,33 +27,29 @@ public class PlayerMovement : MonoBehaviour
     [Header("values")] 
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float speed = 30f;
-    [SerializeField] private float sprint = 45f;
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float replaceSlopeOffset;
 
+    [SerializeField] private float dashScale;
+
     [Header("jump settings")]
-    [SerializeField] private float jumpHeight;
+    [SerializeField, Range(0f, 100f)] private float jumpHeight;
     [SerializeField] private float initVelocity;
     [SerializeField] private float jumpTime;
-    [SerializeField] private float timeToApex;
+    [SerializeField] private float timeToApex; 
+    [SerializeField] float jumpCoolDown;
+    [SerializeField] float timer;
 
-    [Header("Handle Slopes")]
-    private Vector3 slopeDirection;
-    private Vector3 rayCastVector;
-    private RaycastHit slopeHit;
 
+    [Header("falling settings")] 
+    [SerializeField] LayerMask layers;
+    [SerializeField] float checkHeightOffset;
+    [SerializeField] float debugRadius;
 
     [Header("character controller")] private CharacterController controller;
 
     [Header("gravity settings")] 
-    [SerializeField] private float groundGravity;
-    [SerializeField] private float gravity;
-
-
-
-    [SerializeField] private float slopeForce;
-
-    [SerializeField] private float slopeForceRayLength;
+    [SerializeField, Range(-100f, 100f)] private float gravity;
     
     private void Awake()
     {
@@ -73,31 +57,28 @@ public class PlayerMovement : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         
         timeToApex = jumpTime / 2;
-        gravity = (-2 * jumpHeight) / Mathf.Pow(timeToApex, 2);
+        //gravity = (-2 * jumpHeight) / Mathf.Pow(timeToApex, 2);
         initVelocity = (2 * jumpHeight) / timeToApex;
     }
 
     private void Start()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
+        timer = jumpCoolDown;
 
     }
 
     public void HandleAllPlayerMovement()
     {
-        
-        //HandleFalls();
+        HandleCCJumping();   
+        HandleGravity();
         if (playerManager.isInteracting)
         {
+            Debug.Log("player is interacting");
             return;
         }
         HandleMovement();
         HandleTurns();
-        controller.Move(moveVector * Time.deltaTime);
-        
-        HandleGravity();
-       HandleCCJumping();
-
     }
 
     private void HandleMovement()
@@ -106,17 +87,14 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (controller.isGrounded && !playerInputHandle.jumpInput)
+        if (isGrounded && !playerInputHandle.jumpInput)
         {
+            Debug.Log("HandleMovement is called");
             moveVector = camera.forward * playerInputHandle.vertical;
             moveVector = moveVector + camera.right * playerInputHandle.horizontal;
             moveVector.y = 0;
             moveVector.Normalize();
-            if (isSprinting)
-            {
-                moveVector *= sprint;
-            }
-            else if(rangedShootingHandler.isAiming){
+            if(rangedShootingHandler.isAiming){
                 moveVector *= walkSpeed;
             }
             else if (isWalking)
@@ -135,18 +113,13 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
-            
+
+            controller.Move(moveVector * Time.deltaTime);
         }
     }
 
     private void HandleTurns()
     {
-        //we cannot move during jump
-        if (playerInputHandle.jumpInput)
-        {
-            return;
-        }
-
         if (rangedShootingHandler.isAiming)
         {
             transform.rotation = rangedShootingHandler.aimVector;
@@ -171,40 +144,82 @@ public class PlayerMovement : MonoBehaviour
     }
     
 
-    public void HandleCCJumping()
+    private void HandleCCJumping()
     {
-        if (controller.isGrounded && !isJumping && playerInputHandle.jumpInput)
+        if(isGrounded)
         {
-            isJumping = true;
-            Debug.Log("jumpinh");
-            animatorManager.animator.SetBool("isJumping", true);
-            animatorManager.PlayTargetAnimation("Jumping", false);
-            moveVector.y += initVelocity * 1.5f;
-        } else if (!playerInputHandle.jumpInput && isJumping && controller.isGrounded)
+            if (timer <= 0f && playerInputHandle.jumpInput)
+            {
+                Debug.Log("we can jump");
+                //moveVector.y += initVelocity * 1.5f;
+                moveVector.y += Mathf.Sqrt(-2f * gravity * jumpHeight);
+                controller.Move(moveVector * Time.deltaTime);
+                animatorManager.animator.SetBool("isJumping", true);
+                animatorManager.PlayTargetAnimation("Jumping", false);
+            }  
+            if(timer >= 0f)
+            {
+                Debug.Log("timer going down");
+                timer -= Time.deltaTime;
+            }
+        }
+        else
         {
-            isJumping = false;
-        }   
+            Debug.Log("timer reset");
+            timer = jumpCoolDown;
+            if(timer >= 0f)
+            {
+                timer -= Time.deltaTime;
+            }
+            isJumping = false; 
+        }
     }
 
-    public void HandleGravity()
+    private void HandleGravity()
     {
-        if (!controller.isGrounded)
+        if (!isGrounded && !isJumping)
         {
-            Debug.Log("applying gravity");
+            //Gravity by default is set to a negative float.
             moveVector.y += gravity * Time.deltaTime;
+                    controller.Move(moveVector * Time.deltaTime);
+        }
+        Vector3 castPos = new Vector3(gameObject.transform.position.x,
+        gameObject.transform.position.y - checkHeightOffset,
+        gameObject.transform.position.z);
+
+        if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore)){
+            Debug.Log("Player is grounded");
+            //when we touch the ground, we check to play the landing animation first
+            if(!isGrounded){
+                //animatorManager.PlayTargetAnimation("Land", true);
+            }
+            isGrounded = true;
+            isJumping = false;
+        }
+        else
+        {
+            isGrounded = false;
         }
         
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(rayCastVector, debugRadius);
+    public void HandleDash(){
+        Vector3 targetDir = Vector3.zero;
+        targetDir = camera.forward * playerInputHandle.vertical;
+        targetDir = targetDir + camera.right * playerInputHandle.horizontal;
+        targetDir.y = 0;
+        targetDir.Normalize();
+
+        controller.Move(targetDir * dashScale * Time.deltaTime);
+
     }
 
-    private void FixedUpdate()
+    void OnDrawGizmosSelected()
     {
-        Debug.Log(controller.isGrounded);
-        HandleAllPlayerMovement();
+        Vector3 debugVec3 = new Vector3(gameObject.transform.position.x,
+        gameObject.transform.position.y - checkHeightOffset,
+        gameObject.transform.position.z);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(debugVec3, debugRadius);
     }
 }

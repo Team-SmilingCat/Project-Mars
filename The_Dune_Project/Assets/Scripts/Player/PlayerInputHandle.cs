@@ -14,11 +14,11 @@ public class PlayerInputHandle : MonoBehaviour
     public float mouseY;
 
     [Header("action flags")]
-    public bool isSprintEnabled;
     public bool isWalkEnabled;
     public bool jumpInput;
     public bool leftClickInput;
     public bool rightClickInput;
+    public bool dashInput;
 
     private PlayerControls playerControls;
     [SerializeField] private AnimatorManager animatorManager;
@@ -46,8 +46,6 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += playerControls => movementInput = playerControls.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
             //sets sprint bool to true when we press it
-            playerControls.PlayerActions.SprintButton.performed += i => isSprintEnabled = true;
-            playerControls.PlayerActions.SprintButton.canceled += i => isSprintEnabled = false;
             playerControls.PlayerActions.WalkButton.performed += i => isWalkEnabled = true;
             playerControls.PlayerActions.WalkButton.canceled += i => isWalkEnabled = false;
             playerControls.PlayerActions.JumpButton.performed += i => jumpInput = true;
@@ -56,6 +54,8 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.Lclick.canceled += i => leftClickInput = false;
             playerControls.PlayerActions.Rclick.performed += i => rightClickInput = true;
             playerControls.PlayerActions.Rclick.canceled += i => rightClickInput = false;
+            playerControls.PlayerActions.DashButton.performed += i => dashInput = true;
+            playerControls.PlayerActions.DashButton.canceled += i => dashInput = false;
 
         }
         playerControls.Enable();
@@ -80,9 +80,8 @@ public class PlayerInputHandle : MonoBehaviour
     {
         //call all input functions in here
         MoveInput();
-        HandleSprint();
         HandleForcedWalk();
-        //HandleJumping();
+        HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
   
@@ -99,17 +98,6 @@ public class PlayerInputHandle : MonoBehaviour
         mouseY = cameraInput.y;
     }
 
-    private void HandleSprint()
-    {
-        if (isSprintEnabled && moveValue > 0.5f)
-        {
-            playerMovement.isSprinting = true;
-        }
-        else
-        {
-            playerMovement.isSprinting = false;
-        }
-    }
 
     private void HandleForcedWalk()
     {
@@ -127,15 +115,13 @@ public class PlayerInputHandle : MonoBehaviour
     {
         if (jumpInput)
         {
-            jumpInput = false;
-
-            
+            jumpInput = false;            
         }   
     }
 
     private void HandleAttackInput()
     {
-        if (leftClickInput && !rightClickInput && !playerMovement.isJumping)
+        if (leftClickInput && !rightClickInput && playerMovement.isGrounded)
         {
             if (playerManager.canCombo)
             {
@@ -157,7 +143,18 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleAimingInput()
     {
-        rangedShootingHandler.HandleShootingAttack();
+        if(!playerMovement.isJumping){
+            rangedShootingHandler.HandleShootingAttack();
+        }
+    }
+
+    private void HandleDashInput()
+    {
+        if(dashInput){
+            dashInput = false;
+            playerMovement.HandleDash();
+        }
+
     }
 
 

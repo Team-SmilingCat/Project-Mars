@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerInputHandle.HandleAllInputs();
+        playerMovement.HandleAllPlayerMovement();
         rangedShootingHandler.HandleShootingAttack();
         
     }
@@ -41,7 +42,6 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         //movement should be fixed update -> unity specific rule
-        playerMovement.HandleAllPlayerMovement();
 
     }
 }

@@ -118,7 +118,7 @@
             "id": "48cf9b66-92b0-4149-bd47-4064dcde5c25",
             "actions": [
                 {
-                    "name": "Sprint Button",
+                    "name": "Dash Button",
                     "type": "Button",
                     "id": "cb2d56fd-5c07-4139-81af-f8acb6e436c7",
                     "expectedControlType": "Button",
@@ -166,7 +166,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sprint Button",
+                    "action": "Dash Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

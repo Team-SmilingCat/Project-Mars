@@ -8,5 +8,6 @@ namespace Scriptable_Objects
         public string atk1;
         public string atk2;
         public string atk3;
+        public string atk4;
     }
 }
