@@ -15,22 +15,32 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private AnimatorManager animatorManager;
     
-    [Header("range of the ranged attack")] [SerializeField]
-    private float rangedDistance;
+    [Header("range of the ranged attack")] 
+    [SerializeField] private float rangedDistance;
     [SerializeField] private LayerMask hittableEntities;
 
     [SerializeField] public float gunRotationSpeed { get; set; }
     [SerializeField] private GameObject particle;
     [SerializeField] private bool leftClickisHeldDownWithRight;
+    private Quaternion currentPlayerRotation;
 
-    [Header("Debug")] [SerializeField] private Transform rayConfirmer;
+    [Header("Debug")] 
+    [SerializeField] private Transform rayConfirmer;
 
-    [Header("settings for movement with aiming")] [SerializeField]
-    public bool isAiming;
+    [Header("settings for movement with aiming")] 
+    [SerializeField] public bool isAiming;
     [SerializeField] public Quaternion aimVector { get; set; }
 
+    void Start(){
+        currentPlayerRotation = gameObject.transform.rotation;
+    }
     public void HandleShootingAttack()
-    {
+    { 
+        if(!isAiming)
+        {
+            //we cast again since the player might have a changed rotation once they start moving around.
+            currentPlayerRotation = gameObject.transform.rotation;
+        }
         Vector3 worldTarget = Vector3.zero;
         Vector2 crossHairLoc = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray rayTarget = Camera.main.ScreenPointToRay(crossHairLoc);
@@ -66,9 +76,11 @@ public class RangedShootingHandler : MonoBehaviour
             }
             else
             {
+                //this is when the player returns to a non-aiming state
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
                 uiReticle.SetActive(false);
+                gameObject.transform.rotation = currentPlayerRotation;
             }
         }
     }
