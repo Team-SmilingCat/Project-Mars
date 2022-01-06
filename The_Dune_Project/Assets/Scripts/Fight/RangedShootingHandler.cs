@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using Fight;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
@@ -59,7 +60,7 @@ public class RangedShootingHandler : MonoBehaviour
                     //checks if the target of the raycast is a attackable emnemy
                     if (hit.collider.gameObject.tag.Equals("Mob"))
                     {
-                        hit.collider.gameObject.GetComponent<EntityStatsManager>().TakeDamage(10);
+                        hit.collider.gameObject.GetComponent<Fighter>().TakeDamage(10);
                     }
                 }
             }

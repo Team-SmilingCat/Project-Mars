@@ -1069,9 +1069,8 @@ GameObject:
   m_Component:
   - component: {fileID: 157057134}
   - component: {fileID: 157057138}
-  - component: {fileID: 157057137}
-  - component: {fileID: 157057136}
   - component: {fileID: 157057135}
+  - component: {fileID: 157057136}
   m_Layer: 0
   m_Name: Rifle Idle (4)
   m_TagString: Mob
@@ -1123,28 +1122,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 157057133}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 157057135}
---- !u!114 &157057137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157057133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 157057135}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &157057138
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4527,37 +4511,6 @@ Transform:
   m_Father: {fileID: 2105988314}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &575440521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148234084950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 919132148234084951}
-  isHittable: 0
-  isBeingHit: 0
---- !u!114 &575440522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148234084950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 919132148234084951}
 --- !u!143 &575440523
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6617,6 +6570,32 @@ CapsuleCollider:
   m_Height: 0.0073421705
   m_Direction: 1
   m_Center: {x: 0.000027630656, y: 0.004310283, z: -0.000009019628}
+--- !u!1 &853126573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3544082272103573612, guid: 09787c956125d204ea0b953307917e36, type: 3}
+  m_PrefabInstance: {fileID: 5399048152211327749}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &853126574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853126573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75db9f23fb042d48d2715741d3704f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: f653259cf4ff9064183c47c004212b63, type: 2}
+  isHittable: 1
+  animator: {fileID: 853126585}
+  curTarget: {fileID: 0}
+--- !u!95 &853126585 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7819621644203436204, guid: 09787c956125d204ea0b953307917e36, type: 3}
+  m_PrefabInstance: {fileID: 5399048152211327749}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &855826281
 GameObject:
   m_ObjectHideFlags: 0
@@ -12753,9 +12732,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1183378503}
   - component: {fileID: 1183378507}
-  - component: {fileID: 1183378506}
-  - component: {fileID: 1183378505}
   - component: {fileID: 1183378504}
+  - component: {fileID: 1183378505}
   m_Layer: 0
   m_Name: Rifle Idle (6)
   m_TagString: Mob
@@ -12807,28 +12785,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1183378502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 1183378504}
---- !u!114 &1183378506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183378502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 1183378504}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &1183378507
 CharacterController:
   m_ObjectHideFlags: 0
@@ -13541,9 +13504,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1277691032}
   - component: {fileID: 1277691036}
-  - component: {fileID: 1277691035}
-  - component: {fileID: 1277691034}
   - component: {fileID: 1277691033}
+  - component: {fileID: 1277691034}
   m_Layer: 0
   m_Name: Rifle Idle (9)
   m_TagString: Mob
@@ -13595,28 +13557,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1277691031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 1277691033}
---- !u!114 &1277691035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277691031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 1277691033}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &1277691036
 CharacterController:
   m_ObjectHideFlags: 0
@@ -15025,9 +14972,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1443203372}
   - component: {fileID: 1443203376}
-  - component: {fileID: 1443203375}
-  - component: {fileID: 1443203374}
   - component: {fileID: 1443203373}
+  - component: {fileID: 1443203374}
   m_Layer: 0
   m_Name: Rifle Idle (5)
   m_TagString: Mob
@@ -15079,28 +15025,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1443203371}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 1443203373}
---- !u!114 &1443203375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443203371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 1443203373}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &1443203376
 CharacterController:
   m_ObjectHideFlags: 0
@@ -16030,9 +15961,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1597599238}
   - component: {fileID: 1597599242}
-  - component: {fileID: 1597599241}
-  - component: {fileID: 1597599240}
   - component: {fileID: 1597599239}
+  - component: {fileID: 1597599240}
   m_Layer: 0
   m_Name: Rifle Idle (7)
   m_TagString: Mob
@@ -16084,28 +16014,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1597599237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 1597599239}
---- !u!114 &1597599241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597599237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 1597599239}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &1597599242
 CharacterController:
   m_ObjectHideFlags: 0
@@ -16816,9 +16731,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1722989003}
   - component: {fileID: 1722989007}
-  - component: {fileID: 1722989006}
-  - component: {fileID: 1722989005}
   - component: {fileID: 1722989004}
+  - component: {fileID: 1722989005}
   m_Layer: 0
   m_Name: Rifle Idle (8)
   m_TagString: Mob
@@ -16870,28 +16784,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1722989002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 1722989004}
---- !u!114 &1722989006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722989002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 1722989004}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &1722989007
 CharacterController:
   m_ObjectHideFlags: 0
@@ -18537,9 +18436,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1952999708}
   - component: {fileID: 1952999712}
-  - component: {fileID: 1952999711}
-  - component: {fileID: 1952999710}
   - component: {fileID: 1952999709}
+  - component: {fileID: 1952999710}
   m_Layer: 0
   m_Name: Rifle Idle (3)
   m_TagString: Mob
@@ -18591,28 +18489,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1952999707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd87f9d25b33e145af08c22a2b21200, type: 3}
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
   animator: {fileID: 1952999709}
---- !u!114 &1952999711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952999707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198af1dedcd28847adc0be5625fffb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  imperium: {fileID: 11400000, guid: a750ca1ee529c6e40b0e83cb4faf9cff, type: 2}
-  animator: {fileID: 1952999709}
-  isHittable: 0
-  isBeingHit: 0
+  curTarget: {fileID: 0}
 --- !u!143 &1952999712
 CharacterController:
   m_ObjectHideFlags: 0
@@ -20545,9 +20428,8 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652505946348}
   - component: {fileID: 575440523}
-  - component: {fileID: 575440521}
-  - component: {fileID: 575440522}
   - component: {fileID: 919132148234084951}
+  - component: {fileID: 919132148234084952}
   m_Layer: 0
   m_Name: Rifle Idle (2)
   m_TagString: Mob
@@ -20574,6 +20456,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &919132148234084952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148234084950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9d8cabd85a414c9c90e31e18db584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 65d3ba4d62cbffe43ad1d799ce0bd558, type: 2}
+  isHittable: 1
+  animator: {fileID: 919132148234084951}
+  curTarget: {fileID: 0}
 --- !u!23 &997568786755001989
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20767,9 +20665,9 @@ GameObject:
   - component: {fileID: 1078253111007757182}
   - component: {fileID: 1078253111007757180}
   - component: {fileID: 1078253111007757181}
-  - component: {fileID: 1078253111007757178}
   - component: {fileID: 1078253111007757155}
   - component: {fileID: 1078253111007757179}
+  - component: {fileID: 1078253111007757177}
   m_Layer: 6
   m_Name: traveler_ver3 (1)
   m_TagString: Player
@@ -20777,7 +20675,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1078253111007757178
+--- !u!114 &1078253111007757177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20786,16 +20684,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078253111007757176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576ab1ff21fe4f6479c063bb4ad43068, type: 3}
+  m_Script: {fileID: 11500000, guid: 8007ae5b3ec4486d8afe161c6551ec5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  damage: 0
-  playerStats: {fileID: 11400000, guid: f653259cf4ff9064183c47c004212b63, type: 2}
-  playerUIManager: {fileID: 1734104181}
-  healthScale: 10
-  currHealth: 0
+  stats: {fileID: 11400000, guid: f653259cf4ff9064183c47c004212b63, type: 2}
+  isHittable: 1
+  animator: {fileID: 6007033369053774776}
+  curTarget: {fileID: 0}
   animatorManager: {fileID: 159825749490485543}
+  playerUIManager: {fileID: 1734104181}
+  healthScale: 1
 --- !u!114 &1078253111007757179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24008,7 +23906,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3544082272103573614, guid: 09787c956125d204ea0b953307917e36, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 09787c956125d204ea0b953307917e36, type: 3}
 --- !u!1 &5412520775503508778
 GameObject:
@@ -24614,7 +24513,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentOverride: {fileID: 2286445529965300171}
-  weaponMesh: {fileID: 234576111256210880, guid: e37dab2bb6c055149a847acd8741296a, type: 3}
 --- !u!23 &6269839943501776238
 MeshRenderer:
   m_ObjectHideFlags: 0

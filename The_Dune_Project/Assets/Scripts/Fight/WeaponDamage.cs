@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fight;
 
 public class WeaponDamage : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class WeaponDamage : MonoBehaviour
             //take damage
             //check enemy hp using scritable object
             Debug.Log("weapon is colliding with enemy");
-            var mobStats = other.GetComponent<EntityStatsManager>();
+            var mobStats = other.GetComponent<Fighter>();
             mobStats.TakeDamage(10);
         }
     }

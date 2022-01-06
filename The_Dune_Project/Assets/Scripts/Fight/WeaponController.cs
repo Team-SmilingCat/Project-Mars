@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public Transform parentOverride;
-    public GameObject weaponMesh;
+    private GameObject weaponMesh;
 
     public void LoadWeapon(Weapons weapon)
     {
@@ -53,5 +53,4 @@ public class WeaponController : MonoBehaviour
             Destroy(weaponMesh);
         }
     }
-    
 }
