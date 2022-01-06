@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour
     private GameObject cinemachineTarget;
 
     [SerializeField] private float aimSensitivity;
-    private float originalCamSpeed;
+    [SerializeField] private float originalCamSpeed;
 
     [Header("Camera Aim")] [SerializeField]
     private CinemachineVirtualCamera aimCamera;
@@ -65,12 +65,12 @@ public class CameraManager : MonoBehaviour
         {
             Debug.Log("right clicking is " + inputHandle.rightClickInput);
             aimCamera.gameObject.SetActive(true);
-            setSensitivity(aimSensitivity);
+            camSpeed = aimSensitivity;
         }
         else
         {
             aimCamera.gameObject.SetActive(false);
-            setSensitivity(originalCamSpeed);
+            camSpeed = originalCamSpeed;
         }
         
     }

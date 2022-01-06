@@ -4,6 +4,9 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MarsTest1.unity
+    guid: 9e5803b69760b8e4d96521c114d2e43f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c8b46eb13b8c9164c93fe6bd56cc3264, type: 2}

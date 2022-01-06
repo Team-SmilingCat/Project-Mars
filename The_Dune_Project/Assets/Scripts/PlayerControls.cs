@@ -131,7 +131,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
             ""id"": ""48cf9b66-92b0-4149-bd47-4064dcde5c25"",
             ""actions"": [
                 {
-                    ""name"": ""Sprint Button"",
+                    ""name"": ""Dash Button"",
                     ""type"": ""Button"",
                     ""id"": ""cb2d56fd-5c07-4139-81af-f8acb6e436c7"",
                     ""expectedControlType"": ""Button"",
@@ -179,7 +179,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sprint Button"",
+                    ""action"": ""Dash Button"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -238,7 +238,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerMovement_Camera = m_PlayerMovement.FindAction("Camera", throwIfNotFound: true);
         // Player Actions
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
-        m_PlayerActions_SprintButton = m_PlayerActions.FindAction("Sprint Button", throwIfNotFound: true);
+        m_PlayerActions_DashButton = m_PlayerActions.FindAction("Dash Button", throwIfNotFound: true);
         m_PlayerActions_WalkButton = m_PlayerActions.FindAction("Walk Button", throwIfNotFound: true);
         m_PlayerActions_JumpButton = m_PlayerActions.FindAction("Jump Button", throwIfNotFound: true);
         m_PlayerActions_Lclick = m_PlayerActions.FindAction("Lclick", throwIfNotFound: true);
@@ -333,7 +333,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     // Player Actions
     private readonly InputActionMap m_PlayerActions;
     private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
-    private readonly InputAction m_PlayerActions_SprintButton;
+    private readonly InputAction m_PlayerActions_DashButton;
     private readonly InputAction m_PlayerActions_WalkButton;
     private readonly InputAction m_PlayerActions_JumpButton;
     private readonly InputAction m_PlayerActions_Lclick;
@@ -342,7 +342,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SprintButton => m_Wrapper.m_PlayerActions_SprintButton;
+        public InputAction @DashButton => m_Wrapper.m_PlayerActions_DashButton;
         public InputAction @WalkButton => m_Wrapper.m_PlayerActions_WalkButton;
         public InputAction @JumpButton => m_Wrapper.m_PlayerActions_JumpButton;
         public InputAction @Lclick => m_Wrapper.m_PlayerActions_Lclick;
@@ -356,9 +356,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsActionsCallbackInterface != null)
             {
-                @SprintButton.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprintButton;
-                @SprintButton.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprintButton;
-                @SprintButton.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnSprintButton;
+                @DashButton.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDashButton;
+                @DashButton.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDashButton;
+                @DashButton.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDashButton;
                 @WalkButton.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnWalkButton;
                 @WalkButton.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnWalkButton;
                 @WalkButton.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnWalkButton;
@@ -375,9 +375,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @SprintButton.started += instance.OnSprintButton;
-                @SprintButton.performed += instance.OnSprintButton;
-                @SprintButton.canceled += instance.OnSprintButton;
+                @DashButton.started += instance.OnDashButton;
+                @DashButton.performed += instance.OnDashButton;
+                @DashButton.canceled += instance.OnDashButton;
                 @WalkButton.started += instance.OnWalkButton;
                 @WalkButton.performed += instance.OnWalkButton;
                 @WalkButton.canceled += instance.OnWalkButton;
@@ -401,7 +401,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     }
     public interface IPlayerActionsActions
     {
-        void OnSprintButton(InputAction.CallbackContext context);
+        void OnDashButton(InputAction.CallbackContext context);
         void OnWalkButton(InputAction.CallbackContext context);
         void OnJumpButton(InputAction.CallbackContext context);
         void OnLclick(InputAction.CallbackContext context);

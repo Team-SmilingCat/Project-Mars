@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using Fight;
 using UnityEngine.InputSystem;
@@ -8,6 +8,9 @@ using UnityEngine.InputSystem.Interactions;
 
 public class RangedShootingHandler : MonoBehaviour
 {
+    [Header("Reticle UI object")]
+    [SerializeField] GameObject uiReticle;
+
     [Header("character manager scripts accessor")]
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private AnimatorManager animatorManager;
@@ -39,6 +42,7 @@ public class RangedShootingHandler : MonoBehaviour
             if (playerInputHandle.rightClickInput)
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
+                uiReticle.SetActive(true);
                 worldTarget = hit.point;
                 //worldTarget.y = gameObject.transform.position.y;
                 Vector3 aimDirection = (worldTarget - gameObject.transform.position).normalized;
@@ -64,6 +68,7 @@ public class RangedShootingHandler : MonoBehaviour
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
+                uiReticle.SetActive(false);
             }
         }
     }
