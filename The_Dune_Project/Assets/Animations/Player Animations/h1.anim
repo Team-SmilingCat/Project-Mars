@@ -49014,6 +49014,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.73333335
+    functionName: MovePlayerInSequence
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.3
     functionName: DisableCombo
     data: 

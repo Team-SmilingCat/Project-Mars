@@ -31,6 +31,8 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] public bool isAiming;
     [SerializeField] public Quaternion aimVector { get; set; }
 
+    [SerializeField] private float minDistanceAllowedToAim;
+
     void Start(){
         currentPlayerRotation = gameObject.transform.rotation;
     }
@@ -49,10 +51,12 @@ public class RangedShootingHandler : MonoBehaviour
         if (Physics.Raycast(rayTarget, out RaycastHit hit, rangedDistance, hittableEntities))
         {
             rayConfirmer.position = hit.point;
-            if (playerInputHandle.rightClickInput)
+            float distancePlayerObject = Vector3.Distance(rayConfirmer.position, transform.position);
+            Debug.Log(distancePlayerObject);
+            if (playerInputHandle.rightClickInput && distancePlayerObject > minDistanceAllowedToAim)
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
-                uiReticle.SetActive(true);
+                //uiReticle.SetActive(true);
                 worldTarget = hit.point;
                 //worldTarget.y = gameObject.transform.position.y;
                 Vector3 aimDirection = (worldTarget - gameObject.transform.position).normalized;
@@ -79,7 +83,7 @@ public class RangedShootingHandler : MonoBehaviour
                 //this is when the player returns to a non-aiming state
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
-                uiReticle.SetActive(false);
+                //uiReticle.SetActive(false);
                 gameObject.transform.rotation = currentPlayerRotation;
             }
         }
