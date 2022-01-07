@@ -213,7 +213,16 @@ public class PlayerMovement : MonoBehaviour
         targetDir.Normalize();
 
         controller.Move(targetDir * dashScale * Time.deltaTime);
+    }
 
+    public Vector3 GetPlayerDirection(){
+    Vector3 targetDir = Vector3.zero;
+        targetDir = camera.forward * playerInputHandle.vertical;
+        targetDir = targetDir + camera.right * playerInputHandle.horizontal;
+        targetDir.y = 0;
+        targetDir.Normalize();
+
+        return targetDir;
     }
 
     public void HandleFalling()

@@ -6,13 +6,22 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     //place where weapon is
-    [SerializeField] private WeaponController weaponController;
-    [SerializeField] private WeaponDamage weaponDamage;
     [SerializeField] private GameObject rightHand;
     [SerializeField] private Animator animator;
 
+    [Header("player components")]
+    private CharacterController playerBody;
+    [SerializeField] private WeaponController weaponController;
+    //weapon damage is loaded in runtime
+    [SerializeField] private WeaponDamage weaponDamage;
+
+
+    [Header("moving player during combo properties")]
+    [SerializeField] private float moveAmount;
+
     public void Start()
     {
+        playerBody = gameObject.GetComponent<CharacterController>();
 
     }
 
@@ -34,5 +43,11 @@ public class WeaponManager : MonoBehaviour
     public void weaponDamageOnDisable()
     {
         weaponDamage.OnDisableWeapon();
+    }
+
+    public void MovePlayerInSequence()
+    {
+        playerBody.Move(gameObject.transform.forward * moveAmount * Time.deltaTime);
+
     }
 }
