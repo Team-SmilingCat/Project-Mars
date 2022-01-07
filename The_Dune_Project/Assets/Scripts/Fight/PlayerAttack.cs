@@ -16,6 +16,12 @@ public class PlayerAttack : MonoBehaviour
             prevAtk = weapon.atk1;
     }
 
+    public void HandleHeavyMeleeAttack(MeleeWeapon weapon)
+    {
+        animatorManager.PlayTargetAnimation(weapon.atk4, true);
+        prevAtk = weapon.atk4;
+    }
+
     public void handleMeleeAttackSequence(MeleeWeapon weapon)
     {
         if (playerInputHandle.flagCombo)
