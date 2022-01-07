@@ -45,19 +45,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask layers;
     [SerializeField] float checkHeightOffset;
     [SerializeField] float debugRadius;
+    private float lastYPos;
+    private bool isFalling;
 
     [Header("character controller")] private CharacterController controller;
 
     [Header("gravity settings")] 
     [SerializeField, Range(-100f, 100f)] private float gravity;
-    
+    private float velocityY;
+
     private void Awake()
     {
         camera = Camera.main.transform;
         controller = gameObject.GetComponent<CharacterController>();
         
         timeToApex = jumpTime / 2;
-        //gravity = (-2 * jumpHeight) / Mathf.Pow(timeToApex, 2);
         initVelocity = (2 * jumpHeight) / timeToApex;
     }
 
@@ -65,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         timer = jumpCoolDown;
-
+        lastYPos = transform.position.y;
     }
 
     public void HandleAllPlayerMovement()
@@ -73,12 +75,11 @@ public class PlayerMovement : MonoBehaviour
         HandleCCJumping();   
         HandleGravity();
         if (playerManager.isInteracting)
-        {
-            Debug.Log("player is interacting");
             return;
-        }
+        
         HandleMovement();
         HandleTurns();
+        HandleFalling();
     }
 
     private void HandleMovement()
@@ -89,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isGrounded && !playerInputHandle.jumpInput)
         {
-            Debug.Log("HandleMovement is called");
             moveVector = camera.forward * playerInputHandle.vertical;
             moveVector = moveVector + camera.right * playerInputHandle.horizontal;
             moveVector.y = 0;
@@ -150,49 +150,52 @@ public class PlayerMovement : MonoBehaviour
         {
             if (timer <= 0f && playerInputHandle.jumpInput)
             {
-                Debug.Log("we can jump");
                 //moveVector.y += initVelocity * 1.5f;
                 moveVector.y += Mathf.Sqrt(-2f * gravity * jumpHeight);
                 controller.Move(moveVector * Time.deltaTime);
-                animatorManager.animator.SetBool("isJumping", true);
                 animatorManager.PlayTargetAnimation("Jumping", false);
-            }  
+                isJumping = true;
+            }
             if(timer >= 0f)
             {
-                Debug.Log("timer going down");
                 timer -= Time.deltaTime;
             }
         }
         else
         {
-            Debug.Log("timer reset");
             timer = jumpCoolDown;
             if(timer >= 0f)
             {
                 timer -= Time.deltaTime;
             }
-            isJumping = false; 
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if(!isGrounded)
+        {
+            float curYPos = transform.position.y;
+            velocityY  = (curYPos - lastYPos) / Time.deltaTime;
+            lastYPos = curYPos;
         }
     }
 
     private void HandleGravity()
     {
-        if (!isGrounded && !isJumping)
+        if (!isGrounded)
         {
             //Gravity by default is set to a negative float.
             moveVector.y += gravity * Time.deltaTime;
-                    controller.Move(moveVector * Time.deltaTime);
+            controller.Move(moveVector * Time.deltaTime);
         }
+
         Vector3 castPos = new Vector3(gameObject.transform.position.x,
         gameObject.transform.position.y - checkHeightOffset,
         gameObject.transform.position.z);
 
-        if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore)){
-            Debug.Log("Player is grounded");
-            //when we touch the ground, we check to play the landing animation first
-            if(!isGrounded){
-                //animatorManager.PlayTargetAnimation("Land", true);
-            }
+        if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
+        {
             isGrounded = true;
             isJumping = false;
         }
@@ -200,7 +203,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
-        
     }
 
     public void HandleDash(){
@@ -212,6 +214,19 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(targetDir * dashScale * Time.deltaTime);
 
+    }
+
+    public void HandleFalling()
+    {
+        if (!isGrounded && !isJumping && !isFalling && velocityY < -10.0f)
+        {
+            animatorManager.PlayTargetAnimation("Falling", true);
+            isFalling = true;
+        }
+        else if(isGrounded)
+        {
+            isFalling = false;
+        }
     }
 
     void OnDrawGizmosSelected()
