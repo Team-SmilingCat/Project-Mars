@@ -24,11 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public bool isJumping;
 
 
-    [Header("values")] 
+    [Header("movement values")] 
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float speed = 30f;
     [SerializeField] private float turnSpeed = 10f;
-    [SerializeField] private float replaceSlopeOffset;
+    [SerializeField] private float acceleration;
 
     [SerializeField] private float dashScale;
 
@@ -48,11 +48,17 @@ public class PlayerMovement : MonoBehaviour
     private float lastYPos;
     private bool isFalling;
 
-    [Header("character controller")] private CharacterController controller;
+    [Header("character controller")] 
+    private CharacterController controller;
 
     [Header("gravity settings")] 
     [SerializeField, Range(-100f, 100f)] private float gravity;
+
+    [SerializeField, Range(-100f, 100f)] private float playerToGroundRayOffset;
+
+     [SerializeField] float groundHeightLimit;
     private float velocityY;
+
 
     private void Awake()
     {
@@ -113,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
-
             controller.Move(moveVector * Time.deltaTime);
         }
     }
@@ -179,6 +184,7 @@ public class PlayerMovement : MonoBehaviour
             velocityY  = (curYPos - lastYPos) / Time.deltaTime;
             lastYPos = curYPos;
         }
+
     }
 
     private void HandleGravity()
@@ -196,6 +202,8 @@ public class PlayerMovement : MonoBehaviour
 
         if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
         {
+            //Lerp to proper position when going down
+   
             isGrounded = true;
             isJumping = false;
         }
@@ -215,19 +223,9 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(targetDir * dashScale * Time.deltaTime);
     }
 
-    public Vector3 GetPlayerDirection(){
-    Vector3 targetDir = Vector3.zero;
-        targetDir = camera.forward * playerInputHandle.vertical;
-        targetDir = targetDir + camera.right * playerInputHandle.horizontal;
-        targetDir.y = 0;
-        targetDir.Normalize();
-
-        return targetDir;
-    }
-
     public void HandleFalling()
     {
-        if (!isGrounded && !isJumping && !isFalling && velocityY < -10.0f)
+        if (!isGrounded && !isJumping && !isFalling && velocityY < -30.0f)
         {
             animatorManager.PlayTargetAnimation("Falling", true);
             isFalling = true;
@@ -235,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
         else if(isGrounded)
         {
             isFalling = false;
+            velocityY = 0;
         }
     }
 
