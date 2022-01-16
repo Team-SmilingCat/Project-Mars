@@ -8,6 +8,9 @@ using UnityEngine.InputSystem.Interactions;
 
 public class RangedShootingHandler : MonoBehaviour
 {
+    [Header("spine to rotate on playermodel")]
+    [SerializeField] GameObject spineToRotate;
+
     [Header("Reticle UI object")]
     [SerializeField] GameObject uiReticle;
 
@@ -19,7 +22,7 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] private float rangedDistance;
     [SerializeField] private LayerMask hittableEntities;
 
-    [SerializeField] public float gunRotationSpeed { get; set; }
+    [SerializeField] private float gunRotationSpeed;
     [SerializeField] private GameObject particle;
     [SerializeField] private bool leftClickisHeldDownWithRight;
     private Quaternion currentPlayerRotation;
@@ -34,14 +37,14 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] private float minDistanceAllowedToAim;
 
     void Start(){
-        currentPlayerRotation = gameObject.transform.rotation;
+        currentPlayerRotation = spineToRotate.transform.rotation;
     }
     public void HandleShootingAttack()
     { 
         if(!isAiming)
         {
             //we cast again since the player might have a changed rotation once they start moving around.
-            currentPlayerRotation = gameObject.transform.rotation;
+            currentPlayerRotation = spineToRotate.transform.rotation;
         }
         Vector3 worldTarget = Vector3.zero;
         Vector2 crossHairLoc = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -52,22 +55,20 @@ public class RangedShootingHandler : MonoBehaviour
         {
             rayConfirmer.position = hit.point;
             float distancePlayerObject = Vector3.Distance(rayConfirmer.position, transform.position);
-            Debug.Log(distancePlayerObject);
             if (playerInputHandle.rightClickInput && distancePlayerObject > minDistanceAllowedToAim)
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
                 //uiReticle.SetActive(true);
                 worldTarget = hit.point;
                 //worldTarget.y = gameObject.transform.position.y;
-                Vector3 aimDirection = (worldTarget - gameObject.transform.position).normalized;
+                Vector3 aimDirection = (worldTarget - spineToRotate.transform.position).normalized;
 
                 var rotation = Quaternion.LookRotation(aimDirection);
                 aimVector = rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
+                spineToRotate.transform.rotation = Quaternion.Slerp(spineToRotate.transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
                 isAiming = true;
                 if(playerInputHandle.leftClickInput)
                 {
-                    Debug.Log("only shooting");
                     animatorManager.PlayTargetAnimation("shoot", true);
                     GameObject clone = (GameObject) Instantiate(particle, rayConfirmer.position, Quaternion.identity);
                     Destroy(clone, 1.5f);
@@ -84,7 +85,7 @@ public class RangedShootingHandler : MonoBehaviour
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
                 //uiReticle.SetActive(false);
-                gameObject.transform.rotation = currentPlayerRotation;
+                spineToRotate.transform.rotation = currentPlayerRotation;
             }
         }
     }

@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
+    [SerializeField] private PlayerHookHandler playerHookHandler;
     private Transform camera;
     private PlayerInputHandle playerInputHandle;
     private Vector3 moveVector;
@@ -22,13 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public bool isWalking;
     public bool isGrounded;
     public bool isJumping;
+    public bool isGrappled;
 
 
-    [Header("values")] 
+    [Header("movement values")] 
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float speed = 30f;
     [SerializeField] private float turnSpeed = 10f;
-    [SerializeField] private float replaceSlopeOffset;
+    [SerializeField] private float acceleration;
 
     [SerializeField] private float dashScale;
 
@@ -48,11 +50,17 @@ public class PlayerMovement : MonoBehaviour
     private float lastYPos;
     private bool isFalling;
 
-    [Header("character controller")] private CharacterController controller;
+    [Header("character controller")] 
+    private CharacterController controller;
 
     [Header("gravity settings")] 
     [SerializeField, Range(-100f, 100f)] private float gravity;
+
+    [SerializeField, Range(-100f, 100f)] private float playerToGroundRayOffset;
+
+     [SerializeField] float groundHeightLimit;
     private float velocityY;
+
 
     private void Awake()
     {
@@ -72,14 +80,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleAllPlayerMovement()
     {
+        if(!playerHookHandler.finishedHook){
+            return;
+        }
+        HandleFalling();
         HandleCCJumping();   
         HandleGravity();
         if (playerManager.isInteracting)
             return;
-        
         HandleMovement();
         HandleTurns();
-        HandleFalling();
     }
 
     private void HandleMovement()
@@ -113,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
-
             controller.Move(moveVector * Time.deltaTime);
         }
     }
@@ -179,29 +188,32 @@ public class PlayerMovement : MonoBehaviour
             velocityY  = (curYPos - lastYPos) / Time.deltaTime;
             lastYPos = curYPos;
         }
+
     }
 
     private void HandleGravity()
     {
-        if (!isGrounded)
-        {
-            //Gravity by default is set to a negative float.
-            moveVector.y += gravity * Time.deltaTime;
-            controller.Move(moveVector * Time.deltaTime);
-        }
-
         Vector3 castPos = new Vector3(gameObject.transform.position.x,
         gameObject.transform.position.y - checkHeightOffset,
         gameObject.transform.position.z);
 
         if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
         {
+            //Lerp to proper position when going down
+   
             isGrounded = true;
             isJumping = false;
         }
         else
         {
             isGrounded = false;
+        }
+        
+        if (!isGrounded && velocityY <= 0)
+        {
+            //Gravity by default is set to a negative float.
+            moveVector.y += gravity * Time.deltaTime;
+            controller.Move(moveVector * Time.deltaTime);
         }
     }
 
@@ -215,19 +227,9 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(targetDir * dashScale * Time.deltaTime);
     }
 
-    public Vector3 GetPlayerDirection(){
-    Vector3 targetDir = Vector3.zero;
-        targetDir = camera.forward * playerInputHandle.vertical;
-        targetDir = targetDir + camera.right * playerInputHandle.horizontal;
-        targetDir.y = 0;
-        targetDir.Normalize();
-
-        return targetDir;
-    }
-
     public void HandleFalling()
     {
-        if (!isGrounded && !isJumping && !isFalling && velocityY < -10.0f)
+        if (!isGrounded && !isJumping && !isFalling && velocityY < -30.0f)
         {
             animatorManager.PlayTargetAnimation("Falling", true);
             isFalling = true;
@@ -235,6 +237,7 @@ public class PlayerMovement : MonoBehaviour
         else if(isGrounded)
         {
             isFalling = false;
+            velocityY = 0;
         }
     }
 
