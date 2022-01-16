@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isWalking;
     public bool isGrounded;
     public bool isJumping;
+    public bool isGrappled;
 
 
     [Header("movement values")] 
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleAllPlayerMovement()
     {
+        HandleFalling();
         HandleCCJumping();   
         HandleGravity();
         if (playerManager.isInteracting)
@@ -85,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
         
         HandleMovement();
         HandleTurns();
-        HandleFalling();
     }
 
     private void HandleMovement()

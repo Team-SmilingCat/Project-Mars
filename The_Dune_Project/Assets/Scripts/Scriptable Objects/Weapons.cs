@@ -10,4 +10,6 @@ public class Weapons : Items
    public int damage;
    public GameObject weaponMesh;
 
+   public int handsUsed;
+
 }

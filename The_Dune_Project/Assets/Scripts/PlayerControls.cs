@@ -224,6 +224,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Hook"",
+                    ""type"": ""Button"",
+                    ""id"": ""102b40c6-1355-438c-a92b-fb95bcb5a032"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -281,6 +289,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Rclick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef3052fa-b4a2-4fa6-9a02-ab70a7e0e374"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -298,6 +317,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_JumpButton = m_PlayerActions.FindAction("Jump Button", throwIfNotFound: true);
         m_PlayerActions_Lclick = m_PlayerActions.FindAction("Lclick", throwIfNotFound: true);
         m_PlayerActions_Rclick = m_PlayerActions.FindAction("Rclick", throwIfNotFound: true);
+        m_PlayerActions_Hook = m_PlayerActions.FindAction("Hook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -393,6 +413,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerActions_JumpButton;
     private readonly InputAction m_PlayerActions_Lclick;
     private readonly InputAction m_PlayerActions_Rclick;
+    private readonly InputAction m_PlayerActions_Hook;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -402,6 +423,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @JumpButton => m_Wrapper.m_PlayerActions_JumpButton;
         public InputAction @Lclick => m_Wrapper.m_PlayerActions_Lclick;
         public InputAction @Rclick => m_Wrapper.m_PlayerActions_Rclick;
+        public InputAction @Hook => m_Wrapper.m_PlayerActions_Hook;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +448,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Rclick.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRclick;
                 @Rclick.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRclick;
                 @Rclick.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRclick;
+                @Hook.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnHook;
+                @Hook.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnHook;
+                @Hook.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnHook;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -445,6 +470,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Rclick.started += instance.OnRclick;
                 @Rclick.performed += instance.OnRclick;
                 @Rclick.canceled += instance.OnRclick;
+                @Hook.started += instance.OnHook;
+                @Hook.performed += instance.OnHook;
+                @Hook.canceled += instance.OnHook;
             }
         }
     }
@@ -461,5 +489,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnJumpButton(InputAction.CallbackContext context);
         void OnLclick(InputAction.CallbackContext context);
         void OnRclick(InputAction.CallbackContext context);
+        void OnHook(InputAction.CallbackContext context);
     }
 }
