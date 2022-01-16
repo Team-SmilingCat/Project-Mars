@@ -156,7 +156,12 @@ public class PlayerInputHandle : MonoBehaviour
     private void HandleHookInput(){
         if(playerManager.isInteracting) return;
         if(hookInput){
+            if(playerHookHandler.finishedHook)
             playerHookHandler.UseHook();
+        }
+        else{
+            playerHookHandler.finishedHook = true;
+            playerHookHandler.isHooking = false;
         }
 
     }

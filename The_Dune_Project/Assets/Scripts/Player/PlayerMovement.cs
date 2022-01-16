@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
+    [SerializeField] private PlayerHookHandler playerHookHandler;
     private Transform camera;
     private PlayerInputHandle playerInputHandle;
     private Vector3 moveVector;
@@ -79,12 +80,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleAllPlayerMovement()
     {
+        if(!playerHookHandler.finishedHook){
+            return;
+        }
         HandleFalling();
         HandleCCJumping();   
         HandleGravity();
         if (playerManager.isInteracting)
             return;
-        
         HandleMovement();
         HandleTurns();
     }
@@ -190,13 +193,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleGravity()
     {
-        if (!isGrounded)
-        {
-            //Gravity by default is set to a negative float.
-            moveVector.y += gravity * Time.deltaTime;
-            controller.Move(moveVector * Time.deltaTime);
-        }
-
         Vector3 castPos = new Vector3(gameObject.transform.position.x,
         gameObject.transform.position.y - checkHeightOffset,
         gameObject.transform.position.z);
@@ -211,6 +207,13 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isGrounded = false;
+        }
+        
+        if (!isGrounded && velocityY <= 0)
+        {
+            //Gravity by default is set to a negative float.
+            moveVector.y += gravity * Time.deltaTime;
+            controller.Move(moveVector * Time.deltaTime);
         }
     }
 
