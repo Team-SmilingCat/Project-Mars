@@ -79,25 +79,23 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void HandleAllPlayerMovement()
-    {
+    {  
+        HandleCCJumping();
+        HandleFalling(); 
+        HandleGravity();
         if(!playerHookHandler.finishedHook){
             return;
         }
-        HandleFalling();
-        HandleCCJumping();   
-        HandleGravity();
-        if (playerManager.isInteracting)
+        if (playerManager.isInteracting){
             return;
+        }
         HandleMovement();
         HandleTurns();
     }
 
     private void HandleMovement()
     {
-        if (playerInputHandle.jumpInput)
-        {
-            return;
-        }
+
         if (isGrounded && !playerInputHandle.jumpInput)
         {
             moveVector = camera.forward * playerInputHandle.vertical;
@@ -200,7 +198,6 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
         {
             //Lerp to proper position when going down
-   
             isGrounded = true;
             isJumping = false;
         }
@@ -239,6 +236,10 @@ public class PlayerMovement : MonoBehaviour
             isFalling = false;
             velocityY = 0;
         }
+    }
+
+    public void resetVelocityY(){
+        velocityY = 0;
     }
 
     void OnDrawGizmosSelected()

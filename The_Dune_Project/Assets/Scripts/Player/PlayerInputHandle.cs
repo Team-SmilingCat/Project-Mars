@@ -119,10 +119,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleJumping()
     {
-        if (jumpInput)
-        {
-            jumpInput = false;            
-        }   
+
     }
 
     private void HandleAttackInput()
@@ -169,6 +166,7 @@ public class PlayerInputHandle : MonoBehaviour
         else{
             playerHookHandler.finishedHook = true;
             playerHookHandler.isHooking = false;
+            playerHookHandler.ResetHook();
         }
 
     }

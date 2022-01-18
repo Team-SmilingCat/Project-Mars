@@ -10,16 +10,21 @@ public class PlayerHookHandler : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] LayerMask layers;
     [SerializeField] RangedShootingHandler rangedShootingHandler;
-
-    [SerializeField]float launchSpeed;
     private Vector3 hookPos;
+
+    private Quaternion originalHookRot;
+    private Vector3 preStretchHookPos;
 
     private CharacterController controller;
     public bool isHooking;
     public bool finishedHook;
     private Vector3 target;
     
-    [SerializeField] float distanceNearGrappledLocation;
+    private Vector3 momentum;
+    [SerializeField] float grappleLimit;
+    [SerializeField] float launchSpeedMin;
+    [SerializeField] float launchSpeedMax;
+    [SerializeField] float constant;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +32,8 @@ public class PlayerHookHandler : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         finishedHook = true;
         isHooking = false;
+        originalHookRot = hook.transform.rotation;
+        preStretchHookPos = boneToMove.transform.position;
     }
 
     // Update is called once per frame
@@ -69,16 +76,21 @@ public class PlayerHookHandler : MonoBehaviour
         if (isHooking)
         {
             Vector3 direction = (target - transform.position).normalized;
-            controller.Move(direction * launchSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target) < distanceNearGrappledLocation)
+            controller.Move(direction * constant * Mathf.Clamp(Vector3.Distance(transform.position, target), launchSpeedMin, launchSpeedMax) * Time.deltaTime);
+            if (Vector3.Distance(transform.position, target) < grappleLimit)
             {
                 finishedHook = true;
                 isHooking = false;
+                ResetHook();
             }   
         }
-
-
     }
+
+    public void ResetHook(){
+        hook.transform.rotation = originalHookRot;
+        boneToMove.transform.position = preStretchHookPos;
+}
+
 }
 
 
