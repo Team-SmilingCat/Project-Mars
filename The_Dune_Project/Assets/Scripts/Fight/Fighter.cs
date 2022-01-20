@@ -56,7 +56,7 @@ namespace Fight
             
             if (animator)
             {
-                animator.Play("hit");
+                // TODO: animator.Play("hit");
             }
 
             StartCoroutine(Timer(5f));

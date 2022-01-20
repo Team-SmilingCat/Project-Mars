@@ -20,6 +20,8 @@ public class PlayerInputHandle : MonoBehaviour
     public bool rightClickInput;
     public bool dashInput;
 
+    public bool hookInput;
+
     private PlayerControls playerControls;
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private PlayerMovement playerMovement;
@@ -27,6 +29,8 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
+
+    [SerializeField] private PlayerHookHandler playerHookHandler;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
@@ -56,7 +60,8 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.Rclick.canceled += i => rightClickInput = false;
             playerControls.PlayerActions.DashButton.performed += i => dashInput = true;
             playerControls.PlayerActions.DashButton.canceled += i => dashInput = false;
-
+            playerControls.PlayerActions.Hook.performed += i => hookInput = true;
+            playerControls.PlayerActions.Hook.canceled += i => hookInput = false;
         }
         playerControls.Enable();
     }
@@ -84,6 +89,7 @@ public class PlayerInputHandle : MonoBehaviour
         HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
+        HandleHookInput();
   
     }
 
@@ -126,7 +132,7 @@ public class PlayerInputHandle : MonoBehaviour
             if (playerManager.canCombo)
             {
                 flagCombo = true;
-                playerAttack.handleMeleeAttackSequence((Scriptable_Objects.MeleeWeapon)playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttackSequence((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 flagCombo = false;
             }
@@ -134,9 +140,15 @@ public class PlayerInputHandle : MonoBehaviour
             {
                 if (playerManager.isInteracting) return;
                 if (playerManager.canCombo) return;
-                playerAttack.handleMeleeAttack((Scriptable_Objects.MeleeWeapon)playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
+        }
+
+        if (rightClickInput && !leftClickInput && playerMovement.isGrounded)
+        {
+            if (playerManager.isInteracting) return;
+            playerAttack.HandleHeavyMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
         }
 
     }
@@ -146,6 +158,19 @@ public class PlayerInputHandle : MonoBehaviour
         if(!playerMovement.isJumping){
             rangedShootingHandler.HandleShootingAttack();
         }
+    }
+
+    private void HandleHookInput(){
+        if(playerManager.isInteracting) return;
+        if(hookInput){
+            if(playerHookHandler.finishedHook)
+            playerHookHandler.UseHook();
+        }
+        else{
+            playerHookHandler.finishedHook = true;
+            playerHookHandler.isHooking = false;
+        }
+
     }
 
     private void HandleDashInput()

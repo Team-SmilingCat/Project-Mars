@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7464a2fb0b854ae781b7ae7cb09c2e9c, type: 3}
-  m_Name: 1H-Desert Carver
+  m_Script: {fileID: 11500000, guid: 5c190dc7b37f56b439ab4cada762180b, type: 3}
+  m_Name: grappler
   m_EditorClassIdentifier: 
-  itemName: desert carver
+  itemName: hooker
   isInCombat: 0
-  type: melee
-  damage: 10
-  weaponMesh: {fileID: 234576111256210880, guid: e37dab2bb6c055149a847acd8741296a, type: 3}
+  type: ranged
+  damage: 0
+  weaponMesh: {fileID: 919132149155446097, guid: 336acb74ea938274784b59d3f29bd015, type: 3}
   handsUsed: 1
-  atk1: atk1
-  atk2: atk2
-  atk3: atk3
-  atk4: atk4
+  shootAnimation: hook_shoot
