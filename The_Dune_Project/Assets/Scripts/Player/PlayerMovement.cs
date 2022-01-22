@@ -48,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float checkHeightOffset;
     [SerializeField] float debugRadius;
     private float lastYPos;
-    private bool isFalling;
+    public bool isFalling;
+    private float stepOffset;
 
     [Header("character controller")] 
     private CharacterController controller;
@@ -76,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         timer = jumpCoolDown;
         lastYPos = transform.position.y;
+        stepOffset = controller.stepOffset;
     }
 
     public void HandleAllPlayerMovement()
@@ -204,9 +206,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isGrounded = false;
+            isFalling = true;
         }
         
-        if (!isGrounded && velocityY <= 0)
+        if (!isGrounded && isFalling)
         {
             //Gravity by default is set to a negative float.
             moveVector.y += gravity * Time.deltaTime;
@@ -230,11 +233,13 @@ public class PlayerMovement : MonoBehaviour
         {
             animatorManager.PlayTargetAnimation("Falling", true);
             isFalling = true;
+            controller.stepOffset = 0;
         }
         else if(isGrounded)
         {
             isFalling = false;
             velocityY = 0;
+            controller.stepOffset = stepOffset;
         }
     }
 
