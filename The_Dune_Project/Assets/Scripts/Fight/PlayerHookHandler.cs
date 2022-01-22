@@ -10,21 +10,17 @@ public class PlayerHookHandler : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] LayerMask layers;
     [SerializeField] RangedShootingHandler rangedShootingHandler;
-    private Vector3 hookPos;
-
-    private Quaternion originalHookRot;
-    private Vector3 preStretchHookPos;
-
     private CharacterController controller;
     public bool isHooking;
     public bool finishedHook;
     private Vector3 target;
-    
     private Vector3 momentum;
     [SerializeField] float grappleLimit;
     [SerializeField] float launchSpeedMin;
     [SerializeField] float launchSpeedMax;
     [SerializeField] float constant;
+
+    [SerializeField] Vector3 returnPosOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +28,6 @@ public class PlayerHookHandler : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         finishedHook = true;
         isHooking = false;
-        originalHookRot = hook.transform.rotation;
-        preStretchHookPos = boneToMove.transform.position;
     }
 
     // Update is called once per frame
@@ -59,9 +53,6 @@ public class PlayerHookHandler : MonoBehaviour
                 isHooking = true;
                 target = hit.point;
                 Vector3 direction = (target - hook.transform.position).normalized;
-                var rotation = Quaternion.LookRotation(direction);
-                hook.transform.rotation = Quaternion.Slerp(hook.transform.localRotation,
-                    rotation, Time.deltaTime * rotationSpeed);
                 boneToMove.transform.position = Vector3.Slerp(boneToMove.transform.position,
                     hit.point, rotationSpeed * Time.deltaTime);
             }
@@ -87,9 +78,11 @@ public class PlayerHookHandler : MonoBehaviour
     }
 
     public void ResetHook(){
-        hook.transform.rotation = originalHookRot;
-        boneToMove.transform.position = preStretchHookPos;
-}
+        boneToMove.transform.position = new Vector3(
+        boneToMove.transform.parent.transform.position.x + returnPosOffset.x, 
+        boneToMove.transform.parent.transform.position.y + returnPosOffset.y, 
+        boneToMove.transform.parent.transform.position.z + returnPosOffset.z);
+    }
 
 }
 

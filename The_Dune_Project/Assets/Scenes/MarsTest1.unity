@@ -6371,6 +6371,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2beac87d7a313324390206e7a7c826f1, type: 3}
+--- !u!114 &1671193248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6813731441242177500, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
+  m_PrefabInstance: {fileID: 6813731442293283168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1692746754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14492,6 +14503,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 8445622322223117988}
+    - target: {fileID: 7540847069976375245, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
+      propertyPath: hookCam
+      value: 
+      objectReference: {fileID: 1671193248}
     - target: {fileID: 7540847069976375245, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: inputHandle
       value: 
