@@ -6,29 +6,21 @@ using UnityEngine;
 public class Consumable : Items
 {
     public int Count { get; set; }
-    public int MaxCount { get; }
+    public int? MaxCount { get; }
     public int Target { get; }
     public int Effect { get; }
 
     public delegate void OnConsumableUsed();
     public OnConsumableUsed onConsumableUsedCallback;
 
-    public Consumable(string name, Sprite icon, int count, int target, int effect)
+    public Consumable(string name, string? description, Sprite icon, int count, int? maxCount, int target, int effect)
     {
         itemName = name;
+        Description = description;
         Icon = icon;
         Count = count;
-        MaxCount = 99;
-        Target = target;
-        Effect = effect;
-    }
-
-    public Consumable(string name, Sprite icon, int count, int maxCount, int target, int effect)
-    {
-        itemName = name;
-        Icon = icon;
-        Count = count;
-        MaxCount = maxCount;
+        if (maxCount == null) MaxCount = 99;
+        else MaxCount = maxCount;
         Target = target;
         Effect = effect;
     }

@@ -14,30 +14,42 @@ public class Inventory : MonoBehaviour
 		instance = this;
 	}
 
+    public delegate void OnKeyItemChanged();
+    public OnKeyItemChanged onKeyItemChangedCallback;
     public delegate void OnConsumableChanged();
     public OnConsumableChanged onConsumableChangedCallback;
 
     public List<KeyItem> keyItems = new List<KeyItem>();
     public List<Consumable> consumables = new List<Consumable>();
 
+    public GameObject inventoryUI;
+    InventorySlot[] keyItemSlots;
+    InventorySlot[] consumableSlots;
+    void Start(){
+        onKeyItemChangedCallback += UpdateKeyItemUI;
+        onConsumableChangedCallback += UpdateConsumableUI;
+        keyItemSlots = inventoryUI.transform.GetChild(0).transform.GetComponentsInChildren<InventorySlot>(); // TODO: Set up UI in Unity.
+        consumableSlots = inventoryUI.transform.GetChild(1).transform.GetComponentsInChildren<InventorySlot>();
+    }
+
     public bool Add(Items item){
         if (item is KeyItem)
         {
             KeyItem existingKeyItem = keyItems.Find(i => i.name == item.name);
-            if (existingKeyItem)
+            if (existingKeyItem != null)
             {
                 Debug.Log("Cannot pickup: Key item already in inventory.");
                 return false;
             }
             keyItems.Add((KeyItem) item);
-            if (onConsumableChangedCallback != null) onConsumableChangedCallback.Invoke();
+            if (onKeyItemChangedCallback != null) onKeyItemChangedCallback.Invoke();
             return true;
         }
         if (item is Consumable)
         {
             Consumable consumableItem = (Consumable) item;
             Consumable existingConsumable = consumables.Find(i => i.name == item.name);
-            if (existingConsumable)
+            if (existingConsumable != null)
             {
                 existingConsumable.Count += consumableItem.Count;
                 if (existingConsumable.OverCapacity())
@@ -81,5 +93,12 @@ public class Inventory : MonoBehaviour
             Debug.Log("Remove failed: Consumable is not in inventory.");
             return false;
         }
+    }
+
+    public void UpdateKeyItemUI(){ // TODO: FIX THESE METHODS.
+        
+    }
+    public void UpdateConsumableUI(){
+        
     }
 }

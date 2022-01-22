@@ -8,9 +8,10 @@ public class KeyItem : Items
     public delegate void OnKeyItemUsed();
     public OnKeyItemUsed onKeyItemUsedCallback;
 
-    public KeyItem(string name, Sprite icon)
+    public KeyItem(string name, string? description, Sprite icon)
     {
         itemName = name;
+        Description = description;
         Icon = icon;
     }
 
