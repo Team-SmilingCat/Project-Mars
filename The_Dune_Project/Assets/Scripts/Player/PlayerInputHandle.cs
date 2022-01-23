@@ -23,18 +23,21 @@ public class PlayerInputHandle : MonoBehaviour
     public bool hookInput;
 
     private PlayerControls playerControls;
+
+    [Header("Player Components")]
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
-
     [SerializeField] private PlayerHookHandler playerHookHandler;
+    [SerializeField] private PlayerUIManager playerUIManager;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
-    [Header("action flags")] public bool flagCombo;
+    [Header("action flags")] 
+    public bool flagCombo;
 
     private void Awake()
     {
@@ -119,10 +122,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleJumping()
     {
-        if (jumpInput)
-        {
-            jumpInput = false;            
-        }   
+
     }
 
     private void HandleAttackInput()
@@ -164,11 +164,16 @@ public class PlayerInputHandle : MonoBehaviour
         if(playerManager.isInteracting) return;
         if(hookInput){
             if(playerHookHandler.finishedHook)
-            playerHookHandler.UseHook();
+            {
+                playerHookHandler.UseHook();
+            } else if(playerHookHandler.isHooking){
+                return;
+            }
         }
         else{
             playerHookHandler.finishedHook = true;
             playerHookHandler.isHooking = false;
+            playerHookHandler.ResetHook();
         }
 
     }

@@ -86,4 +86,8 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool("canCombo", false);
     }
 
+    public void EnableLanding(){
+        animator.SetBool("canLand", true);
+    }
+
 }

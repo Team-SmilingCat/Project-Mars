@@ -48,7 +48,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float checkHeightOffset;
     [SerializeField] float debugRadius;
     private float lastYPos;
-    private bool isFalling;
+    public bool isFalling;
+    private float stepOffset;
+    private float fallTime;
 
     [Header("character controller")] 
     private CharacterController controller;
@@ -76,28 +78,28 @@ public class PlayerMovement : MonoBehaviour
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         timer = jumpCoolDown;
         lastYPos = transform.position.y;
+        stepOffset = controller.stepOffset;
     }
 
     public void HandleAllPlayerMovement()
     {
+              HandleGravity();  
+        HandleFalling(); 
+        HandleCCJumping();
+
         if(!playerHookHandler.finishedHook){
             return;
         }
-        HandleFalling();
-        HandleCCJumping();   
-        HandleGravity();
-        if (playerManager.isInteracting)
+        if (playerManager.isInteracting){
             return;
+        }
         HandleMovement();
         HandleTurns();
     }
 
     private void HandleMovement()
     {
-        if (playerInputHandle.jumpInput)
-        {
-            return;
-        }
+
         if (isGrounded && !playerInputHandle.jumpInput)
         {
             moveVector = camera.forward * playerInputHandle.vertical;
@@ -200,21 +202,24 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
         {
             //Lerp to proper position when going down
-   
-            isGrounded = true;
-            isJumping = false;
+            if(isJumping){
+                isGrounded = true;
+                isJumping = false;
+                animatorManager.EnableLanding();
+            }
+            else{
+                isGrounded = true;
+                isFalling = false;
+                animatorManager.EnableLanding();
+            }
         }
         else
         {
             isGrounded = false;
-        }
-        
-        if (!isGrounded && velocityY <= 0)
-        {
-            //Gravity by default is set to a negative float.
             moveVector.y += gravity * Time.deltaTime;
             controller.Move(moveVector * Time.deltaTime);
         }
+        
     }
 
     public void HandleDash(){
@@ -229,16 +234,32 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleFalling()
     {
-        if (!isGrounded && !isJumping && !isFalling && velocityY < -30.0f)
-        {
-            animatorManager.PlayTargetAnimation("Falling", true);
-            isFalling = true;
-        }
-        else if(isGrounded)
+        if(isGrounded)
         {
             isFalling = false;
             velocityY = 0;
+            controller.stepOffset = stepOffset;
         }
+        if (!isGrounded && isJumping && !isFalling && velocityY < -30.0f)
+        {
+            animatorManager.PlayTargetAnimation("FallingJumped", false);
+            isFalling = true;
+            controller.stepOffset = 0;
+
+        }
+        else if (!isGrounded && !isJumping && !isFalling && velocityY < -20.0f)
+        {
+            animatorManager.PlayTargetAnimation("Falling", false);
+            isFalling = true;
+            controller.stepOffset = 0;
+
+        }
+        
+
+    }
+
+    public void resetVelocityY(){
+        velocityY = 0;
     }
 
     void OnDrawGizmosSelected()
