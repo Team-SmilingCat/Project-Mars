@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastYPos;
     public bool isFalling;
     private float stepOffset;
+    private float fallTime;
 
     [Header("character controller")] 
     private CharacterController controller;
@@ -81,10 +82,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void HandleAllPlayerMovement()
-    {  
-        HandleCCJumping();
+    {
+              HandleGravity();  
         HandleFalling(); 
-        HandleGravity();
+        HandleCCJumping();
+
         if(!playerHookHandler.finishedHook){
             return;
         }
@@ -200,21 +202,24 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
         {
             //Lerp to proper position when going down
-            isGrounded = true;
-            isJumping = false;
+            if(isJumping){
+                isGrounded = true;
+                isJumping = false;
+                animatorManager.EnableLanding();
+            }
+            else{
+                isGrounded = true;
+                isFalling = false;
+                animatorManager.EnableLanding();
+            }
         }
         else
         {
             isGrounded = false;
-            isFalling = true;
-        }
-        
-        if (!isGrounded && isFalling)
-        {
-            //Gravity by default is set to a negative float.
             moveVector.y += gravity * Time.deltaTime;
             controller.Move(moveVector * Time.deltaTime);
         }
+        
     }
 
     public void HandleDash(){
@@ -229,18 +234,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleFalling()
     {
-        if (!isGrounded && !isJumping && !isFalling && velocityY < -30.0f)
-        {
-            animatorManager.PlayTargetAnimation("Falling", true);
-            isFalling = true;
-            controller.stepOffset = 0;
-        }
-        else if(isGrounded)
+        if(isGrounded)
         {
             isFalling = false;
             velocityY = 0;
             controller.stepOffset = stepOffset;
         }
+        if (!isGrounded && isJumping && !isFalling && velocityY < -30.0f)
+        {
+            animatorManager.PlayTargetAnimation("FallingJumped", false);
+            isFalling = true;
+            controller.stepOffset = 0;
+
+        }
+        else if (!isGrounded && !isJumping && !isFalling && velocityY < -20.0f)
+        {
+            animatorManager.PlayTargetAnimation("Falling", false);
+            isFalling = true;
+            controller.stepOffset = 0;
+
+        }
+        
+
     }
 
     public void resetVelocityY(){

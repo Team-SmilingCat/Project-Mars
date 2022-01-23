@@ -4,23 +4,37 @@ using UnityEngine;
 
 public class PlayerHookHandler : MonoBehaviour
 {
+    [Header("hook game object parts")]
     [SerializeField] GameObject hook;
     [SerializeField] GameObject boneToMove;
+    
+
+    [Header("hook attributes")]
     [SerializeField] float distance;
-    [SerializeField] float rotationSpeed;
     [SerializeField] LayerMask layers;
-    [SerializeField] RangedShootingHandler rangedShootingHandler;
-    private CharacterController controller;
-    public bool isHooking;
-    public bool finishedHook;
-    private Vector3 target;
-    private Vector3 momentum;
+    [SerializeField] float lerpSpeed;
     [SerializeField] float grappleLimit;
     [SerializeField] float launchSpeedMin;
     [SerializeField] float launchSpeedMax;
     [SerializeField] float constant;
-
     [SerializeField] Vector3 returnPosOffset;
+
+    [Header("Player components")]
+    [SerializeField] RangedShootingHandler rangedShootingHandler;
+    [SerializeField] PlayerUIManager playerUIManager;
+
+    [Header("crossHair")]
+
+    [SerializeField] Sprite canHookCH;
+    [SerializeField] Sprite cannotHookCH;
+
+
+    [SerializeField] private CharacterController controller;
+    public bool isHooking;
+    public bool finishedHook;
+    private Vector3 target;
+    private Vector3 momentum;
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +49,7 @@ public class PlayerHookHandler : MonoBehaviour
     {
         if (isHooking)
         {
+            playerUIManager.DisableCrossHair();
             MoveToGrappledPosition();
         }
     }
@@ -50,14 +65,16 @@ public class PlayerHookHandler : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, distance, layers, QueryTriggerInteraction.Collide))
             {
+                playerUIManager.ChangeCrossHair(canHookCH);
                 isHooking = true;
                 target = hit.point;
                 Vector3 direction = (target - hook.transform.position).normalized;
                 boneToMove.transform.position = Vector3.Slerp(boneToMove.transform.position,
-                    hit.point, rotationSpeed * Time.deltaTime);
+                    hit.point, lerpSpeed * Time.deltaTime);
             }
             else
             {
+                playerUIManager.ChangeCrossHair(cannotHookCH);
                 isHooking = false;
             }
         }

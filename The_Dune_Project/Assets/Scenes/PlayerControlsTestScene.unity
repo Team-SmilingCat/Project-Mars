@@ -760,7 +760,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609625201}
   m_LocalRotation: {x: -0.21018396, y: -0.5079412, z: 0.12888058, w: -0.82535344}
-  m_LocalPosition: {x: 416.59918, y: 184.61624, z: 887.85065}
+  m_LocalPosition: {x: 416.59918, y: 182.32625, z: 887.85065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 618883002}
@@ -6971,6 +6971,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 290662447135712963, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 290662447135712965, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: uiCrossHairUsed
+      value: 
+      objectReference: {fileID: 1196739763}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ddc8d68c4e3bb14bbeefa1230035d36, type: 3}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9eab741f316692a4ca195622ba2a0b2f, type: 3}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 80587e0302b4baa4aa3063c91d48af38, type: 3}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6b993d94794a42f479c6ad51319b77e6, type: 3}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 79815227371311a43a66c976bc898187, type: 3}
+    - target: {fileID: 905915028246693754, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
+      propertyPath: crossHairList.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 64f4652959ec430469c585fb1d6b5601, type: 3}
     - target: {fileID: 905915029826961090, guid: 2cadead735d04f949939c0e06ff38008, type: 3}
       propertyPath: m_Name
       value: UI
@@ -8176,6 +8216,7 @@ MonoBehaviour:
     m_Bits: 128
   checkHeightOffset: -0.07
   debugRadius: 0.13
+  isFalling: 0
   gravity: -98
   playerToGroundRayOffset: 0
   groundHeightLimit: 0.5
@@ -8209,6 +8250,7 @@ MonoBehaviour:
   playerManager: {fileID: 1078253111007757182}
   rangedShootingHandler: {fileID: 1078253111007757155}
   playerHookHandler: {fileID: 1078253111007757178}
+  playerUIManager: {fileID: 0}
   flagCombo: 0
 --- !u!114 &1078253111007757155
 MonoBehaviour:
@@ -8223,9 +8265,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spineToRotate: {fileID: 1078253111007757176}
-  uiReticle: {fileID: 1196739763}
+  aimningCrossHair: {fileID: 0}
+  canHitCrossHair: {fileID: 0}
   playerInputHandle: {fileID: 1078253111007757153}
   animatorManager: {fileID: 159825749490485543}
+  playerUIManager: {fileID: 0}
   rangedDistance: 10000
   hittableEntities:
     serializedVersion: 2
@@ -8299,18 +8343,22 @@ MonoBehaviour:
   hook: {fileID: 6905609872266289928}
   boneToMove: {fileID: 1790183945173743351}
   distance: 999
-  rotationSpeed: 58
   layers:
     serializedVersion: 2
     m_Bits: 128
-  rangedShootingHandler: {fileID: 1078253111007757155}
-  isHooking: 0
-  finishedHook: 0
+  lerpSpeed: 0
   grappleLimit: 2
   launchSpeedMin: 30
   launchSpeedMax: 60
   constant: 2
   returnPosOffset: {x: 0, y: 0, z: 0}
+  rangedShootingHandler: {fileID: 1078253111007757155}
+  playerUIManager: {fileID: 0}
+  canHookCH: {fileID: 0}
+  cannotHookCH: {fileID: 0}
+  controller: {fileID: 0}
+  isHooking: 0
+  finishedHook: 0
 --- !u!114 &1078253111007757179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11900,19 +11948,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hook: {fileID: 836849596}
   boneToMove: {fileID: 1993378023}
-  distance: 99
-  rotationSpeed: 40
+  distance: 250
   layers:
     serializedVersion: 2
     m_Bits: 128
-  rangedShootingHandler: {fileID: 3691644121268582164}
-  isHooking: 0
-  finishedHook: 0
+  lerpSpeed: 0
   grappleLimit: 3
   launchSpeedMin: 65
   launchSpeedMax: 90
   constant: 3
   returnPosOffset: {x: 0, y: 0, z: 0}
+  rangedShootingHandler: {fileID: 3691644121268582164}
+  playerUIManager: {fileID: 620044431140072716}
+  canHookCH: {fileID: 21300000, guid: 80587e0302b4baa4aa3063c91d48af38, type: 3}
+  cannotHookCH: {fileID: 21300000, guid: 9eab741f316692a4ca195622ba2a0b2f, type: 3}
+  controller: {fileID: 3691644121268582155}
+  isHooking: 0
+  finishedHook: 0
 --- !u!114 &3691644121268582164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11926,9 +11978,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spineToRotate: {fileID: 3691644121268582159}
-  uiReticle: {fileID: 0}
+  aimningCrossHair: {fileID: 21300000, guid: 79815227371311a43a66c976bc898187, type: 3}
+  canHitCrossHair: {fileID: 0}
   playerInputHandle: {fileID: 3691644121268582166}
   animatorManager: {fileID: 4610053334367993168}
+  playerUIManager: {fileID: 620044431140072716}
   rangedDistance: 10000
   hittableEntities:
     serializedVersion: 2
@@ -11969,6 +12023,7 @@ MonoBehaviour:
   playerManager: {fileID: 3691644121268582153}
   rangedShootingHandler: {fileID: 3691644121268582164}
   playerHookHandler: {fileID: 3691644121268582161}
+  playerUIManager: {fileID: 0}
   flagCombo: 0
 --- !u!114 &3691644121268582167
 MonoBehaviour:
@@ -12001,13 +12056,14 @@ MonoBehaviour:
   initVelocity: 0
   jumpTime: 0.03
   timeToApex: 0
-  jumpCoolDown: 0.2
+  jumpCoolDown: 0.4
   timer: -0.0283729
   layers:
     serializedVersion: 2
     m_Bits: 128
   checkHeightOffset: 0.05
   debugRadius: 0.2
+  isFalling: 0
   gravity: -69.6
   playerToGroundRayOffset: 0.05
   groundHeightLimit: 5
@@ -12442,7 +12498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3691644121268582159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 422.13, y: 171.14, z: 812.86}
+  m_LocalPosition: {x: 422.13, y: 168.85, z: 812.86}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 5258237855640797907}
@@ -15182,7 +15238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6813731441772748511, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 181.21625
+      value: 178.92625
       objectReference: {fileID: 0}
     - target: {fileID: 6813731441772748511, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15190,15 +15246,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 190.09918
+      value: 193.03824
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 137.91624
+      value: 132.22626
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 357.85065
+      value: 318.54034
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15234,7 +15290,7 @@ PrefabInstance:
       objectReference: {fileID: 5258237855640797906}
     - target: {fileID: 7540847069976375246, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: field of view
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375246, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: near clip plane

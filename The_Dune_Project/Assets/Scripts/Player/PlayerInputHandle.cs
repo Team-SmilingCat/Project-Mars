@@ -32,6 +32,7 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
     [SerializeField] private PlayerHookHandler playerHookHandler;
+    [SerializeField] private PlayerUIManager playerUIManager;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
