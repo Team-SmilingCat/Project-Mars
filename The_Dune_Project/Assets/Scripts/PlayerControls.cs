@@ -232,6 +232,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shield Button"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d978f25-025e-4b64-a21f-60c2c354d6f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -300,6 +308,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Hook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1795441-f38d-4b29-b303-d9d05dfcc6d3"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shield Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -318,6 +337,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_Lclick = m_PlayerActions.FindAction("Lclick", throwIfNotFound: true);
         m_PlayerActions_Rclick = m_PlayerActions.FindAction("Rclick", throwIfNotFound: true);
         m_PlayerActions_Hook = m_PlayerActions.FindAction("Hook", throwIfNotFound: true);
+        m_PlayerActions_ShieldButton = m_PlayerActions.FindAction("Shield Button", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -414,6 +434,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerActions_Lclick;
     private readonly InputAction m_PlayerActions_Rclick;
     private readonly InputAction m_PlayerActions_Hook;
+    private readonly InputAction m_PlayerActions_ShieldButton;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -424,6 +445,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Lclick => m_Wrapper.m_PlayerActions_Lclick;
         public InputAction @Rclick => m_Wrapper.m_PlayerActions_Rclick;
         public InputAction @Hook => m_Wrapper.m_PlayerActions_Hook;
+        public InputAction @ShieldButton => m_Wrapper.m_PlayerActions_ShieldButton;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -451,6 +473,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Hook.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnHook;
                 @Hook.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnHook;
                 @Hook.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnHook;
+                @ShieldButton.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnShieldButton;
+                @ShieldButton.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnShieldButton;
+                @ShieldButton.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnShieldButton;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -473,6 +498,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Hook.started += instance.OnHook;
                 @Hook.performed += instance.OnHook;
                 @Hook.canceled += instance.OnHook;
+                @ShieldButton.started += instance.OnShieldButton;
+                @ShieldButton.performed += instance.OnShieldButton;
+                @ShieldButton.canceled += instance.OnShieldButton;
             }
         }
     }
@@ -490,5 +518,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnLclick(InputAction.CallbackContext context);
         void OnRclick(InputAction.CallbackContext context);
         void OnHook(InputAction.CallbackContext context);
+        void OnShieldButton(InputAction.CallbackContext context);
     }
 }
