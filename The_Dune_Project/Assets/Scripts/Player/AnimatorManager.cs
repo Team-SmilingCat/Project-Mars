@@ -90,4 +90,13 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool("canLand", true);
     }
 
+    public void EnableIsInteracting()
+    {
+        animator.SetBool("isInteracting", true);
+    }
+
+    public void DisableIsInteracting(){
+        animator.SetBool("isInteracting", false);
+    }
+
 }
