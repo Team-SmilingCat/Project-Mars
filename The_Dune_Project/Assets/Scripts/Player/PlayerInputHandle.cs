@@ -19,8 +19,9 @@ public class PlayerInputHandle : MonoBehaviour
     public bool leftClickInput;
     public bool rightClickInput;
     public bool dashInput;
-
     public bool hookInput;
+
+    public bool shieldInput;
 
     private PlayerControls playerControls;
 
@@ -65,6 +66,8 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.DashButton.canceled += i => dashInput = false;
             playerControls.PlayerActions.Hook.performed += i => hookInput = true;
             playerControls.PlayerActions.Hook.canceled += i => hookInput = false;
+            playerControls.PlayerActions.ShieldButton.performed += i => shieldInput = true;
+            playerControls.PlayerActions.ShieldButton.canceled -= i => shieldInput = false;
         }
         playerControls.Enable();
     }
@@ -184,7 +187,10 @@ public class PlayerInputHandle : MonoBehaviour
             dashInput = false;
             playerMovement.HandleDash();
         }
+    }
 
+    private void HandleShieldInput(){
+        
     }
 
 

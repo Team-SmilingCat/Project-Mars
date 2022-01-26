@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask layers;
     [SerializeField] float checkHeightOffset;
     [SerializeField] float debugRadius;
+
     private float lastYPos;
     public bool isFalling;
     private float stepOffset;
@@ -60,8 +61,15 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField, Range(-100f, 100f)] private float playerToGroundRayOffset;
 
-     [SerializeField] float groundHeightLimit;
+    [SerializeField] float groundHeightLimit;
     private float velocityY;
+    
+    [Header("slope settings")]
+    [SerializeField] private float slopeAngleLimit;
+    [SerializeField] private bool isOnSlope;
+    [SerializeField] LayerMask slopeLayer;
+
+    [SerializeField] private float slopeJumpHeight;
 
 
     private void Awake()
@@ -79,11 +87,12 @@ public class PlayerMovement : MonoBehaviour
         timer = jumpCoolDown;
         lastYPos = transform.position.y;
         stepOffset = controller.stepOffset;
+        isOnSlope = false;
     }
 
     public void HandleAllPlayerMovement()
     {
-              HandleGravity();  
+        HandleGravity();  
         HandleFalling(); 
         HandleCCJumping();
 
@@ -157,12 +166,38 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleCCJumping()
     {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, -Vector3.up, out hit, groundHeightLimit, slopeLayer)){
+            if(Vector3.Angle(Vector3.up, hit.normal) < slopeAngleLimit){
+                isOnSlope = true;
+            }
+            else{
+                isOnSlope = false;
+            }
+        }
+        else{
+            isOnSlope = false;
+        }
+
         if(isGrounded)
         {
             if (timer <= 0f && playerInputHandle.jumpInput)
             {
                 //moveVector.y += initVelocity * 1.5f;
                 moveVector.y += Mathf.Sqrt(-2f * gravity * jumpHeight);
+                controller.Move(moveVector * Time.deltaTime);
+                animatorManager.PlayTargetAnimation("Jumping", false);
+                isJumping = true;
+            }
+            if(timer >= 0f)
+            {
+                timer -= Time.deltaTime;
+            }
+        }
+        else if((isGrounded && isOnSlope) || isOnSlope){
+            if (timer <= 0f && playerInputHandle.jumpInput)
+            {
+                moveVector.y += Mathf.Sqrt(-2f * gravity * slopeJumpHeight);
                 controller.Move(moveVector * Time.deltaTime);
                 animatorManager.PlayTargetAnimation("Jumping", false);
                 isJumping = true;
@@ -199,8 +234,16 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.position.y - checkHeightOffset,
         gameObject.transform.position.z);
 
-        if(Physics.CheckSphere(castPos, debugRadius, layers, QueryTriggerInteraction.Ignore))
+        RaycastHit hit;
+
+        if(Physics.Raycast(transform.position, -Vector3.up, out hit,checkHeightOffset, layers))
         {
+            if(Vector3.Distance(transform.position, hit.point) < checkHeightOffset){
+                transform.position = Vector3.Lerp(transform.position,
+                transform.position + Vector3.up * checkHeightOffset,
+                5 * Time.deltaTime
+                );
+            }
             //Lerp to proper position when going down
             if(isJumping){
                 isGrounded = true;
