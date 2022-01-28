@@ -86,4 +86,17 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool("canCombo", false);
     }
 
+    public void EnableLanding(){
+        animator.SetBool("canLand", true);
+    }
+
+    public void EnableIsInteracting()
+    {
+        animator.SetBool("isInteracting", true);
+    }
+
+    public void DisableIsInteracting(){
+        animator.SetBool("isInteracting", false);
+    }
+
 }

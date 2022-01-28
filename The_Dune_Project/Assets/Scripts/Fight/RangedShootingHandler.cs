@@ -12,11 +12,13 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] GameObject spineToRotate;
 
     [Header("Reticle UI object")]
-    [SerializeField] GameObject uiReticle;
+    [SerializeField] Sprite aimningCrossHair;
+    [SerializeField] Sprite canHitCrossHair;
 
     [Header("character manager scripts accessor")]
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private AnimatorManager animatorManager;
+    [SerializeField] private PlayerUIManager playerUIManager;
     
     [Header("range of the ranged attack")] 
     [SerializeField] private float rangedDistance;
@@ -58,9 +60,8 @@ public class RangedShootingHandler : MonoBehaviour
             if (playerInputHandle.rightClickInput && distancePlayerObject > minDistanceAllowedToAim)
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
-                //uiReticle.SetActive(true);
+                playerUIManager.ChangeCrossHair(aimningCrossHair);
                 worldTarget = hit.point;
-                //worldTarget.y = gameObject.transform.position.y;
                 Vector3 aimDirection = (worldTarget - spineToRotate.transform.position).normalized;
 
                 var rotation = Quaternion.LookRotation(aimDirection);
@@ -72,7 +73,6 @@ public class RangedShootingHandler : MonoBehaviour
                     animatorManager.PlayTargetAnimation("shoot", true);
                     GameObject clone = (GameObject) Instantiate(particle, rayConfirmer.position, Quaternion.identity);
                     Destroy(clone, 1.5f);
-                    //checks if the target of the raycast is a attackable emnemy
                     if (hit.collider.gameObject.tag.Equals("Mob"))
                     {
                         hit.collider.gameObject.GetComponent<Fighter>().TakeDamage(10);
@@ -84,7 +84,7 @@ public class RangedShootingHandler : MonoBehaviour
                 //this is when the player returns to a non-aiming state
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
-                //uiReticle.SetActive(false);
+                playerUIManager.DisableCrossHair();
                 spineToRotate.transform.rotation = currentPlayerRotation;
             }
         }

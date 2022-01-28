@@ -4,22 +4,37 @@ using UnityEngine;
 
 public class PlayerHookHandler : MonoBehaviour
 {
+    [Header("hook game object parts")]
     [SerializeField] GameObject hook;
     [SerializeField] GameObject boneToMove;
+    
+
+    [Header("hook attributes")]
     [SerializeField] float distance;
-    [SerializeField] float rotationSpeed;
     [SerializeField] LayerMask layers;
+    [SerializeField] float lerpSpeed;
+    [SerializeField] float grappleLimit;
+    [SerializeField] float launchSpeedMin;
+    [SerializeField] float launchSpeedMax;
+    [SerializeField] float constant;
+    [SerializeField] Vector3 returnPosOffset;
+
+    [Header("Player components")]
     [SerializeField] RangedShootingHandler rangedShootingHandler;
+    [SerializeField] PlayerUIManager playerUIManager;
 
-    [SerializeField]float launchSpeed;
-    private Vector3 hookPos;
+    [Header("crossHair")]
 
-    private CharacterController controller;
+    [SerializeField] Sprite canHookCH;
+    [SerializeField] Sprite cannotHookCH;
+
+
+    [SerializeField] private CharacterController controller;
     public bool isHooking;
     public bool finishedHook;
     private Vector3 target;
-    
-    [SerializeField] float distanceNearGrappledLocation;
+    private Vector3 momentum;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +49,7 @@ public class PlayerHookHandler : MonoBehaviour
     {
         if (isHooking)
         {
+            playerUIManager.DisableCrossHair();
             MoveToGrappledPosition();
         }
     }
@@ -49,17 +65,16 @@ public class PlayerHookHandler : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, distance, layers, QueryTriggerInteraction.Collide))
             {
+                playerUIManager.ChangeCrossHair(canHookCH);
                 isHooking = true;
                 target = hit.point;
                 Vector3 direction = (target - hook.transform.position).normalized;
-                var rotation = Quaternion.LookRotation(direction);
-                hook.transform.rotation = Quaternion.Slerp(hook.transform.localRotation,
-                    rotation, Time.deltaTime * rotationSpeed);
                 boneToMove.transform.position = Vector3.Slerp(boneToMove.transform.position,
-                    hit.point, rotationSpeed * Time.deltaTime);
+                    hit.point, lerpSpeed * Time.deltaTime);
             }
             else
             {
+                playerUIManager.ChangeCrossHair(cannotHookCH);
                 isHooking = false;
             }
         }
@@ -69,16 +84,23 @@ public class PlayerHookHandler : MonoBehaviour
         if (isHooking)
         {
             Vector3 direction = (target - transform.position).normalized;
-            controller.Move(direction * launchSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target) < distanceNearGrappledLocation)
+            controller.Move(direction * constant * Mathf.Clamp(Vector3.Distance(transform.position, target), launchSpeedMin, launchSpeedMax) * Time.deltaTime);
+            if (Vector3.Distance(transform.position, target) < grappleLimit)
             {
                 finishedHook = true;
                 isHooking = false;
+                ResetHook();
             }   
         }
-
-
     }
+
+    public void ResetHook(){
+        boneToMove.transform.position = new Vector3(
+        boneToMove.transform.parent.transform.position.x + returnPosOffset.x, 
+        boneToMove.transform.parent.transform.position.y + returnPosOffset.y, 
+        boneToMove.transform.parent.transform.position.z + returnPosOffset.z);
+    }
+
 }
 
 
