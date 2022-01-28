@@ -69,6 +69,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
     
+    // For Consumables only. This and UpdateKeyItemUI should be updated if KeyItems can be lost/broken.
     public bool Remove(Consumable consumable, int amountRemoved)
     {
         Consumable existingConsumable = consumables.Find(c => c.name == consumable.name);
@@ -77,12 +78,6 @@ public class Inventory : MonoBehaviour
             {
                 Debug.Log("Remove failed: Remove quantity greater than owned quantity.");
                 return false;
-            }
-            if (amountRemoved == existingConsumable.Count)
-            {
-                consumables.Remove(existingConsumable);
-                if (onConsumableChangedCallback != null) onConsumableChangedCallback.Invoke();
-                return true;
             }
             existingConsumable.Count -= amountRemoved;
             if (onConsumableChangedCallback != null) onConsumableChangedCallback.Invoke();
@@ -95,10 +90,35 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void UpdateKeyItemUI(){ // TODO: FIX THESE METHODS.
-        
+    public void UpdateKeyItemUI(){
+        foreach(KeyItem ki in keyItems){
+            InventorySlot slot = keyItemSlots.Find(k => k.name == ki.item.name);
+            KeyItem keyItem = slot.item;
+            if (keyItem == null){ // This case should not happen unless there is a mismatch/new Remove() applied elsewhere.
+                slot.UpdateSlot(null);
+            }
+            else{
+                slot.UpdateSlot(ki);
+            }
+        }
     }
+
     public void UpdateConsumableUI(){
-        
+        foreach(Consumable com in consumables){
+            InventorySlot slot = consumableSlots.Find(c => c.name == com.item.name);
+            Consumable consumable = slot.item;
+            if (consumable == null){ // This case should not happen. Read above.
+                slot.UpdateSlot(null);
+            }
+            else{
+                if (com.count == 0){
+                    consumables.Remove(com);
+                    slot.UpdateSlot(null);
+                }
+                else{
+                    slot.UpdateSlot(com);
+                }
+            }
+        }
     }
 }

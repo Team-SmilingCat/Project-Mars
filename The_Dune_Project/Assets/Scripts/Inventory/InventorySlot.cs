@@ -13,8 +13,10 @@ public class InventorySlot
             icon.sprite = null;
             item = null;
         }
-        if (((Consumable)newItem).Count != null) count = ((Consumable)newItem).Count;
-        icon.sprite = newItem.Icon;
-        item = newItem;
+        else {
+            if (newItem is Consumable) count = ((Consumable)newItem).Count;
+            icon.sprite = newItem.Icon;
+            item = newItem;
+        }
     }
 }
