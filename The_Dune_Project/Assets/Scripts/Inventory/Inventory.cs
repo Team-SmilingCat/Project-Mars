@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,19 +24,26 @@ public class Inventory : MonoBehaviour
     public List<Consumable> consumables = new List<Consumable>();
 
     public GameObject inventoryUI;
-    InventorySlot[] keyItemSlots;
-    InventorySlot[] consumableSlots;
+    public InventorySlot[] keyItemSlots; // TODO: Change these to private later. Currently public for easier in-editor debugging.
+    public InventorySlot[] consumableSlots;
+
     void Start(){
         onKeyItemChangedCallback += UpdateKeyItemUI;
         onConsumableChangedCallback += UpdateConsumableUI;
-        keyItemSlots = inventoryUI.transform.GetChild(0).transform.GetComponentsInChildren<InventorySlot>(); // TODO: Set up UI in Unity.
+        keyItemSlots = inventoryUI.transform.GetChild(0).transform.GetComponentsInChildren<InventorySlot>();
         consumableSlots = inventoryUI.transform.GetChild(1).transform.GetComponentsInChildren<InventorySlot>();
+
+        // TODO: Remove when done testing.
+        Consumable con = ScriptableObject.CreateInstance<Consumable>();
+        con.itemName = "test";
+        con.Count = 1;
+        Add(con);
     }
 
     public bool Add(Items item){
         if (item is KeyItem)
         {
-            KeyItem existingKeyItem = keyItems.Find(i => i.name == item.name);
+            KeyItem existingKeyItem = keyItems.Find(i => i.itemName == item.itemName);
             if (existingKeyItem != null)
             {
                 Debug.Log("Cannot pickup: Key item already in inventory.");
@@ -48,7 +56,7 @@ public class Inventory : MonoBehaviour
         if (item is Consumable)
         {
             Consumable consumableItem = (Consumable) item;
-            Consumable existingConsumable = consumables.Find(i => i.name == item.name);
+            Consumable existingConsumable = consumables.Find(i => i.name == item.itemName);
             if (existingConsumable != null)
             {
                 existingConsumable.Count += consumableItem.Count;
@@ -72,7 +80,7 @@ public class Inventory : MonoBehaviour
     // For Consumables only. This and UpdateKeyItemUI should be updated if KeyItems can be lost/broken.
     public bool Remove(Consumable consumable, int amountRemoved)
     {
-        Consumable existingConsumable = consumables.Find(c => c.name == consumable.name);
+        Consumable existingConsumable = consumables.Find(c => c.name == consumable.itemName);
         if (existingConsumable){
             if (amountRemoved > existingConsumable.Count)
             {
@@ -92,31 +100,33 @@ public class Inventory : MonoBehaviour
 
     public void UpdateKeyItemUI(){
         foreach(KeyItem ki in keyItems){
-            InventorySlot slot = keyItemSlots.Find(k => k.name == ki.item.name);
-            KeyItem keyItem = slot.item;
-            if (keyItem == null){ // This case should not happen unless there is a mismatch/new Remove() applied elsewhere.
-                slot.UpdateSlot(null);
+            InventorySlot slot = Array.Find(keyItemSlots, k => k.item != null && k.item.itemName == ki.itemName);
+            if (slot == null){
+                slot = Array.Find(keyItemSlots, k => k.item == null);
+                slot.UpdateSlot(ki);
             }
             else{
+                KeyItem keyItem = (KeyItem) slot.item;
                 slot.UpdateSlot(ki);
             }
         }
     }
 
     public void UpdateConsumableUI(){
-        foreach(Consumable com in consumables){
-            InventorySlot slot = consumableSlots.Find(c => c.name == com.item.name);
-            Consumable consumable = slot.item;
-            if (consumable == null){ // This case should not happen. Read above.
-                slot.UpdateSlot(null);
+        foreach(Consumable con in consumables){
+            InventorySlot slot = Array.Find(consumableSlots, c => c.item != null && c.item.itemName == con.itemName);
+            if (slot == null){
+                slot = Array.Find(consumableSlots, c => c.item == null);
+                slot.UpdateSlot(con);
             }
             else{
-                if (com.count == 0){
-                    consumables.Remove(com);
+                Consumable consumable = (Consumable) slot.item;
+                if (con.Count == 0){
+                    consumables.Remove(con);
                     slot.UpdateSlot(null);
                 }
                 else{
-                    slot.UpdateSlot(com);
+                    slot.UpdateSlot(con);
                 }
             }
         }

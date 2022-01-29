@@ -6,7 +6,7 @@ using UnityEngine;
 public class Consumable : Items
 {
     public int Count { get; set; }
-    public int? MaxCount { get; }
+    public int MaxCount { get; }
     public int Target { get; }
     public int Effect { get; }
 
@@ -19,8 +19,7 @@ public class Consumable : Items
         Description = description;
         Icon = icon;
         Count = count;
-        if (maxCount == null) MaxCount = 99;
-        else MaxCount = maxCount;
+        MaxCount = maxCount == null ? 99 : maxCount.Value;
         Target = target;
         Effect = effect;
     }
