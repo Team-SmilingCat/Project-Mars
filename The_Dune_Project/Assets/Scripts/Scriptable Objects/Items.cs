@@ -6,5 +6,6 @@ public class Items : ScriptableObject
 {
     [Header("item data")] 
     public string itemName;
-
+    public string? Description;
+    public Sprite Icon;
 }
