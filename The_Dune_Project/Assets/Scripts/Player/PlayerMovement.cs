@@ -286,6 +286,7 @@ public class PlayerMovement : MonoBehaviour
         }
         moveVector = camera.forward * playerInputHandle.vertical;
         moveVector += camera.right * playerInputHandle.horizontal;
+        moveVector.Normalize();
         if(playerInputHandle.moveValue > 0){
             animatorManager.PlayTargetAnimation("dive", true);
             moveVector.y = 0;
