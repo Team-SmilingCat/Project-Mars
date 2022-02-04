@@ -32,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float acceleration;
 
-    [SerializeField] private float dashScale;
-
     [Header("jump settings")]
     [SerializeField, Range(0f, 100f)] private float jumpHeight;
     [SerializeField] private float initVelocity;
@@ -71,6 +69,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float slopeJumpHeight;
 
+    [Header("dash settings")]
+    [SerializeField] private float dashScale;
+    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashTimer;
+
+    private bool canDash; 
+
 
     private void Awake()
     {
@@ -84,10 +89,16 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
+        initMovementSettings();
+    }
+
+    private void initMovementSettings(){
         timer = jumpCoolDown;
+        dashTimer = dashCooldown;
         lastYPos = transform.position.y;
         stepOffset = controller.stepOffset;
         isOnSlope = false;
+        canDash = true;
     }
 
     public void HandleAllPlayerMovement()
@@ -95,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
         HandleGravity();  
         HandleFalling(); 
         HandleCCJumping();
-
+        //HandleDashCD();
         if(!playerHookHandler.finishedHook){
             return;
         }
@@ -112,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && !playerInputHandle.jumpInput)
         {
             moveVector = camera.forward * playerInputHandle.vertical;
-            moveVector = moveVector + camera.right * playerInputHandle.horizontal;
+            moveVector += camera.right * playerInputHandle.horizontal;
             moveVector.y = 0;
             moveVector.Normalize();
             if(rangedShootingHandler.isAiming){
@@ -194,7 +205,8 @@ public class PlayerMovement : MonoBehaviour
                 timer -= Time.deltaTime;
             }
         }
-        else if((isGrounded && isOnSlope) || isOnSlope){
+        else if((isGrounded && isOnSlope) || isOnSlope)
+        {
             if (timer <= 0f && playerInputHandle.jumpInput)
             {
                 moveVector.y += Mathf.Sqrt(-2f * gravity * slopeJumpHeight);
@@ -266,13 +278,38 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void HandleDash(){
-        Vector3 targetDir = Vector3.zero;
-        targetDir = camera.forward * playerInputHandle.vertical;
-        targetDir = targetDir + camera.right * playerInputHandle.horizontal;
-        targetDir.y = 0;
-        targetDir.Normalize();
+        if(playerManager.isInteracting){
+            return;
+        }
+        if(isJumping){
+            return;
+        }
+        moveVector = camera.forward * playerInputHandle.vertical;
+        moveVector += camera.right * playerInputHandle.horizontal;
+        if(playerInputHandle.moveValue > 0){
+            animatorManager.PlayTargetAnimation("dive", true);
+            moveVector.y = 0;
+            controller.Move(moveVector * Time.deltaTime * dashScale);
+        }
 
-        controller.Move(targetDir * dashScale * Time.deltaTime);
+    }
+
+    private void HandleDashCD(){
+        if(canDash){
+            if(dashTimer <= 0f){
+                //nothing
+            }
+            if(dashTimer >= 0f){
+                dashTimer -= Time.deltaTime;
+            }
+        }    
+        else
+        {
+            dashTimer = dashCooldown;
+            if(dashTimer >= 0f){
+                dashTimer -= Time.deltaTime;
+            }
+        }
     }
 
     public void HandleFalling()
