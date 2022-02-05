@@ -17,6 +17,7 @@ MonoBehaviour:
   type: melee
   damage: 10
   weaponMesh: {fileID: 234576111256210880, guid: e37dab2bb6c055149a847acd8741296a, type: 3}
+  handsUsed: 1
   atk1: atk1
   atk2: atk2
   atk3: atk3

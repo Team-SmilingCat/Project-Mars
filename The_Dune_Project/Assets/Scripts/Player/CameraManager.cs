@@ -11,6 +11,8 @@ public class CameraManager : MonoBehaviour
     //object that the cam will follow
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Transform cameraPivot;
+
+    [Header("Player Components")]
     [SerializeField] private PlayerInputHandle inputHandle;
 
     [Header("Camera Rotation Settings")] 
@@ -29,9 +31,10 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float aimSensitivity;
     [SerializeField] private float originalCamSpeed;
 
-    [Header("Camera Aim")] [SerializeField]
-    private CinemachineVirtualCamera aimCamera;
+    [Header("Camera Aim")] 
+    [SerializeField] private CinemachineVirtualCamera aimCamera;
 
+    [SerializeField] private CinemachineVirtualCamera hookCam;
 
 
     public void Awake()
@@ -41,7 +44,9 @@ public class CameraManager : MonoBehaviour
 
     public void HandleCameraFunctions()
     {
+        HandleHookCamera();
         HandleCameraAim();
+        if(inputHandle.hookInput) return;
         RotateCamera();
     }
     
@@ -63,7 +68,6 @@ public class CameraManager : MonoBehaviour
     {
         if (inputHandle.rightClickInput)
         {
-            Debug.Log("right clicking is " + inputHandle.rightClickInput);
             aimCamera.gameObject.SetActive(true);
             camSpeed = aimSensitivity;
         }
@@ -72,7 +76,16 @@ public class CameraManager : MonoBehaviour
             aimCamera.gameObject.SetActive(false);
             camSpeed = originalCamSpeed;
         }
-        
+    }
+
+    private void HandleHookCamera(){
+        if(inputHandle.hookInput){
+            hookCam.gameObject.SetActive(true);
+        }
+        else{
+            hookCam.gameObject.SetActive(false);
+        }
+
     }
 
     private void setSensitivity(float d)

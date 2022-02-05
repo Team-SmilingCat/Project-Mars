@@ -211,6 +211,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Hook",
+                    "type": "Button",
+                    "id": "102b40c6-1355-438c-a92b-fb95bcb5a032",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Shield Button",
+                    "type": "Button",
+                    "id": "5d978f25-025e-4b64-a21f-60c2c354d6f8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -266,6 +282,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rclick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef3052fa-b4a2-4fa6-9a02-ab70a7e0e374",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1795441-f38d-4b29-b303-d9d05dfcc6d3",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shield Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

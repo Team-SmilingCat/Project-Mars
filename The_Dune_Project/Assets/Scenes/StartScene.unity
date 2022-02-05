@@ -623,6 +623,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 65254db8-1140-4b7c-9b46-43aac017be1d
     m_ActionName: Menu Controls/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 102b40c6-1355-438c-a92b-fb95bcb5a032
+    m_ActionName: Player Actions/Hook[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5d978f25-025e-4b64-a21f-60c2c354d6f8
+    m_ActionName: Player Actions/Shield Button[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Menu Controls

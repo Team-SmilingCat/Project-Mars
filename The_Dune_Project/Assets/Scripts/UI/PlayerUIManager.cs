@@ -8,6 +8,10 @@ public class PlayerUIManager : MonoBehaviour
 {
     [SerializeField] private Slider slider;
 
+    [SerializeField] private List<Sprite> crossHairList; 
+
+    [SerializeField] private GameObject uiCrossHairUsed;
+
     private void Start()
     {
         if (slider.value == 0)
@@ -29,6 +33,23 @@ public class PlayerUIManager : MonoBehaviour
     public void SetHealth(int currentHealth)
     {
         slider.value = currentHealth;
+    }
+
+    public void DisableCrossHair()
+    {
+        uiCrossHairUsed.gameObject.SetActive(false);
+    }
+
+    public void ChangeCrossHair(Sprite crosshair)
+    {
+        if(!uiCrossHairUsed.activeSelf){
+            uiCrossHairUsed.SetActive(true);
+        }
+        foreach(Sprite i in crossHairList){
+            if(i.Equals(crosshair)){
+                uiCrossHairUsed.GetComponent<Image>().sprite = i;
+            }
+        }
     }
     
 }

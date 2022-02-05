@@ -45,7 +45,7 @@ public class MainMenuUIManager : MonoBehaviour
     {
         if (context.started)
         {
-            if (curPopUp.IsPopUpActive())
+            if (curPopUp && curPopUp.IsPopUpActive())
             {
                 curPopUp.OnClickPopUpButton(false);
             }

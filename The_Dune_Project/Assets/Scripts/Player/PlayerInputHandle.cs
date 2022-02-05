@@ -19,18 +19,26 @@ public class PlayerInputHandle : MonoBehaviour
     public bool leftClickInput;
     public bool rightClickInput;
     public bool dashInput;
+    public bool hookInput;
+
+    public bool shieldInput;
 
     private PlayerControls playerControls;
+
+    [Header("Player Components")]
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
+    [SerializeField] private PlayerHookHandler playerHookHandler;
+    [SerializeField] private PlayerUIManager playerUIManager;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
-    [Header("action flags")] public bool flagCombo;
+    [Header("action flags")] 
+    public bool flagCombo;
 
     private void Awake()
     {
@@ -56,7 +64,10 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.Rclick.canceled += i => rightClickInput = false;
             playerControls.PlayerActions.DashButton.performed += i => dashInput = true;
             playerControls.PlayerActions.DashButton.canceled += i => dashInput = false;
-
+            playerControls.PlayerActions.Hook.performed += i => hookInput = true;
+            playerControls.PlayerActions.Hook.canceled += i => hookInput = false;
+            playerControls.PlayerActions.ShieldButton.performed += i => shieldInput = true;
+            playerControls.PlayerActions.ShieldButton.canceled -= i => shieldInput = false;
         }
         playerControls.Enable();
     }
@@ -84,6 +95,7 @@ public class PlayerInputHandle : MonoBehaviour
         HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
+        HandleHookInput();
   
     }
 
@@ -113,10 +125,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleJumping()
     {
-        if (jumpInput)
-        {
-            jumpInput = false;            
-        }   
+
     }
 
     private void HandleAttackInput()
@@ -126,7 +135,7 @@ public class PlayerInputHandle : MonoBehaviour
             if (playerManager.canCombo)
             {
                 flagCombo = true;
-                playerAttack.handleMeleeAttackSequence((Scriptable_Objects.MeleeWeapon)playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttackSequence((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 flagCombo = false;
             }
@@ -134,9 +143,15 @@ public class PlayerInputHandle : MonoBehaviour
             {
                 if (playerManager.isInteracting) return;
                 if (playerManager.canCombo) return;
-                playerAttack.handleMeleeAttack((Scriptable_Objects.MeleeWeapon)playerInventoryManager.weapon);
+                playerAttack.handleMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
                 //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             }
+        }
+
+        if (rightClickInput && !leftClickInput && playerMovement.isGrounded)
+        {
+            if (playerManager.isInteracting) return;
+            playerAttack.HandleHeavyMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
         }
 
     }
@@ -148,13 +163,34 @@ public class PlayerInputHandle : MonoBehaviour
         }
     }
 
+    private void HandleHookInput(){
+        if(playerManager.isInteracting) return;
+        if(hookInput){
+            if(playerHookHandler.finishedHook)
+            {
+                playerHookHandler.UseHook();
+            } else if(playerHookHandler.isHooking){
+                return;
+            }
+        }
+        else{
+            playerHookHandler.finishedHook = true;
+            playerHookHandler.isHooking = false;
+            playerHookHandler.ResetHook();
+        }
+
+    }
+
     private void HandleDashInput()
     {
         if(dashInput){
             dashInput = false;
             playerMovement.HandleDash();
         }
+    }
 
+    private void HandleShieldInput(){
+        
     }
 
 
