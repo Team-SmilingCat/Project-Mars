@@ -1,8 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -10,13 +11,15 @@ public class MainMenuUIManager : MonoBehaviour
 {
     [SerializeField] private VerticalLayoutGroup mainMenu;
     [SerializeField] private VerticalLayoutGroup settingsMenu;
+    [SerializeField] private PopUp popUpPrefab;
+    private PopUp curPopUp;
     
     [Header("Settings Pages")]
     [SerializeField] private GameObject visualsPage;
     [SerializeField] private GameObject audioPage;
     [SerializeField] private GameObject controlsPage;
     private GameObject activeSettingsPage;
-    // an apply & reset to default buttons for settings?
+    // cache default settings to be able to revert to default
     
     [Header("Audio")]
     [SerializeField] private AudioMixer audioMixer;
@@ -24,28 +27,40 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private Slider musicVolSlider;
     [SerializeField] private Slider effectsVolSlider;
     [SerializeField] private Slider uiEffectsVolSlider;
+
+    [Header("Visuals")] 
+    [SerializeField] private List<ResolutionStruct> resolutionOptions;
+    [SerializeField] private TMPro.TMP_Dropdown resolutionDropdownUI;
+    [SerializeField] private TMPro.TMP_Dropdown graphicsQualityDropdownUI;
+    [Serializable] struct ResolutionStruct { public int width, height; }
     
     private void Start()
     {
         LoadAudio();
         HideSettings();
+        SetUpVisuals();
+    }
+
+    public void Escape(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (curPopUp.IsPopUpActive())
+            {
+                curPopUp.OnClickPopUpButton(false);
+            }
+            else
+            {
+                OnBackButtonClicked();
+            } 
+        }
     }
 
     private void Update()
     {
-        if (settingsMenu.IsActive())
+        if (!settingsMenu.IsActive() && !mainMenu.IsActive()) // fallback
         {
-            if (activeSettingsPage == audioPage)
-            {
-                
-            }
-        }
-        else
-        {
-            if (!mainMenu.IsActive())
-            {
-                mainMenu.gameObject.SetActive(true);
-            }
+            mainMenu.gameObject.SetActive(true);
         }
     }
 
@@ -148,6 +163,42 @@ public class MainMenuUIManager : MonoBehaviour
         audioMixer.SetFloat ("effectsVolume", Mathf.Log10(effectsVolLvl) * 20);
         audioMixer.SetFloat ("uiEffectsVolume", Mathf.Log10(uiEffectsVolLvl) * 20);
     }
+
+    private void SetUpVisuals()
+    {
+        /* Resolution */
+        var curRes = Screen.currentResolution;
+        int curResIndex = 0;
+        
+        Screen.SetResolution(curRes.width, curRes.height, Screen.fullScreenMode); // TODO: is this player pref stored?
+
+        // dropdown naming
+        if (resolutionDropdownUI != null)
+        {
+            List<string> resolutionNames = new List<string>();
+            for(int i = 0; i < resolutionOptions.Count; i++)
+            {
+                var res = resolutionOptions[i];
+                resolutionNames.Add(res.width + " x " + res.height);
+            
+                if ((Screen.width == res.width) && (Screen.height == res.height))
+                    curResIndex = i;
+            }
+            resolutionDropdownUI.ClearOptions();
+            resolutionDropdownUI.AddOptions(resolutionNames);
+            resolutionDropdownUI.value = curResIndex;
+            resolutionDropdownUI.RefreshShownValue();
+        }
+
+        /* Graphics Quality */
+        if (graphicsQualityDropdownUI != null)
+        {
+            graphicsQualityDropdownUI.ClearOptions();
+            graphicsQualityDropdownUI.AddOptions(new List<string>() {"Low" , "Medium", "High"});
+            graphicsQualityDropdownUI.value = PlayerPrefs.HasKey("graphicsQualityIndex") ? PlayerPrefs.GetInt("graphicsQualityIndex") : 2; // ie high on start
+            graphicsQualityDropdownUI.RefreshShownValue();
+        }
+    }
     
     public void SetMasterVolumeLevel(float masterVolLvl)
     {
@@ -171,5 +222,35 @@ public class MainMenuUIManager : MonoBehaviour
     {
         audioMixer.SetFloat ("uiEffectsVolume", Mathf.Log10(uiEffectsVolLvl) * 20);
         PlayerPrefs.SetFloat("uiEffectsVolume", uiEffectsVolLvl);
+    }
+
+    // TODO: work for OS vs Windows
+    public void SetResolution(int index) => Screen.SetResolution(resolutionOptions[index].width, resolutionOptions[index].height, Screen.fullScreenMode);
+
+    public void SetFullScreen(bool isFullScreen) => Screen.fullScreen = isFullScreen;
+
+    public void SetGraphicsQuality(int index)
+    {
+        QualitySettings.SetQualityLevel(index);
+        PlayerPrefs.SetFloat("graphicsQualityIndex", index);
+    }
+
+    public void OnClickRevertToDefault()
+    {
+        curPopUp = Instantiate(popUpPrefab, transform);
+        curPopUp.DisplayPopUp(RevertToDefault);
+    }
+    
+    // TODO: implement controls page and default caching & reverting
+    public void RevertToDefault(bool isConfirmed)
+    {
+        if (isConfirmed)
+        {
+            Debug.Log("reverting to default");
+        }
+        else
+        {
+            Debug.Log("NOT reverting to default");
+        }
     }
 }
