@@ -35,21 +35,5 @@ public class PlayerUIManager : MonoBehaviour
         slider.value = currentHealth;
     }
 
-    public void DisableCrossHair()
-    {
-        uiCrossHairUsed.gameObject.SetActive(false);
-    }
-
-    public void ChangeCrossHair(Sprite crosshair)
-    {
-        if(!uiCrossHairUsed.activeSelf){
-            uiCrossHairUsed.SetActive(true);
-        }
-        foreach(Sprite i in crossHairList){
-            if(i.Equals(crosshair)){
-                uiCrossHairUsed.GetComponent<Image>().sprite = i;
-            }
-        }
-    }
     
 }

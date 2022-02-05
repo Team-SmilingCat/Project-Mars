@@ -49,7 +49,6 @@ public class PlayerHookHandler : MonoBehaviour
     {
         if (isHooking)
         {
-            playerUIManager.DisableCrossHair();
             MoveToGrappledPosition();
         }
     }
@@ -65,7 +64,6 @@ public class PlayerHookHandler : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, distance, layers, QueryTriggerInteraction.Collide))
             {
-                playerUIManager.ChangeCrossHair(canHookCH);
                 isHooking = true;
                 target = hit.point;
                 Vector3 direction = (target - hook.transform.position).normalized;
@@ -74,7 +72,6 @@ public class PlayerHookHandler : MonoBehaviour
             }
             else
             {
-                playerUIManager.ChangeCrossHair(cannotHookCH);
                 isHooking = false;
             }
         }
