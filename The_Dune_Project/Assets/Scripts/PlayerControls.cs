@@ -321,6 +321,33 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu Controls"",
+            ""id"": ""9a9995fe-8352-4f1b-9102-95ab254721aa"",
+            ""actions"": [
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""65254db8-1140-4b7c-9b46-43aac017be1d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e0b0de35-289c-483b-a934-a74ed5487bcd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -338,6 +365,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_Rclick = m_PlayerActions.FindAction("Rclick", throwIfNotFound: true);
         m_PlayerActions_Hook = m_PlayerActions.FindAction("Hook", throwIfNotFound: true);
         m_PlayerActions_ShieldButton = m_PlayerActions.FindAction("Shield Button", throwIfNotFound: true);
+        // Menu Controls
+        m_MenuControls = asset.FindActionMap("Menu Controls", throwIfNotFound: true);
+        m_MenuControls_Escape = m_MenuControls.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -505,6 +535,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+    // Menu Controls
+    private readonly InputActionMap m_MenuControls;
+    private IMenuControlsActions m_MenuControlsActionsCallbackInterface;
+    private readonly InputAction m_MenuControls_Escape;
+    public struct MenuControlsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public MenuControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Escape => m_Wrapper.m_MenuControls_Escape;
+        public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuControlsActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuControlsActions instance)
+        {
+            if (m_Wrapper.m_MenuControlsActionsCallbackInterface != null)
+            {
+                @Escape.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnEscape;
+            }
+            m_Wrapper.m_MenuControlsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
+            }
+        }
+    }
+    public MenuControlsActions @MenuControls => new MenuControlsActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -519,5 +582,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnRclick(InputAction.CallbackContext context);
         void OnHook(InputAction.CallbackContext context);
         void OnShieldButton(InputAction.CallbackContext context);
+    }
+    public interface IMenuControlsActions
+    {
+        void OnEscape(InputAction.CallbackContext context);
     }
 }
