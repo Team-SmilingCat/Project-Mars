@@ -86,14 +86,4 @@ public class RangedShootingHandler : MonoBehaviour
             }
         }
     }
-
-    public void handleBullets()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

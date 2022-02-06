@@ -51,7 +51,7 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls = new PlayerControls();
             //when we hit key
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-            playerControls.PlayerMovement.Movement.canceled -= i => movementInput = new Vector2(0,0);
+            playerControls.PlayerMovement.Movement.canceled += i => movementInput = new Vector2(0,0);
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
             //sets sprint bool to true when we press it
             playerControls.PlayerActions.WalkButton.performed += i => isWalkEnabled = true;
@@ -74,7 +74,8 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void OnDisable()
     {
-        if(playerControls == null){
+        if(playerControls != null)
+        {
             return;
         }
         playerControls.Disable();
@@ -162,18 +163,21 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleAimingInput()
     {
-        if(!playerMovement.isJumping){
+        if(!playerMovement.isJumping)
+        {
             rangedShootingHandler.HandleShootingAttack();
         }
     }
 
-    private void HandleHookInput(){
+    private void HandleHookInput()
+    {
         if(playerManager.isInteracting) return;
         if(hookInput){
             if(playerHookHandler.finishedHook)
             {
                 playerHookHandler.UseHook();
-            } else if(playerHookHandler.isHooking){
+            } else if(playerHookHandler.isHooking)
+            {
                 return;
             }
         }
@@ -187,9 +191,10 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleDashInput()
     {
-        if(dashInput){
+        if(dashInput)
+        {
             playerMovement.HandleDash();
-                        dashInput = false;
+            dashInput = false;
         }
     }
 

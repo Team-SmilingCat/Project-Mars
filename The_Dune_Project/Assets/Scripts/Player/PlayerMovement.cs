@@ -72,8 +72,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("dash settings")]
     [SerializeField] private float dashScale;
     [SerializeField] private float dashCooldown;
-    [SerializeField] private float dashTimer;
-
     private bool canDash; 
 
 
@@ -89,12 +87,12 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
-        initMovementSettings();
+        InitMovementSettings();
     }
 
-    private void initMovementSettings(){
+    private void InitMovementSettings()
+    {
         timer = jumpCoolDown;
-        dashTimer = dashCooldown;
         lastYPos = transform.position.y;
         stepOffset = controller.stepOffset;
         isOnSlope = false;
@@ -106,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
         HandleGravity();  
         HandleFalling(); 
         HandleCCJumping();
-        //HandleDashCD();
         if(!playerHookHandler.finishedHook){
             return;
         }
@@ -178,15 +175,19 @@ public class PlayerMovement : MonoBehaviour
     private void HandleCCJumping()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up, out hit, groundHeightLimit, slopeLayer)){
-            if(Vector3.Angle(Vector3.up, hit.normal) < slopeAngleLimit){
+        if(Physics.Raycast(transform.position, -Vector3.up, out hit, groundHeightLimit, slopeLayer))
+        {
+            if(Vector3.Angle(Vector3.up, hit.normal) < slopeAngleLimit)
+            {
                 isOnSlope = true;
             }
-            else{
+            else
+            {
                 isOnSlope = false;
             }
         }
-        else{
+        else
+        {
             isOnSlope = false;
         }
 
@@ -257,12 +258,14 @@ public class PlayerMovement : MonoBehaviour
                 );
             }
             //Lerp to proper position when going down
-            if(isJumping){
+            if(isJumping)
+            {
                 isGrounded = true;
                 isJumping = false;
                 animatorManager.EnableLanding();
             }
-            else{
+            else
+            {
                 isGrounded = true;
                 isFalling = false;
                 animatorManager.EnableLanding();
@@ -277,40 +280,34 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void HandleDash(){
-        if(playerManager.isInteracting){
+    public void HandleDash()
+    {
+        if(playerManager.isInteracting)
+        {
             return;
         }
-        if(isJumping){
+        if(isJumping)
+        {
             return;
         }
-        moveVector = camera.forward * playerInputHandle.vertical;
-        moveVector += camera.right * playerInputHandle.horizontal;
-        moveVector.Normalize();
-        if(playerInputHandle.moveValue > 0){
+        if(playerInputHandle.moveValue > 0 && canDash)
+        {
+            moveVector = camera.forward * playerInputHandle.vertical;
+            moveVector += camera.right * playerInputHandle.horizontal;
+            moveVector.Normalize();
             animatorManager.PlayTargetAnimation("dive", true);
             moveVector.y = 0;
             controller.Move(moveVector * Time.deltaTime * dashScale);
         }
+        StartCoroutine(HandleDashCD());
 
     }
 
-    private void HandleDashCD(){
-        if(canDash){
-            if(dashTimer <= 0f){
-                //nothing
-            }
-            if(dashTimer >= 0f){
-                dashTimer -= Time.deltaTime;
-            }
-        }    
-        else
-        {
-            dashTimer = dashCooldown;
-            if(dashTimer >= 0f){
-                dashTimer -= Time.deltaTime;
-            }
-        }
+    private IEnumerator HandleDashCD()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
 
     public void HandleFalling()
@@ -339,7 +336,8 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void resetVelocityY(){
+    public void resetVelocityY()
+    {
         velocityY = 0;
     }
 

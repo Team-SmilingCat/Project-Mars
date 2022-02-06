@@ -12766,7 +12766,7 @@ MonoBehaviour:
     m_Bits: 512
   slopeJumpHeight: 9
   dashScale: 150
-  dashCooldown: 3
+  dashCooldown: 5
   dashTimer: 0
 --- !u!1 &3707315836558718919
 GameObject:
