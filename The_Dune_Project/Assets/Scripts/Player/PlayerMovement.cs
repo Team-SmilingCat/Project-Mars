@@ -32,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float acceleration;
 
-    [SerializeField] private float dashScale;
-
     [Header("jump settings")]
     [SerializeField, Range(0f, 100f)] private float jumpHeight;
     [SerializeField] private float initVelocity;
@@ -71,12 +69,16 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float slopeJumpHeight;
 
+    [Header("dash settings")]
+    [SerializeField] private float dashScale;
+    [SerializeField] private float dashCooldown;
+    private bool canDash; 
+
 
     private void Awake()
     {
         camera = Camera.main.transform;
         controller = gameObject.GetComponent<CharacterController>();
-        
         timeToApex = jumpTime / 2;
         initVelocity = (2 * jumpHeight) / timeToApex;
     }
@@ -84,10 +86,16 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
+        InitMovementSettings();
+    }
+
+    private void InitMovementSettings()
+    {
         timer = jumpCoolDown;
         lastYPos = transform.position.y;
         stepOffset = controller.stepOffset;
         isOnSlope = false;
+        canDash = true;
     }
 
     public void HandleAllPlayerMovement()
@@ -95,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
         HandleGravity();  
         HandleFalling(); 
         HandleCCJumping();
-
         if(!playerHookHandler.finishedHook){
             return;
         }
@@ -112,10 +119,11 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && !playerInputHandle.jumpInput)
         {
             moveVector = camera.forward * playerInputHandle.vertical;
-            moveVector = moveVector + camera.right * playerInputHandle.horizontal;
+            moveVector += camera.right * playerInputHandle.horizontal;
             moveVector.y = 0;
             moveVector.Normalize();
-            if(rangedShootingHandler.isAiming){
+            if(rangedShootingHandler.isAiming)
+            {
                 moveVector *= walkSpeed;
             }
             else if (isWalking)
@@ -167,15 +175,19 @@ public class PlayerMovement : MonoBehaviour
     private void HandleCCJumping()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up, out hit, groundHeightLimit, slopeLayer)){
-            if(Vector3.Angle(Vector3.up, hit.normal) < slopeAngleLimit){
+        if(Physics.Raycast(transform.position, -Vector3.up, out hit, groundHeightLimit, slopeLayer))
+        {
+            if(Vector3.Angle(Vector3.up, hit.normal) < slopeAngleLimit)
+            {
                 isOnSlope = true;
             }
-            else{
+            else
+            {
                 isOnSlope = false;
             }
         }
-        else{
+        else
+        {
             isOnSlope = false;
         }
 
@@ -194,7 +206,8 @@ public class PlayerMovement : MonoBehaviour
                 timer -= Time.deltaTime;
             }
         }
-        else if((isGrounded && isOnSlope) || isOnSlope){
+        else if((isGrounded && isOnSlope) || isOnSlope)
+        {
             if (timer <= 0f && playerInputHandle.jumpInput)
             {
                 moveVector.y += Mathf.Sqrt(-2f * gravity * slopeJumpHeight);
@@ -245,12 +258,14 @@ public class PlayerMovement : MonoBehaviour
                 );
             }
             //Lerp to proper position when going down
-            if(isJumping){
+            if(isJumping)
+            {
                 isGrounded = true;
                 isJumping = false;
                 animatorManager.EnableLanding();
             }
-            else{
+            else
+            {
                 isGrounded = true;
                 isFalling = false;
                 animatorManager.EnableLanding();
@@ -265,14 +280,34 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void HandleDash(){
-        Vector3 targetDir = Vector3.zero;
-        targetDir = camera.forward * playerInputHandle.vertical;
-        targetDir = targetDir + camera.right * playerInputHandle.horizontal;
-        targetDir.y = 0;
-        targetDir.Normalize();
+    public void HandleDash()
+    {
+        if(playerManager.isInteracting)
+        {
+            return;
+        }
+        if(isJumping)
+        {
+            return;
+        }
+        if(playerInputHandle.moveValue > 0 && canDash)
+        {
+            moveVector = camera.forward * playerInputHandle.vertical;
+            moveVector += camera.right * playerInputHandle.horizontal;
+            moveVector.Normalize();
+            animatorManager.PlayTargetAnimation("dive", true);
+            moveVector.y = 0;
+            controller.Move(moveVector * Time.deltaTime * dashScale);
+        }
+        StartCoroutine(HandleDashCD());
 
-        controller.Move(targetDir * dashScale * Time.deltaTime);
+    }
+
+    private IEnumerator HandleDashCD()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
 
     public void HandleFalling()
@@ -301,7 +336,8 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void resetVelocityY(){
+    public void resetVelocityY()
+    {
         velocityY = 0;
     }
 

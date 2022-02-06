@@ -33,7 +33,6 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
     [SerializeField] private PlayerHookHandler playerHookHandler;
-    [SerializeField] private PlayerUIManager playerUIManager;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
@@ -51,7 +50,8 @@ public class PlayerInputHandle : MonoBehaviour
         {
             playerControls = new PlayerControls();
             //when we hit key
-            playerControls.PlayerMovement.Movement.performed += playerControls => movementInput = playerControls.ReadValue<Vector2>();
+            playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+            playerControls.PlayerMovement.Movement.canceled += i => movementInput = new Vector2(0,0);
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
             //sets sprint bool to true when we press it
             playerControls.PlayerActions.WalkButton.performed += i => isWalkEnabled = true;
@@ -67,13 +67,17 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.Hook.performed += i => hookInput = true;
             playerControls.PlayerActions.Hook.canceled += i => hookInput = false;
             playerControls.PlayerActions.ShieldButton.performed += i => shieldInput = true;
-            playerControls.PlayerActions.ShieldButton.canceled -= i => shieldInput = false;
+            playerControls.PlayerActions.ShieldButton.canceled += i => shieldInput = false;
         }
         playerControls.Enable();
     }
 
     private void OnDisable()
     {
+        if(playerControls != null)
+        {
+            return;
+        }
         playerControls.Disable();
     }
 
@@ -90,13 +94,13 @@ public class PlayerInputHandle : MonoBehaviour
     public void HandleAllInputs()
     {
         //call all input functions in here
+        HandleJumping();
         MoveInput();
         HandleForcedWalk();
         HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
         HandleHookInput();
-  
     }
 
     private void MoveInput()
@@ -125,6 +129,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleJumping()
     {
+
 
     }
 
@@ -158,18 +163,21 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleAimingInput()
     {
-        if(!playerMovement.isJumping){
+        if(!playerMovement.isJumping)
+        {
             rangedShootingHandler.HandleShootingAttack();
         }
     }
 
-    private void HandleHookInput(){
+    private void HandleHookInput()
+    {
         if(playerManager.isInteracting) return;
         if(hookInput){
             if(playerHookHandler.finishedHook)
             {
                 playerHookHandler.UseHook();
-            } else if(playerHookHandler.isHooking){
+            } else if(playerHookHandler.isHooking)
+            {
                 return;
             }
         }
@@ -183,13 +191,15 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleDashInput()
     {
-        if(dashInput){
-            dashInput = false;
+        if(dashInput)
+        {
             playerMovement.HandleDash();
+            dashInput = false;
         }
     }
 
-    private void HandleShieldInput(){
+    private void HandleShieldInput()
+    {
         
     }
 

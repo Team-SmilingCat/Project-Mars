@@ -874,13 +874,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584947217}
-  m_LocalRotation: {x: -0.7388137, y: 0.017946929, z: 0.014338694, w: 0.6735181}
-  m_LocalPosition: {x: -0.12, y: -0.31, z: 1.01}
-  m_LocalScale: {x: 576.11035, y: 518.94714, z: 777.06323}
+  m_LocalRotation: {x: -0.7822534, y: 0.016946554, z: 0.015508212, w: 0.62253684}
+  m_LocalPosition: {x: -0.12, y: 0.99, z: 0.95}
+  m_LocalScale: {x: 576.11035, y: 512.64166, z: 422.3868}
   m_Children: []
   m_Father: {fileID: 8437686422943632332}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -95.301, y: -1.8529968, z: 4.472}
+  m_LocalEulerAnglesHint: {x: -102.97, y: 0.80700684, z: 1.8390045}
 --- !u!23 &584947219
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8454,6 +8454,7 @@ MonoBehaviour:
   speed: 25
   turnSpeed: 6
   acceleration: 20
+  dashScale: 800
   jumpHeight: 4.2
   initVelocity: 0
   jumpTime: 0.3
@@ -8475,9 +8476,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   slopeJumpHeight: 0
-  dashScale: 800
-  dashCooldown: 0
-  dashTimer: 0
 --- !u!114 &1078253111007757153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12742,8 +12740,9 @@ MonoBehaviour:
   isGrappled: 0
   walkSpeed: 1
   speed: 25
-  turnSpeed: 30
+  turnSpeed: 10
   acceleration: 0
+  dashScale: 0
   jumpHeight: 8.5
   initVelocity: 0
   jumpTime: 0.03
@@ -12765,9 +12764,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   slopeJumpHeight: 9
-  dashScale: 150
-  dashCooldown: 5
-  dashTimer: 0
 --- !u!1 &3707315836558718919
 GameObject:
   m_ObjectHideFlags: 0

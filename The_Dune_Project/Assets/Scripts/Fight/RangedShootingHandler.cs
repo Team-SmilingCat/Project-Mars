@@ -18,7 +18,6 @@ public class RangedShootingHandler : MonoBehaviour
     [Header("character manager scripts accessor")]
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private AnimatorManager animatorManager;
-    [SerializeField] private PlayerUIManager playerUIManager;
     
     [Header("range of the ranged attack")] 
     [SerializeField] private float rangedDistance;
@@ -60,7 +59,6 @@ public class RangedShootingHandler : MonoBehaviour
             if (playerInputHandle.rightClickInput && distancePlayerObject > minDistanceAllowedToAim)
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
-                playerUIManager.ChangeCrossHair(aimningCrossHair);
                 worldTarget = hit.point;
                 Vector3 aimDirection = (worldTarget - spineToRotate.transform.position).normalized;
 
@@ -84,19 +82,8 @@ public class RangedShootingHandler : MonoBehaviour
                 //this is when the player returns to a non-aiming state
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
-                playerUIManager.DisableCrossHair();
                 spineToRotate.transform.rotation = currentPlayerRotation;
             }
         }
-    }
-
-    public void handleBullets()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }
