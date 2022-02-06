@@ -79,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
     {
         camera = Camera.main.transform;
         controller = gameObject.GetComponent<CharacterController>();
-        
         timeToApex = jumpTime / 2;
         initVelocity = (2 * jumpHeight) / timeToApex;
     }
@@ -123,7 +122,8 @@ public class PlayerMovement : MonoBehaviour
             moveVector += camera.right * playerInputHandle.horizontal;
             moveVector.y = 0;
             moveVector.Normalize();
-            if(rangedShootingHandler.isAiming){
+            if(rangedShootingHandler.isAiming)
+            {
                 moveVector *= walkSpeed;
             }
             else if (isWalking)

@@ -198,7 +198,8 @@ public class PlayerInputHandle : MonoBehaviour
         }
     }
 
-    private void HandleShieldInput(){
+    private void HandleShieldInput()
+    {
         
     }
 
