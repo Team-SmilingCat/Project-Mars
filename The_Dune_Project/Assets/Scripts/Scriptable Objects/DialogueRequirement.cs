@@ -9,6 +9,7 @@ namespace Scriptable_Objects
     {
         public string speakerName;
         public TextAsset inkDialogueFile;
+        public Story story;
         public List<AudioClip> audiosAssociatedWithDialogue;
     }
 }

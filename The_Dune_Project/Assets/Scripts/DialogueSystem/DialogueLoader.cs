@@ -1,18 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
+using Scriptable_Objects;
 using UnityEngine;
+using Cinemachine;
+using Ink.Runtime;
 
-public class DialogueLoader : DialogueManager
+public class DialogueLoader : MonoBehaviour
 {
+    //attached to where the dialogue trigger lies. This class loads up the dialogue 
+    //when the player wants to engage. all parameters required to pass to the parser is 
+    //within the scriptable object.
+    [Header("dialogue manager with the canvas and ui elements")]
+    [SerializeField] private DialogueManager dialogueManager;
+
+    [Header("ink file parser for the scriptable object for dialogue")]
+    [SerializeField] InkDialogueParser inkDialogueParser;
+    [SerializeField] protected DialogueRequirement dialogRequirement;
+
+    [Header("Dialogue Cameras specific to this dialogue scene")]
+    [SerializeField] List<CinemachineVirtualCamera> cameraList;
+
+    [Header("camera of the main player")]
+    [SerializeField] private CinemachineVirtualCamera thirdPersonCam;
+    protected Story requiredDialogue;
+
+    
+    void Awake()
+    {
+        InitAudio();
+    }
+
+    private void InitAudio()
+    {
+        foreach(var i in dialogRequirement.audiosAssociatedWithDialogue)
+        {
+            dialogueManager.GetAudioLibrary().Add(i.name.ToLower().Replace(" ",""), i);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Things we need: TextAsset, 
+        requiredDialogue = new Story(dialogRequirement.inkDialogueFile.text);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(inkDialogueParser.isFinishedParsing)
+        {
+            thirdPersonCam.Priority = 100;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        if(other.tag.Equals("Player"))
+        inkDialogueParser.StartStory(
+            requiredDialogue,
+            dialogueManager.GetAudioSource(),
+            dialogueManager.canvas,
+            cameraList
+        );
     }
 }

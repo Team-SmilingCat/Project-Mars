@@ -5,24 +5,34 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] GameObject dialogueBox;
-    [SerializeField] private Canvas canvas;
+    [SerializeField] private AudioSource audioSource;
 
+    [SerializeField] private Dictionary<string, AudioClip> clipDictionary = new Dictionary<string, AudioClip>();
+    
+    public Canvas canvas;
+    public GameObject buttonPrefab;
     void Start()
     {
-        
+
     }
 
-
-
-    public virtual void TriggerDialogue(){
-        Debug.Log("Dialogue initiated by the player");
+    public Dictionary<string, AudioClip> GetAudioLibrary()
+    {
+        return clipDictionary;
     }
 
-    public void setCanvas(Canvas c){
-        this.canvas = c;
+    public AudioSource GetAudioSource(){
+        return audioSource;
     }
 
-    public Canvas getCanvas(){
-        return this.canvas;
+    public void PlayClipName(string clipName)
+    {
+        if(clipDictionary.TryGetValue(clipName.ToLower(), out var clip))
+        {
+            Debug.Log("audio has been played");
+            audioSource.PlayOneShot(clip);
+        }
     }
+    
+
 }
