@@ -10,7 +10,7 @@ public class DialogueLoader : MonoBehaviour
     //attached to where the dialogue trigger lies. This class loads up the dialogue 
     //when the player wants to engage. all parameters required to pass to the parser is 
     //within the scriptable object.
-    [Header("dialogue manager with the canvas and ui elements")]
+    [Header("dialogue manager with the canvas and ui elements")]        
     [SerializeField] private DialogueManager dialogueManager;
 
     [Header("ink file parser for the scriptable object for dialogue")]
@@ -22,7 +22,11 @@ public class DialogueLoader : MonoBehaviour
 
     [Header("camera of the main player")]
     [SerializeField] private CinemachineVirtualCamera thirdPersonCam;
+
+    [Header("Parameter checks")]
+    [SerializeField] bool isInDialogue;
     protected Story requiredDialogue;
+
 
     
     void Awake()
@@ -41,26 +45,35 @@ public class DialogueLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Things we need: TextAsset, 
+        isInDialogue = false;
         requiredDialogue = new Story(dialogRequirement.inkDialogueFile.text);
     }
 
     void Update()
     {
-        if(inkDialogueParser.isFinishedParsing)
-        {
-            thirdPersonCam.Priority = 100;
-        }
+
     }
 
     private void OnTriggerEnter(Collider other) 
     {
         if(other.tag.Equals("Player"))
-        inkDialogueParser.StartStory(
+        {
+            dialogueManager.CheckDialoguebox();
+            inkDialogueParser.StartStory(
             requiredDialogue,
             dialogueManager.GetAudioSource(),
-            dialogueManager.canvas,
-            cameraList
-        );
+            dialogueManager.GetDialogueCanvas(),
+            cameraList,
+            dialogueManager.GetDialogueBox(),
+            dialogueManager.GetDialogueText(),
+            dialogueManager.GetChoicesButtons()
+            );
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        dialogueManager.CheckDialoguebox();
+        
     }
 }

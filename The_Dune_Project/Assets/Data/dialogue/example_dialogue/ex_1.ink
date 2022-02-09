@@ -4,4 +4,12 @@ Welcome to the bonfire, Unkindled One. #Clip.hellofirekeeper #Camera.WitchCam
  * To this end, I am at thy side.
 
 - Welcome home, ashen one.
-    -> END
+
+    + and you are from?
+    
+    -> London
+
+==London==
+Yes I am from London
+    
+-> END
