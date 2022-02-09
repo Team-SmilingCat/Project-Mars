@@ -69,7 +69,8 @@ public class InkDialogueParser : MonoBehaviour {
 
 	private void OnClickChoiceButton (Choice choice, Story s, AudioSource a, Canvas c, List<CinemachineVirtualCamera> l, GameObject d, TextMeshProUGUI t, List<Button> b) 
 	{
-		if(s.currentChoices.Count <= 0)
+		try{
+					if(s.currentChoices.Count <= 0)
 		{
 			return;
 		}
@@ -77,6 +78,10 @@ public class InkDialogueParser : MonoBehaviour {
 		{
 			s.ChooseChoiceIndex(choice.index);
 			StartCoroutine(RefreshView(s, a, c, l, d, t, b));
+		}
+		}
+		catch(Exception e){
+			throw new Exception(e.ToString());
 		}
 	}
 
