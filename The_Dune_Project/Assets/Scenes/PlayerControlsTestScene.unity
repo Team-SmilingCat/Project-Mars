@@ -874,13 +874,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584947217}
-  m_LocalRotation: {x: -0.7822534, y: 0.016946554, z: 0.015508212, w: 0.62253684}
-  m_LocalPosition: {x: -0.12, y: 0.99, z: 0.95}
-  m_LocalScale: {x: 576.11035, y: 512.64166, z: 422.3868}
+  m_LocalRotation: {x: -0.7388137, y: 0.017946929, z: 0.014338694, w: 0.6735181}
+  m_LocalPosition: {x: -0.12, y: -0.31, z: 1.01}
+  m_LocalScale: {x: 576.11035, y: 518.94714, z: 777.06323}
   m_Children: []
   m_Father: {fileID: 8437686422943632332}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -102.97, y: 0.80700684, z: 1.8390045}
+  m_LocalEulerAnglesHint: {x: -95.301, y: -1.8529968, z: 4.472}
 --- !u!23 &584947219
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8454,7 +8454,6 @@ MonoBehaviour:
   speed: 25
   turnSpeed: 6
   acceleration: 20
-  dashScale: 800
   jumpHeight: 4.2
   initVelocity: 0
   jumpTime: 0.3
@@ -8476,6 +8475,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   slopeJumpHeight: 0
+  dashScale: 800
+  dashCooldown: 0
+  dashTimer: 0
 --- !u!114 &1078253111007757153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8507,7 +8509,6 @@ MonoBehaviour:
   playerManager: {fileID: 1078253111007757182}
   rangedShootingHandler: {fileID: 1078253111007757155}
   playerHookHandler: {fileID: 1078253111007757178}
-  playerUIManager: {fileID: 0}
   flagCombo: 0
 --- !u!114 &1078253111007757155
 MonoBehaviour:
@@ -8526,7 +8527,6 @@ MonoBehaviour:
   canHitCrossHair: {fileID: 0}
   playerInputHandle: {fileID: 1078253111007757153}
   animatorManager: {fileID: 159825749490485543}
-  playerUIManager: {fileID: 0}
   rangedDistance: 10000
   hittableEntities:
     serializedVersion: 2
@@ -12623,7 +12623,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3691644121268582159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dfbb64fb0bfe9fc49800f07ce747d9bc, type: 3}
   m_Name: 
@@ -12676,7 +12676,6 @@ MonoBehaviour:
   canHitCrossHair: {fileID: 0}
   playerInputHandle: {fileID: 3691644121268582166}
   animatorManager: {fileID: 4610053334367993168}
-  playerUIManager: {fileID: 620044431140072716}
   rangedDistance: 10000
   hittableEntities:
     serializedVersion: 2
@@ -12718,7 +12717,6 @@ MonoBehaviour:
   playerManager: {fileID: 3691644121268582153}
   rangedShootingHandler: {fileID: 3691644121268582164}
   playerHookHandler: {fileID: 3691644121268582161}
-  playerUIManager: {fileID: 0}
   flagCombo: 0
 --- !u!114 &3691644121268582167
 MonoBehaviour:
@@ -12744,9 +12742,8 @@ MonoBehaviour:
   isGrappled: 0
   walkSpeed: 1
   speed: 25
-  turnSpeed: 10
+  turnSpeed: 30
   acceleration: 0
-  dashScale: 0
   jumpHeight: 8.5
   initVelocity: 0
   jumpTime: 0.03
@@ -12768,6 +12765,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   slopeJumpHeight: 9
+  dashScale: 150
+  dashCooldown: 5
+  dashTimer: 0
 --- !u!1 &3707315836558718919
 GameObject:
   m_ObjectHideFlags: 0
@@ -15501,13 +15501,17 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 4066902644943170997}
+    - target: {fileID: 6813731441605307784, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
+      propertyPath: CameraDistance
+      value: 54.98
+      objectReference: {fileID: 0}
     - target: {fileID: 6813731441772748510, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 5258237855640797907}
     - target: {fileID: 6813731441772748511, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 444.60825
+      value: 443.302
       objectReference: {fileID: 0}
     - target: {fileID: 6813731441772748511, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15515,11 +15519,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6813731441772748511, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 848.54034
+      value: 866.0116
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 218.10825
+      value: 216.802
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15527,7 +15531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 318.54034
+      value: 336.0116
       objectReference: {fileID: 0}
     - target: {fileID: 7540847069976375241, guid: 116ad025ecb285d4bb7ea122cd2b48be, type: 3}
       propertyPath: m_LocalRotation.w
