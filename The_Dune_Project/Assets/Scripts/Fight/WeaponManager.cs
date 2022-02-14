@@ -45,6 +45,8 @@ public class WeaponManager : MonoBehaviour
         weaponDamage.OnDisableWeapon();
     }
 
+    // TODO: allow movement before second attack button pressed?
+    // move (rotate?) in that direction then cause animation? cutting the recovery part of the anim of the first attack
     public void MovePlayerInSequence()
     {
         playerBody.Move(gameObject.transform.forward * moveAmount * Time.deltaTime);
