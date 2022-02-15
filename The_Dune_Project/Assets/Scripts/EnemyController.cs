@@ -1,6 +1,8 @@
 ﻿using Fight;
 using UnityEngine;
 using UnityEngine.AI;
+using CleverCrow.Fluid.BTs.Tasks;
+using CleverCrow.Fluid.BTs.Tasks.Actions;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
@@ -30,8 +32,6 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        GoToTarget();
-
         hitCooldownTimer = Mathf.Max( hitCooldownTimer - Time.deltaTime, 0.0f);
         aggroTimer = Mathf.Max( aggroTimer - Time.deltaTime, 0.0f);
 
@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void GoToTarget()
+    protected virtual void GoToTarget()
     {
         float distance = Vector3.Distance(target.position, transform.position);
         if (distance <= lookRadius)
@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void FaceTarget()
+    protected virtual void FaceTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
         direction = new Vector3(direction.x, 0, direction.z);
@@ -71,7 +71,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void MeleeAttackTarget()
+    protected virtual void MeleeAttackTarget()
     {
         float distance = Vector3.Distance(target.position, transform.position);
         if(distance <= myAgent.stoppingDistance)
