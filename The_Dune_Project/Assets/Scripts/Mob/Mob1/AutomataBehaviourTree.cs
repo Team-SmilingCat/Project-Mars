@@ -23,27 +23,22 @@ public class AutomataBehaviourTree : MonoBehaviour
     private void Awake()
     {
         automataTree = new BehaviorTreeBuilder(gameObject)
-            .Sequence("Chase Player")
-            .Do("Moving", () =>
-            {
-                controller.GoToTarget();
-                return TaskStatus.Success;
-            })
-            .End()
-            .Sequence("Attack Player")
-            .Do("Bash", () =>
-            {
-                controller.PerformBaseMeleeAtk();
-                return TaskStatus.Success;
-            })
-            .End()
-            .Sequence("Idle")
-            .Do("Original Action 1", () =>
-            {
-                //call the action leaf node here.
-                return TaskStatus.Success;
-            })
-            .End()
+            .Selector()
+            .Sequence("move and attack")
+                .Condition("Player is in range", () =>
+                {
+                    return controller.PlayerIsInRangeOfMe();
+                })
+                .Do("go to the player", () =>
+                {
+                    controller.GoToTarget();
+                    return TaskStatus.Success;
+                })
+                .Do("attack", () =>
+                {
+                    controller.PerformBaseMeleeAtk();
+                    return TaskStatus.Success;
+                })
             .Build();
     }
 

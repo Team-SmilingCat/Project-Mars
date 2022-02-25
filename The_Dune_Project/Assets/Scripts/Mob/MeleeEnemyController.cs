@@ -23,23 +23,10 @@ public class MeleeEnemyController : EnemyController
 
     public override void GoToTarget()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= lookRadius)
-        {
-            this.myAgent.SetDestination(target.position);
-            meleeAnimator.SetBool("walking", true);
-            aggroTimer = timeToDeagrro;
-            isAggroed = true;
-        } 
-        else if (isAggroed && aggroTimer <= 0)
-        {
-            isAggroed = false;
-            myAgent.SetDestination(homeLocation);
-        }
-        else
-        {
-            meleeAnimator.SetBool("walk", false);
-        }
+        this.myAgent.SetDestination(target.position);
+        meleeAnimator.SetBool("walking", true);
+        aggroTimer = timeToDeagrro;
+        isAggroed = true;
     }
 
     public override void FaceTarget()
@@ -64,6 +51,29 @@ public class MeleeEnemyController : EnemyController
             enemyAnimatorManager.PlayTargetAnimation("smash", true);
             targetFighter.TakeDamage(10); // TODO
             hitCooldownTimer = hitCooldown;
+        }
+    }
+
+    public void ReturnToOriginalLocation()
+    {
+        if (isAggroed && aggroTimer <= 0)
+        {
+            isAggroed = false;
+            myAgent.SetDestination(homeLocation);
+            meleeAnimator.SetBool("walking", true);
+        }
+    }
+
+    public bool PlayerIsInRangeOfMe()
+    {
+        float distance = Vector3.Distance(target.position, transform.position);
+        if (distance <= lookRadius)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
