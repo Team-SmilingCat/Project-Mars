@@ -7815,13 +7815,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1863109277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 181cfd1c842f4a108e0544701d9a638e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a190ff5e944bed40aa28295250bf674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 25
   timeToDeagrro: 5
   isAggroed: 0
   hitCooldown: 3
+  homeLocation: {x: 0, y: 0, z: 0}
+  myAgent: {fileID: 1863109280}
+  myFighter: {fileID: 1863109282}
   target: {fileID: 0}
 --- !u!114 &1863109282
 MonoBehaviour:
