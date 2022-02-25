@@ -60,4 +60,16 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+
 /UserSettings/
