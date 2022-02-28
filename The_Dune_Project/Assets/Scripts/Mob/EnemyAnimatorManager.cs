@@ -12,5 +12,15 @@ public class EnemyAnimatorManager : MonoBehaviour
         animator.SetBool("isInteracting", isInteracting);
         animator.CrossFade(targetAnimation, 0.2f);
     }
+
+    public void SetAnimBool(String anim, bool b)
+    {
+        animator.SetBool(anim, b);
+    }
+
+    public bool GetBoolData(string anim)
+    {
+        return animator.GetBool(anim);
+    }
     
 }

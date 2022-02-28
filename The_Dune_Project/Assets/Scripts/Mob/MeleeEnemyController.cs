@@ -7,13 +7,13 @@ using UnityEngine.AI;
 public class MeleeEnemyController : EnemyController
 {
     private EnemyAnimatorManager enemyAnimatorManager;
-    private Animator meleeAnimator;
+    public bool enemyIsInteracting;
+    [SerializeField] private float knockbackConditionLimit;
     
     private void Start()
     {
         LoadAgentProperties(this);
         enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
-        meleeAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -21,10 +21,21 @@ public class MeleeEnemyController : EnemyController
         base.Update();
     }
 
+    private void LateUpdate()
+    {
+        enemyIsInteracting = enemyAnimatorManager.GetBoolData("isInteracting");
+        
+    }
+
     public override void GoToTarget()
     {
+        if (enemyAnimatorManager.GetBoolData("isInteracting"))
+        {
+            return;
+        }
+        FaceTarget();
         this.myAgent.SetDestination(target.position);
-        meleeAnimator.SetBool("walking", true);
+        enemyAnimatorManager.SetAnimBool("walking", true);
         aggroTimer = timeToDeagrro;
         isAggroed = true;
     }
@@ -41,15 +52,24 @@ public class MeleeEnemyController : EnemyController
     }
 
     public void PerformBaseMeleeAtk()
-    {
+    {        
         float distance = Vector3.Distance(target.position, transform.position);
-        if (!(distance <= myAgent.stoppingDistance)) return;
-        FaceTarget();
         Fighter targetFighter = target.GetComponent<Fighter>();
         if (targetFighter != null && hitCooldownTimer <= 0.0f)
         {
-            enemyAnimatorManager.PlayTargetAnimation("smash", true);
-            targetFighter.TakeDamage(10); // TODO
+        enemyAnimatorManager.PlayTargetAnimation("smash", true);// TODO
+        hitCooldownTimer = hitCooldown;
+        }
+    }
+
+    public void KnockbackPlayerForSpace()
+    {
+        Fighter targetFighter = target.GetComponent<Fighter>();
+        FaceTarget();
+        if (targetFighter != null && hitCooldownTimer <= 0.0f)
+        {
+            enemyAnimatorManager.PlayTargetAnimation("slash", true);
+            //perform knockback to the player as an aniation event
             hitCooldownTimer = hitCooldown;
         }
     }
@@ -60,7 +80,7 @@ public class MeleeEnemyController : EnemyController
         {
             isAggroed = false;
             myAgent.SetDestination(homeLocation);
-            meleeAnimator.SetBool("walking", true);
+            enemyAnimatorManager.SetAnimBool("walking", false);
         }
     }
 
@@ -75,5 +95,26 @@ public class MeleeEnemyController : EnemyController
         {
             return false;
         }
+    }
+
+    public bool PlayerIsTooClose()
+    {
+        float distance = Vector3.Distance(target.position, transform.position);
+        if ((distance <= knockbackConditionLimit))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 knockBackRange = transform.TransformDirection(Vector3.forward) * knockbackConditionLimit;
+
+        Gizmos.DrawRay(transform.position, knockBackRange);
     }
 }

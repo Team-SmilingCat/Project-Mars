@@ -23,22 +23,45 @@ public class AutomataBehaviourTree : MonoBehaviour
     private void Awake()
     {
         automataTree = new BehaviorTreeBuilder(gameObject)
-            .Selector()
-            .Sequence("move and attack")
-                .Condition("Player is in range", () =>
-                {
-                    return controller.PlayerIsInRangeOfMe();
-                })
-                .Do("go to the player", () =>
-                {
-                    controller.GoToTarget();
-                    return TaskStatus.Success;
-                })
-                .Do("attack", () =>
-                {
-                    controller.PerformBaseMeleeAtk();
-                    return TaskStatus.Success;
-                })
+        .Selector("choices")
+                .Sequence("too close")
+                    .Condition("Player is too close, knock back him", () =>
+                    {
+                        return controller.PlayerIsTooClose();
+                    })
+                    .Do("knockback the player", () =>
+                        {
+                            controller.KnockbackPlayerForSpace();
+                            return TaskStatus.Success;
+                        })
+                .End()
+                .Sequence("move and attack")
+                    .Condition("Player is in range", () =>
+                    {
+                        return controller.PlayerIsInRangeOfMe();
+                    })
+                    .Do("go to the player", () =>
+                    {
+                        controller.GoToTarget();
+                        return TaskStatus.Success;
+                    })
+                    .Do("attack", () =>
+                    {
+                        controller.PerformBaseMeleeAtk();
+                        return TaskStatus.Success;
+                    })
+                .End()
+                .Sequence("reset range")
+                    .Condition("Lost player", () =>
+                    {
+                        return !controller.PlayerIsInRangeOfMe();
+                    })
+                    .Do("go back to original location", () =>
+                    {
+                        controller.ReturnToOriginalLocation();
+                        return TaskStatus.Success;
+                    })
+                .End()
             .Build();
     }
 
@@ -47,3 +70,4 @@ public class AutomataBehaviourTree : MonoBehaviour
         automataTree.Tick();
     }
 }
+

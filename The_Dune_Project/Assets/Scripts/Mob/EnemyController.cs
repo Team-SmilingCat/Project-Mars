@@ -10,7 +10,7 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] protected float lookRadius = 25f;
     [SerializeField] protected float timeToDeagrro = 5f;
     [SerializeField] protected float aggroTimer = 0.0f;
-    [ReadOnlyAttribute, SerializeField] protected bool isAggroed = false;
+    [SerializeField] protected bool isAggroed = false;
 
     [SerializeField] protected float hitCooldown = 3.0f;
     [SerializeField] protected float hitCooldownTimer;
