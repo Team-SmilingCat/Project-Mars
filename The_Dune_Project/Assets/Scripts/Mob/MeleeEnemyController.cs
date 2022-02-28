@@ -57,8 +57,9 @@ public class MeleeEnemyController : EnemyController
         Fighter targetFighter = target.GetComponent<Fighter>();
         if (targetFighter != null && hitCooldownTimer <= 0.0f)
         {
-        enemyAnimatorManager.PlayTargetAnimation("smash", true);// TODO
-        hitCooldownTimer = hitCooldown;
+            enemyAnimatorManager.SetAnimBool("walking", false);
+            enemyAnimatorManager.PlayTargetAnimation("smash", true);// TODO
+            hitCooldownTimer = hitCooldown;
         }
     }
 
@@ -68,6 +69,7 @@ public class MeleeEnemyController : EnemyController
         FaceTarget();
         if (targetFighter != null && hitCooldownTimer <= 0.0f)
         {
+            enemyAnimatorManager.SetAnimBool("walking", false);
             enemyAnimatorManager.PlayTargetAnimation("slash", true);
             //perform knockback to the player as an aniation event
             hitCooldownTimer = hitCooldown;
@@ -114,7 +116,6 @@ public class MeleeEnemyController : EnemyController
     {
         Gizmos.color = Color.red;
         Vector3 knockBackRange = transform.TransformDirection(Vector3.forward) * knockbackConditionLimit;
-
         Gizmos.DrawRay(transform.position, knockBackRange);
     }
 }

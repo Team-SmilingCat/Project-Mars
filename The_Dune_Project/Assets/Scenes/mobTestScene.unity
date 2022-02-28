@@ -7818,7 +7818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a190ff5e944bed40aa28295250bf674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 25
+  lookRadius: 50
   timeToDeagrro: 5
   aggroTimer: 0
   isAggroed: 0
@@ -7829,7 +7829,7 @@ MonoBehaviour:
   myFighter: {fileID: 1863109282}
   target: {fileID: 0}
   enemyIsInteracting: 0
-  knockbackConditionLimit: 15
+  knockbackConditionLimit: 20
 --- !u!114 &1863109282
 MonoBehaviour:
   m_ObjectHideFlags: 0

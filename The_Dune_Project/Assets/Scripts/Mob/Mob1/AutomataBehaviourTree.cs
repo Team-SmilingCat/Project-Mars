@@ -50,12 +50,10 @@ public class AutomataBehaviourTree : MonoBehaviour
                         controller.PerformBaseMeleeAtk();
                         return TaskStatus.Success;
                     })
+                    .WaitTime(1.5f)
                 .End()
                 .Sequence("reset range")
-                    .Condition("Lost player", () =>
-                    {
-                        return !controller.PlayerIsInRangeOfMe();
-                    })
+                    .Condition("Lost player", () => !controller.PlayerIsInRangeOfMe())
                     .Do("go back to original location", () =>
                     {
                         controller.ReturnToOriginalLocation();
