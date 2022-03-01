@@ -47,7 +47,7 @@ public class AutomataBehaviourTree : MonoBehaviour
                     })
                     .Do("attack", () =>
                     {
-                        controller.PerformBaseMeleeAtk();
+                        controller.Attack();
                         return TaskStatus.Success;
                     })
                     .WaitTime(1.5f)

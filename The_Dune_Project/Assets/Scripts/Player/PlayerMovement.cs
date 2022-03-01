@@ -342,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleKnockBack(Vector3 dir)
     {
-        
+        moveVector = dir * kbForce;
     }
 
     void OnDrawGizmosSelected()

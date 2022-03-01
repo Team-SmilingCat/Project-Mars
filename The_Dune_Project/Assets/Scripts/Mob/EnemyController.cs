@@ -43,6 +43,13 @@ public abstract class EnemyController : MonoBehaviour
     public abstract void GoToTarget();
     public abstract void FaceTarget();
 
+    public abstract void StepBackFromTarget();
+
+    public virtual void Attack()
+    {
+        Debug.Log("The enemy attempted to attack.");
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
