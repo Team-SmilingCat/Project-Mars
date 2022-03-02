@@ -72,7 +72,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("dash settings")]
     [SerializeField] private float dashScale;
     [SerializeField] private float dashCooldown;
-    private bool canDash; 
+    private bool canDash;
+
+    [Header("knockback settings")] 
+    [SerializeField] private float kbForce;
 
 
     private void Awake()
@@ -102,11 +105,11 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleGravity();  
         HandleFalling(); 
-        HandleCCJumping();
-        if(!playerHookHandler.finishedHook){
+        if (playerManager.isInteracting){
             return;
         }
-        if (playerManager.isInteracting){
+        HandleCCJumping();
+        if(!playerHookHandler.finishedHook){
             return;
         }
         HandleMovement();
@@ -310,35 +313,36 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-    public void HandleFalling()
+    private void HandleFalling()
     {
-        if(isGrounded)
+        switch (isGrounded)
         {
-            isFalling = false;
-            velocityY = 0;
-            controller.stepOffset = stepOffset;
+            case true:
+                isFalling = false;
+                velocityY = 0;
+                controller.stepOffset = stepOffset;
+                break;
+            case false when isJumping && !isFalling && velocityY < -30.0f:
+                animatorManager.PlayTargetAnimation("FallingJumped", false);
+                isFalling = true;
+                controller.stepOffset = 0;
+                break;
+            case false when !isJumping && !isFalling && velocityY < -20.0f:
+                animatorManager.PlayTargetAnimation("Falling", false);
+                isFalling = true;
+                controller.stepOffset = 0;
+                break;
         }
-        if (!isGrounded && isJumping && !isFalling && velocityY < -30.0f)
-        {
-            animatorManager.PlayTargetAnimation("FallingJumped", false);
-            isFalling = true;
-            controller.stepOffset = 0;
-
-        }
-        else if (!isGrounded && !isJumping && !isFalling && velocityY < -20.0f)
-        {
-            animatorManager.PlayTargetAnimation("Falling", false);
-            isFalling = true;
-            controller.stepOffset = 0;
-
-        }
-        
-
     }
 
-    public void resetVelocityY()
+    public void ResetVelocityY()
     {
         velocityY = 0;
+    }
+
+    public void HandleKnockBack(Vector3 dir)
+    {
+        moveVector = dir * kbForce;
     }
 
     void OnDrawGizmosSelected()
