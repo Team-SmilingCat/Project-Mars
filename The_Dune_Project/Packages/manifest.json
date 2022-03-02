@@ -1,13 +1,4 @@
 {
-  "scopedRegistries": [
-    {
-      "name": "NPM",
-      "url": "https://registry.npmjs.org",
-      "scopes": [
-        "com.fluid"
-      ]
-    }
-  ],
   "dependencies": {
     "com.unity.animation.rigging": "1.0.3",
     "com.unity.burst": "1.4.11",
@@ -55,7 +46,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.fluid.behavior-tree": "2.2.3"
+    "com.unity.modules.xr": "1.0.0"
   }
 }

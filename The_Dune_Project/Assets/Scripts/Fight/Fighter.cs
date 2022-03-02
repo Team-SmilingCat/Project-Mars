@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Scriptable_Objects;
+
 namespace Fight
 {
     public class Fighter : MonoBehaviour
