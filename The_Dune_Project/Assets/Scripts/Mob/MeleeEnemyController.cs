@@ -112,6 +112,11 @@ public class MeleeEnemyController : EnemyController
         }
     }
 
+    public override void StepBackFromTarget()
+    {
+        
+    }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

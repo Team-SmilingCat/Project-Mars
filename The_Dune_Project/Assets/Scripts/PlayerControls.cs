@@ -105,7 +105,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""e26cff93-54e9-492a-91f1-35dc77acf0d9"",
-                    ""path"": ""<Joystick>/stick"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -116,7 +116,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""59761482-6f3b-4dfa-8afa-66e8746586b7"",
-                    ""path"": ""<Joystick>/stick/down"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -127,7 +127,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""f1589858-dce9-4772-8874-be4044970630"",
-                    ""path"": ""<Joystick>/stick/left"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -138,7 +138,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""fa81eddc-9249-4042-9039-3ededd845c40"",
-                    ""path"": ""<Joystick>/stick/right"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -269,6 +269,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""f5b385eb-3bd2-4b44-bd69-b442541ed91d"",
                     ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lclick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b328940-2c75-4d06-abb6-74867c1db353"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
