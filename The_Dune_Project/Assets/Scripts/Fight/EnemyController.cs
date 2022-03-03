@@ -1,37 +1,36 @@
 ﻿using Fight;
 using UnityEngine;
 using UnityEngine.AI;
+using CleverCrow.Fluid.BTs.Tasks;
+using CleverCrow.Fluid.BTs.Tasks.Actions;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyController : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour
 {
     [SerializeField] protected float lookRadius = 25f;
     [SerializeField] protected float timeToDeagrro = 5f;
-    private float aggroTimer = 0.0f;
-    [ReadOnlyAttribute, SerializeField] protected bool isAggroed = false;
+    [SerializeField] protected float aggroTimer = 0.0f;
+    [SerializeField] protected bool isAggroed = false;
 
     [SerializeField] protected float hitCooldown = 3.0f;
-    private float hitCooldownTimer;
+    [SerializeField] protected float hitCooldownTimer;
     
-    protected Vector3 homeLocation;
-    protected NavMeshAgent myAgent;
-    protected Fighter myFighter;
+    [SerializeField] protected Vector3 homeLocation;
+    [SerializeField] protected NavMeshAgent myAgent;
+    [SerializeField] protected Fighter myFighter;
     
     [ReadOnlyAttribute, SerializeField] protected Transform target;
-
-    private void Start()
+    
+    
+    protected void LoadAgentProperties(EnemyController e)
     {
         target = FindObjectOfType<PlayerFighter>().transform;
         myAgent = GetComponent<NavMeshAgent>();
         myFighter = GetComponent<Fighter>();
-
         homeLocation = transform.position; // when player runs away, enemy goes back to their initial location
     }
-
-    private void Update()
+    protected virtual void Update()
     {
-        GoToTarget();
-
         hitCooldownTimer = Mathf.Max( hitCooldownTimer - Time.deltaTime, 0.0f);
         aggroTimer = Mathf.Max( aggroTimer - Time.deltaTime, 0.0f);
 
@@ -41,51 +40,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void GoToTarget()
+    public abstract void GoToTarget();
+    public abstract void FaceTarget();
+
+    public abstract void StepBackFromTarget();
+
+    public virtual void Attack()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= lookRadius)
-        {
-            myAgent.SetDestination(target.position);
-            MeleeAttackTarget(); // TODO: dont have to do
-            
-            aggroTimer = timeToDeagrro;
-            isAggroed = true;
-        }
-
-        if (isAggroed && aggroTimer <= 0)
-        {
-            isAggroed = false;
-            myAgent.SetDestination(homeLocation);
-        }
-    }
-
-    protected void FaceTarget()
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        direction = new Vector3(direction.x, 0, direction.z);
-        if (direction.sqrMagnitude > 0.25f)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-        }
-    }
-
-    protected void MeleeAttackTarget()
-    {
-        float distance = Vector3.Distance(target.position, transform.position);
-        if(distance <= myAgent.stoppingDistance)
-        {
-            FaceTarget();
-            
-            Fighter targetFighter = target.GetComponent<Fighter>();
-            if(targetFighter != null && hitCooldownTimer <= 0.0f)
-            {
-                targetFighter.TakeDamage(10); // TODO
-
-                hitCooldownTimer = hitCooldown;
-            }
-        }
+        Debug.Log("The enemy attempted to attack.");
     }
 
     private void OnDrawGizmosSelected()
