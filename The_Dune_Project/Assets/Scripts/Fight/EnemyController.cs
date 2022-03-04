@@ -9,11 +9,11 @@ public abstract class EnemyController : MonoBehaviour
 {
     [SerializeField] protected float lookRadius = 25f;
     [SerializeField] protected float timeToDeagrro = 5f;
-    [SerializeField] protected float aggroTimer = 0.0f;
-    [SerializeField] protected bool isAggroed = false;
+    protected float aggroTimer;
+    [SerializeField, ReadOnly] protected bool isAggroed = false;
 
     [SerializeField] protected float hitCooldown = 3.0f;
-    [SerializeField] protected float hitCooldownTimer;
+    protected float hitCooldownTimer;
     
     [SerializeField] protected Vector3 homeLocation;
     [SerializeField] protected NavMeshAgent myAgent;

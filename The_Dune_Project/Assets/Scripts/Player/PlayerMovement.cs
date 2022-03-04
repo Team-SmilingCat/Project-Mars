@@ -105,13 +105,8 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleGravity();  
         HandleFalling(); 
-        if (playerManager.isInteracting){
-            return;
-        }
+        if (playerManager.isInteracting) return;
         HandleCCJumping();
-        if(!playerHookHandler.finishedHook){
-            return;
-        }
         HandleMovement();
         HandleTurns();
     }
@@ -342,7 +337,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleKnockBack(Vector3 dir)
     {
-        moveVector = dir * kbForce;
+        moveVector += dir * kbForce;
     }
 
     void OnDrawGizmosSelected()

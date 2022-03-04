@@ -29,10 +29,7 @@ public class MeleeEnemyController : EnemyController
 
     public override void GoToTarget()
     {
-        if (enemyAnimatorManager.GetBoolData("isInteracting"))
-        {
-            return;
-        }
+        if (enemyAnimatorManager.GetBoolData("isInteracting")) return;
         FaceTarget();
         this.myAgent.SetDestination(target.position);
         enemyAnimatorManager.SetAnimBool("walking", true);
@@ -89,27 +86,13 @@ public class MeleeEnemyController : EnemyController
     public bool PlayerIsInRangeOfMe()
     {
         float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= lookRadius)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return distance <= lookRadius;
     }
 
     public bool PlayerIsTooClose()
     {
         float distance = Vector3.Distance(target.position, transform.position);
-        if ((distance <= knockbackConditionLimit))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return distance <= knockbackConditionLimit;
     }
 
     public override void StepBackFromTarget()
