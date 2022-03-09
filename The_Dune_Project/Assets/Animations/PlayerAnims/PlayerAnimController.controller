@@ -452,7 +452,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Jumping
+  m_Name: jumping
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions:
@@ -713,7 +713,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Falling
+  m_Name: falling
   m_Speed: 10
   m_CycleOffset: 0
   m_Transitions:
@@ -966,7 +966,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 73848a3d17c1f194cb16ca6b1a7ed76e, type: 2}
+    m_Motion: {fileID: 7400000, guid: 86469b58497877541bf70c3bc3e9400d, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -974,10 +974,10 @@ BlendTree:
     m_DirectBlendParameter: Vertical
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 5b8a848dbeb503146aff1a37cb8369b8, type: 2}
+    m_Motion: {fileID: 7400000, guid: 8e23e6e378ba47f44a362e71b7c10f31, type: 2}
     m_Threshold: 0.33333334
     m_Position: {x: 0, y: 0.5}
-    m_TimeScale: 10
+    m_TimeScale: 0.3
     m_CycleOffset: 0
     m_DirectBlendParameter: Vertical
     m_Mirror: 0
@@ -1174,7 +1174,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FallingJumped
+  m_Name: fallingJumped
   m_Speed: 10
   m_CycleOffset: 0
   m_Transitions:

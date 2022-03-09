@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isFalling;
     private float stepOffset;
     private float fallTime;
+    private float manualVelocity;
 
     [Header("character controller")] 
     private CharacterController controller;
@@ -172,45 +173,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleCCJumping()
     {
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up, out hit, groundHeightLimit, slopeLayer))
-        {
-            if(Vector3.Angle(Vector3.up, hit.normal) < slopeAngleLimit)
-            {
-                isOnSlope = true;
-            }
-            else
-            {
-                isOnSlope = false;
-            }
-        }
-        else
-        {
-            isOnSlope = false;
-        }
-
         if(isGrounded)
         {
             if (timer <= 0f && playerInputHandle.jumpInput)
             {
-                //moveVector.y += initVelocity * 1.5f;
                 moveVector.y += Mathf.Sqrt(-2f * gravity * jumpHeight);
                 controller.Move(moveVector * Time.deltaTime);
-                animatorManager.PlayTargetAnimation("Jumping", false);
-                isJumping = true;
-            }
-            if(timer >= 0f)
-            {
-                timer -= Time.deltaTime;
-            }
-        }
-        else if((isGrounded && isOnSlope) || isOnSlope)
-        {
-            if (timer <= 0f && playerInputHandle.jumpInput)
-            {
-                moveVector.y += Mathf.Sqrt(-2f * gravity * slopeJumpHeight);
-                controller.Move(moveVector * Time.deltaTime);
-                animatorManager.PlayTargetAnimation("Jumping", false);
+                animatorManager.PlayTargetAnimation("jumping", false);
                 isJumping = true;
             }
             if(timer >= 0f)
@@ -225,7 +194,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 timer -= Time.deltaTime;
             }
+            else
+            {
+                animatorManager.PlayTargetAnimation("falling", false);   
+            }
         }
+        
     }
 
     private void LateUpdate()
@@ -247,9 +221,9 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, -Vector3.up, out hit,checkHeightOffset, layers))
+        if(Physics.Raycast(transform.position, Vector3.down, out hit,checkHeightOffset, layers))
         {
-            if(Vector3.Distance(transform.position, hit.point) < checkHeightOffset){
+            if(Vector3.Distance(transform.position, hit.point) < checkHeightOffset && isOnSlope){
                 transform.position = Vector3.Lerp(transform.position,
                 transform.position + Vector3.up * checkHeightOffset,
                 5 * Time.deltaTime
@@ -317,13 +291,8 @@ public class PlayerMovement : MonoBehaviour
                 velocityY = 0;
                 controller.stepOffset = stepOffset;
                 break;
-            case false when isJumping && !isFalling && velocityY < -30.0f:
-                animatorManager.PlayTargetAnimation("FallingJumped", false);
-                isFalling = true;
-                controller.stepOffset = 0;
-                break;
             case false when !isJumping && !isFalling && velocityY < -20.0f:
-                animatorManager.PlayTargetAnimation("Falling", false);
+                animatorManager.PlayTargetAnimation("falling", false);
                 isFalling = true;
                 controller.stepOffset = 0;
                 break;
