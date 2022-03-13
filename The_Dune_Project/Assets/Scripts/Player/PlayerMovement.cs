@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask layers;
     [SerializeField] float checkHeightOffset;
     [SerializeField] float debugRadius;
+    [SerializeField] private float fallTimer = 0.5f;
+    [SerializeField] private float fallCoolDown = 0.15f;
 
     private float lastYPos;
     public bool isFalling;
@@ -67,13 +69,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float slopeAngleLimit;
     [SerializeField] private bool isOnSlope;
     [SerializeField] LayerMask slopeLayer;
+    [SerializeField] private float slopeRayLength;
 
     [SerializeField] private float slopeJumpHeight;
 
     [Header("dash settings")]
     [SerializeField] private float dashScale;
     [SerializeField] private float dashCooldown;
+    [SerializeField] private AnimationCurve scaledMovmentCurve;
+    private float dashTimer;
     private bool canDash;
+    private bool isDashing;
+    
 
     [Header("knockback settings")] 
     [SerializeField] private float kbForce;
@@ -93,6 +100,17 @@ public class PlayerMovement : MonoBehaviour
         InitMovementSettings();
     }
 
+    private void LateUpdate()
+    {
+        if (!isGrounded)
+        {
+            float curYPos = transform.position.y;
+            velocityY = (curYPos - lastYPos) / Time.deltaTime;
+            lastYPos = curYPos;
+        }
+
+    }
+
     private void InitMovementSettings()
     {
         timer = jumpCoolDown;
@@ -100,13 +118,16 @@ public class PlayerMovement : MonoBehaviour
         stepOffset = controller.stepOffset;
         isOnSlope = false;
         canDash = true;
+        Keyframe lastFrameOfCurve = scaledMovmentCurve[scaledMovmentCurve.length - 1];
+        dashTimer = lastFrameOfCurve.time;
     }
 
     public void HandleAllPlayerMovement()
     {
-        HandleGravity();  
-        HandleFalling(); 
+        HandleGravity();
+        CheckForGrounded();
         if (playerManager.isInteracting) return;
+        if (isDashing) return;
         HandleCCJumping();
         HandleMovement();
         HandleTurns();
@@ -141,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+            moveVector = AdjustOnUnevenTerrain(moveVector);
             controller.Move(moveVector * Time.deltaTime);
         }
     }
@@ -165,7 +187,6 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRot = Quaternion.LookRotation(targetDir);
         //lerps to the rotation target
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
-
         transform.rotation = playerRotation;
 
     }
@@ -175,11 +196,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isGrounded)
         {
+            animatorManager.ModifyBoolParams("isJumping", false);
             if (timer <= 0f && playerInputHandle.jumpInput)
             {
+                animatorManager.ModifyBoolParams("isJumping", true);
                 moveVector.y += Mathf.Sqrt(-2f * gravity * jumpHeight);
                 controller.Move(moveVector * Time.deltaTime);
-                animatorManager.PlayTargetAnimation("jumping", false);
                 isJumping = true;
             }
             if(timer >= 0f)
@@ -194,109 +216,84 @@ public class PlayerMovement : MonoBehaviour
             {
                 timer -= Time.deltaTime;
             }
-            else
-            {
-                animatorManager.PlayTargetAnimation("falling", false);   
-            }
+
+            playerInputHandle.ResetJumpInput();
         }
         
-    }
-
-    private void LateUpdate()
-    {
-        if(!isGrounded)
-        {
-            float curYPos = transform.position.y;
-            velocityY  = (curYPos - lastYPos) / Time.deltaTime;
-            lastYPos = curYPos;
-        }
-
     }
 
     private void HandleGravity()
     {
-        Vector3 castPos = new Vector3(gameObject.transform.position.x,
-        gameObject.transform.position.y - checkHeightOffset,
-        gameObject.transform.position.z);
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(transform.position, Vector3.down, out hit,checkHeightOffset, layers))
+        if (!isGrounded)
         {
-            if(Vector3.Distance(transform.position, hit.point) < checkHeightOffset && isOnSlope){
-                transform.position = Vector3.Lerp(transform.position,
-                transform.position + Vector3.up * checkHeightOffset,
-                5 * Time.deltaTime
-                );
-            }
-            //Lerp to proper position when going down
-            if(isJumping)
+            if (!playerInputHandle.jumpInput)
             {
-                isGrounded = true;
-                isJumping = false;
-                animatorManager.EnableLanding();
+                animatorManager.ModifyBoolParams("isFalling", true);
             }
-            else
-            {
-                isGrounded = true;
-                isFalling = false;
-                animatorManager.EnableLanding();
-            }
-        }
-        else
-        {
-            isGrounded = false;
+            moveVector = AdjustOnUnevenTerrain(moveVector);
             moveVector.y += gravity * Time.deltaTime;
             controller.Move(moveVector * Time.deltaTime);
         }
-        
     }
 
-    public void HandleDash()
+    private void CheckForGrounded()
     {
-        if(playerManager.isInteracting)
-        {
-            return;
-        }
-        if(isJumping)
-        {
-            return;
-        }
-        if(playerInputHandle.moveValue > 0 && canDash)
-        {
-            moveVector = camera.forward * playerInputHandle.vertical;
-            moveVector += camera.right * playerInputHandle.horizontal;
-            moveVector.Normalize();
-            animatorManager.PlayTargetAnimation("dive", true);
-            moveVector.y = 0;
-            controller.Move(moveVector * Time.deltaTime * dashScale);
-        }
-        StartCoroutine(HandleDashCD());
+        Vector3 sphereCaster = new Vector3(transform.position.x,
+            transform.position.y - checkHeightOffset, transform.position.z);
+        isGrounded = Physics.CheckSphere(sphereCaster, debugRadius, layers, QueryTriggerInteraction.Ignore);
+        animatorManager.ModifyBoolParams("canLand", isGrounded);
+        animatorManager.ModifyBoolParams("isJumping", !isGrounded);
+    }
 
+    private Vector3 AdjustOnUnevenTerrain(Vector3 velocity)
+    {
+        var ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit,  slopeRayLength, slopeLayer, QueryTriggerInteraction.Collide))
+        {
+            //hit normal returns to us the normal of the slope that the ray hit.
+            var slopeAngle = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            var newVelocity = slopeAngle * velocity;
+
+            if(newVelocity.y < 0)
+            {
+                return newVelocity;
+            }    
+        }
+
+        return velocity;
     }
 
     private IEnumerator HandleDashCD()
     {
+        isDashing = false;
         canDash = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
 
-    private void HandleFalling()
+    public IEnumerator HandleDodge()
     {
-        switch (isGrounded)
+        if(moveVector.magnitude == 0 || playerManager.isInteracting)
         {
-            case true:
-                isFalling = false;
-                velocityY = 0;
-                controller.stepOffset = stepOffset;
-                break;
-            case false when !isJumping && !isFalling && velocityY < -20.0f:
-                animatorManager.PlayTargetAnimation("falling", false);
-                isFalling = true;
-                controller.stepOffset = 0;
-                break;
+            yield return null;
         }
+        else if (canDash)
+        {
+            isDashing = true;
+            float timer = 0;
+            animatorManager.PlayTargetAnimation("dive", true);
+            while (timer < dashTimer)
+            {
+                float speed = scaledMovmentCurve.Evaluate(timer);
+                Vector3 dashDirection =
+                    (transform.forward * speed) + (Vector3.up * gravity);
+                controller.Move(dashDirection);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        yield return StartCoroutine(HandleDashCD());
     }
 
     public void ResetVelocityY()

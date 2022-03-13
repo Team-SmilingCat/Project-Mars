@@ -191,10 +191,10 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleDashInput()
     {
-        if(dashInput)
+        if (dashInput)
         {
-            playerMovement.HandleDash();
             dashInput = false;
+            StartCoroutine(playerMovement.HandleDodge());
         }
     }
 
@@ -202,6 +202,12 @@ public class PlayerInputHandle : MonoBehaviour
     {
         
     }
+
+    public void ResetJumpInput()
+    {
+        jumpInput = false;
+    }
+
 
 
 }

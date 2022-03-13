@@ -99,4 +99,9 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool("isInteracting", false);
     }
 
+    public void ModifyBoolParams(string s, bool b)
+    {
+        animator.SetBool(s, b);
+    }
+
 }
