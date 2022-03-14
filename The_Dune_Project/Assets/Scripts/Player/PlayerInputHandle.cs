@@ -100,7 +100,6 @@ public class PlayerInputHandle : MonoBehaviour
         HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
-        HandleHookInput();
     }
 
     private void MoveInput()
@@ -169,25 +168,6 @@ public class PlayerInputHandle : MonoBehaviour
         }
     }
 
-    private void HandleHookInput()
-    {
-        if(playerManager.isInteracting) return;
-        if(hookInput){
-            if(playerHookHandler.finishedHook)
-            {
-                playerHookHandler.UseHook();
-            } else if(playerHookHandler.isHooking)
-            {
-                return;
-            }
-        }
-        else{
-            playerHookHandler.finishedHook = true;
-            playerHookHandler.isHooking = false;
-            playerHookHandler.ResetHook();
-        }
-
-    }
 
     private void HandleDashInput()
     {

@@ -9,6 +9,7 @@ public class MeleeEnemyController : EnemyController
     private EnemyAnimatorManager enemyAnimatorManager;
     public bool enemyIsInteracting;
     [SerializeField] private float knockbackConditionLimit;
+    [SerializeField] private float kbImpact;
     
     private void Start()
     {
@@ -68,7 +69,9 @@ public class MeleeEnemyController : EnemyController
         {
             enemyAnimatorManager.SetAnimBool("walking", false);
             enemyAnimatorManager.PlayTargetAnimation("slash", true);
-            //perform knockback to the player as an aniation event
+            //perform knockback
+            StartCoroutine(target.GetComponent<PlayerMovement>().HandleKnockBack(
+    (target.position - transform.position),kbImpact));
             hitCooldownTimer = hitCooldown;
         }
     }

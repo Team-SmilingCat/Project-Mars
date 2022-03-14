@@ -83,7 +83,10 @@ public class PlayerMovement : MonoBehaviour
     
 
     [Header("knockback settings")] 
-    [SerializeField] private float kbForce;
+    [SerializeField] private float kbDuration;
+    [SerializeField] private float kbHeight;
+    [SerializeField] private AnimationCurve kbCurve;
+    private bool isKnockedBack;
 
 
     private void Awake()
@@ -120,6 +123,8 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
         Keyframe lastFrameOfCurve = scaledMovmentCurve[scaledMovmentCurve.length - 1];
         dashTimer = lastFrameOfCurve.time;
+        Keyframe lastFrameOfKbCurve= kbCurve[kbCurve.length - 1];
+        kbDuration = lastFrameOfKbCurve.time;
     }
 
     public void HandleAllPlayerMovement()
@@ -128,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
         CheckForGrounded();
         if (playerManager.isInteracting) return;
         if (isDashing) return;
+        if (isKnockedBack) return;
         HandleCCJumping();
         HandleMovement();
         HandleTurns();
@@ -296,14 +302,27 @@ public class PlayerMovement : MonoBehaviour
         yield return StartCoroutine(HandleDashCD());
     }
 
+    public IEnumerator HandleKnockBack(Vector3 direction, float force)
+    {
+        float timer = 0;
+        animatorManager.PlayTargetAnimation("block", true);
+        while(timer < kbDuration)
+        {
+            isKnockedBack = true;
+            float speed = kbCurve.Evaluate(timer);
+            Vector3 kbDir = direction.normalized * force;
+            kbDir.y = kbHeight;
+            controller.Move(kbDir * speed);
+            timer += Time.deltaTime;
+        }
+
+        yield return isKnockedBack = false;
+
+    }
+
     public void ResetVelocityY()
     {
         velocityY = 0;
-    }
-
-    public void HandleKnockBack(Vector3 dir)
-    {
-        moveVector += dir * kbForce;
     }
 
     void OnDrawGizmosSelected()
