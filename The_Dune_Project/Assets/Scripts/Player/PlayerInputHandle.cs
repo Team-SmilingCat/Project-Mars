@@ -39,11 +39,6 @@ public class PlayerInputHandle : MonoBehaviour
     [Header("action flags")] 
     public bool flagCombo;
 
-    private void Awake()
-    {
-        
-    }
-
     public void OnEnable()
     {
         if (playerControls == null)
@@ -84,11 +79,6 @@ public class PlayerInputHandle : MonoBehaviour
     public float getMouseMagnitudeS()
     {
         return cameraInput.sqrMagnitude;
-    }
-
-    public void TickInput(float delta)
-    {
-        
     }
 
     public void HandleAllInputs()
@@ -180,7 +170,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleShieldInput()
     {
-        
+        //TODO
     }
 
     public void ResetJumpInput()

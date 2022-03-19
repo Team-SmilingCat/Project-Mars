@@ -19,7 +19,7 @@ public class WeaponManager : MonoBehaviour
     [Header("moving player during combo properties")]
     [SerializeField] private float moveAmount;
 
-    public void Start()
+    private void Awake()
     {
         playerBody = gameObject.GetComponent<CharacterController>();
 
@@ -37,12 +37,12 @@ public class WeaponManager : MonoBehaviour
 
     public void weaponDamageOnLoad()
     {
-        weaponDamage.OnEnableWeapon();
+        weaponDamage.OnEnableWeaponCollider();
     }
 
     public void weaponDamageOnDisable()
     {
-        weaponDamage.OnDisableWeapon();
+        weaponDamage.OnDisableWeaponCollider();
     }
 
     // TODO: allow movement before second attack button pressed?

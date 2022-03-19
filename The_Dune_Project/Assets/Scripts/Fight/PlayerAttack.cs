@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,16 +24,21 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] RaycastHit[] listOfEnemiesinRange;
     [SerializeField] Transform closestTarget;
 
+    private void Awake()
+    {
+        animator = gameObject.GetComponent<Animator>();
+    }
+
     private void Start()
     {
         direction = gameObject.transform.forward;
-        animator = gameObject.GetComponent<Animator>();
     }
 
     public void handleMeleeAttack(MeleeWeapon weapon)
     {
+        RotateToTarget();
         animatorManager.PlayTargetAnimation(weapon.atk1, true);
-            prevAtk = weapon.atk1;
+        prevAtk = weapon.atk1;
     }
 
     public void HandleHeavyMeleeAttack(MeleeWeapon weapon)
@@ -48,11 +54,13 @@ public class PlayerAttack : MonoBehaviour
             animatorManager.animator.SetBool("canCombo", false);
             if (prevAtk.Equals(weapon.atk1))
             {
+                RotateToTarget();
                 animatorManager.PlayTargetAnimation(weapon.atk2, true);
                 prevAtk = weapon.atk2;
             } 
             else if (prevAtk.Equals(weapon.atk2))
             {
+                RotateToTarget();
                 animatorManager.PlayTargetAnimation(weapon.atk3, true);
             }
         }
@@ -63,7 +71,9 @@ public class PlayerAttack : MonoBehaviour
         GetNearestTarget();
         if(closestTarget != null)
         {
-            var rotation = Quaternion.LookRotation(closestTarget.transform.position - transform.position);
+            var rotationVector = new Vector3(closestTarget.position.x, transform.position.y, closestTarget.position.z);
+            transform.LookAt(rotationVector);
+
 
         }
 

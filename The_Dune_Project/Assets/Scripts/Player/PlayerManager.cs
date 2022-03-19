@@ -5,19 +5,27 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private PlayerInputHandle playerInputHandle;
-    [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private CameraManager cameraManager;
-    [SerializeField] private RangedShootingHandler rangedShootingHandler;
+    
+    
+    private Animator animator;
+    private PlayerInputHandle playerInputHandle;
+    private PlayerMovement playerMovement;
+    private RangedShootingHandler rangedShootingHandler;
+    private PlayerAttack playerAttack;
 
     public bool isInteracting;
     public bool canCombo;
-    private void Start()
+    public bool canRotateDuringAttack;
+    
+    private void Awake()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
-        
+        rangedShootingHandler = gameObject.GetComponent<RangedShootingHandler>();
+        animator = gameObject.GetComponent<Animator>();
+        playerAttack = gameObject.GetComponent<PlayerAttack>();
+
     }
 
     private void Update()
@@ -33,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     {
         isInteracting = animator.GetBool("isInteracting");
         canCombo = animator.GetBool("canCombo");
+        canRotateDuringAttack = animator.GetBool("canRotateDuringAttack");
         animator.SetBool("isJumping", playerMovement.isJumping);
         animator.SetBool("isGrounded", playerMovement.isGrounded);
         playerInputHandle.leftClickInput = false;
@@ -41,7 +50,7 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //movement should be fixed update -> unity specific rule
+        //movement should be fixed update -> unity guideline
 
     }
 }

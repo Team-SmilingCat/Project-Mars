@@ -91,15 +91,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         camera = Camera.main.transform;
         controller = gameObject.GetComponent<CharacterController>();
-        timeToApex = jumpTime / 2;
-        initVelocity = (2 * jumpHeight) / timeToApex;
     }
 
     private void Start()
     {
-        playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         InitMovementSettings();
     }
 
@@ -125,13 +123,26 @@ public class PlayerMovement : MonoBehaviour
         dashTimer = lastFrameOfCurve.time;
         Keyframe lastFrameOfKbCurve= kbCurve[kbCurve.length - 1];
         kbDuration = lastFrameOfKbCurve.time;
+        
+        timeToApex = jumpTime / 2;
+        initVelocity = (2 * jumpHeight) / timeToApex;
     }
 
     public void HandleAllPlayerMovement()
     {
         HandleGravity();
         CheckForGrounded();
-        if (playerManager.isInteracting) return;
+        if (playerManager.isInteracting)
+        {
+            if (playerManager.canRotateDuringAttack)
+            {
+                HandleTurns();
+            }
+            else
+            {
+                return;   
+            }
+        }
         if (isDashing) return;
         if (isKnockedBack) return;
         HandleCCJumping();
@@ -194,7 +205,6 @@ public class PlayerMovement : MonoBehaviour
         //lerps to the rotation target
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
         transform.rotation = playerRotation;
-
     }
     
 
@@ -287,6 +297,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isDashing = true;
             float timer = 0;
+            
             animatorManager.PlayTargetAnimation("dive", true);
             while (timer < dashTimer)
             {
