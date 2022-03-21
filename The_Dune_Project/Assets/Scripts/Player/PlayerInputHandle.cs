@@ -39,11 +39,6 @@ public class PlayerInputHandle : MonoBehaviour
     [Header("action flags")] 
     public bool flagCombo;
 
-    private void Awake()
-    {
-        
-    }
-
     public void OnEnable()
     {
         if (playerControls == null)
@@ -86,11 +81,6 @@ public class PlayerInputHandle : MonoBehaviour
         return cameraInput.sqrMagnitude;
     }
 
-    public void TickInput(float delta)
-    {
-        
-    }
-
     public void HandleAllInputs()
     {
         //call all input functions in here
@@ -100,7 +90,6 @@ public class PlayerInputHandle : MonoBehaviour
         HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
-        HandleHookInput();
     }
 
     private void MoveInput()
@@ -169,39 +158,26 @@ public class PlayerInputHandle : MonoBehaviour
         }
     }
 
-    private void HandleHookInput()
-    {
-        if(playerManager.isInteracting) return;
-        if(hookInput){
-            if(playerHookHandler.finishedHook)
-            {
-                playerHookHandler.UseHook();
-            } else if(playerHookHandler.isHooking)
-            {
-                return;
-            }
-        }
-        else{
-            playerHookHandler.finishedHook = true;
-            playerHookHandler.isHooking = false;
-            playerHookHandler.ResetHook();
-        }
-
-    }
 
     private void HandleDashInput()
     {
-        if(dashInput)
+        if (dashInput)
         {
-            playerMovement.HandleDash();
             dashInput = false;
+            StartCoroutine(playerMovement.HandleDodge());
         }
     }
 
     private void HandleShieldInput()
     {
-        
+        //TODO
     }
+
+    public void ResetJumpInput()
+    {
+        jumpInput = false;
+    }
+
 
 
 }

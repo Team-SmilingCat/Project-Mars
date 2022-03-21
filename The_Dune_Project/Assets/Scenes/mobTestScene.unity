@@ -274,8 +274,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57922665}
-  m_LocalRotation: {x: 0.10781586, y: 0.75519145, z: -0.12848984, w: 0.6336813}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.051782202, y: 0.7635545, z: 0.061711602, w: 0.6406987}
+  m_LocalPosition: {x: -0.23706055, y: -15.433517, z: 0.041809082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 691821152}
@@ -7282,7 +7282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205294163}
-  m_LocalRotation: {x: 0.12617575, y: 0.75114083, z: -0.15037027, w: 0.63028246}
+  m_LocalRotation: {x: 0.12617576, y: 0.75114083, z: -0.15037028, w: 0.63028246}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7938,7 +7938,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361081875}
-  m_LocalRotation: {x: 0.1296473, y: 0.7503007, z: -0.15450746, w: 0.62957764}
+  m_LocalRotation: {x: 0.1296473, y: 0.7503007, z: -0.15450752, w: 0.6295775}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8668,12 +8668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4d2d744550fb640b5b6c16c4b28856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeSize: 0.2
-  cubesInRow: 5
-  explosionForce: 50
-  explosionRadius: 4
-  explosionUpward: 0.4
-  newMaterial: {fileID: 2100000, guid: ba0820aa223b8ba4495a0954d827c759, type: 2}
 --- !u!195 &1863109280
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8710,10 +8704,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookRadius: 50
   timeToDeagrro: 5
-  aggroTimer: 0
   isAggroed: 0
   hitCooldown: 3
-  hitCooldownTimer: 0
   homeLocation: {x: 0, y: 0, z: 0}
   myAgent: {fileID: 1863109280}
   myFighter: {fileID: 1863109282}
@@ -8736,7 +8728,6 @@ MonoBehaviour:
   isHittable: 1
   animator: {fileID: 5866666020181931789}
   curTarget: {fileID: 543450651870473591}
-  explosion: {fileID: 1863109279}
 --- !u!114 &1863109285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17373,7 +17364,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3902726219144214188}
-  m_LocalRotation: {x: 0.12624553, y: 0.7511242, z: -0.15045343, w: 0.63026845}
+  m_LocalRotation: {x: 0.12624554, y: 0.75112426, z: -0.15045343, w: 0.63026845}
   m_LocalPosition: {x: 191.15515, y: 142.93307, z: 246.30951}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -25902,7 +25893,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 2ad4298c0c14e504c913fe598a63a694, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1

@@ -100,4 +100,9 @@ public class CameraManager : MonoBehaviour
         return Mathf.Clamp(angle, minAngle, maxAngle);
     }
 
+    public void TriggerCamShake()
+    {
+
+    }
+
 }

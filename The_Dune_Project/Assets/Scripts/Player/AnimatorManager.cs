@@ -76,6 +76,7 @@ public class AnimatorManager : MonoBehaviour
         animator.SetFloat(this.vertical, snapVertical, 0.1f, Time.deltaTime);
     }
 
+    //Animator events for flags
     public void EnableCombo()
     {
         animator.SetBool("canCombo", true);
@@ -97,6 +98,22 @@ public class AnimatorManager : MonoBehaviour
 
     public void DisableIsInteracting(){
         animator.SetBool("isInteracting", false);
+    }
+    
+    public void EnableAttackRotation()
+    {
+        animator.SetBool("canRotateDuringAttack", true);
+    }
+    
+    public void DisableAttackRotation()
+    {
+        animator.SetBool("canRotateDuringAttack", false);
+    }
+
+    //general method to modify parameters in references
+    public void ModifyBoolParams(string s, bool b)
+    {
+        animator.SetBool(s, b);
     }
 
 }

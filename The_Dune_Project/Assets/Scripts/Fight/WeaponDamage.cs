@@ -15,12 +15,12 @@ public class WeaponDamage : MonoBehaviour
         weaponHitBox.isTrigger = true;
     }
 
-    public void OnEnableWeapon()
+    public void OnEnableWeaponCollider()
     {
         gameObject.GetComponent<Collider>().enabled = true;
     }
 
-    public void OnDisableWeapon()
+    public void OnDisableWeaponCollider()
     { 
         gameObject.GetComponent<Collider>().enabled = false;
     }
