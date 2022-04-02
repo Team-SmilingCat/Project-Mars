@@ -6,8 +6,6 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private CameraManager cameraManager;
-    
-    
     private Animator animator;
     private PlayerInputHandle playerInputHandle;
     private PlayerMovement playerMovement;
@@ -18,6 +16,14 @@ public class PlayerManager : MonoBehaviour
     public bool canCombo;
     public bool canRotateDuringAttack;
     
+    protected enum PlayerStates
+    {
+        Active,
+        Inventory
+    };
+    
+    protected PlayerStates playerState;
+    
     private void Awake()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
@@ -25,16 +31,28 @@ public class PlayerManager : MonoBehaviour
         rangedShootingHandler = gameObject.GetComponent<RangedShootingHandler>();
         animator = gameObject.GetComponent<Animator>();
         playerAttack = gameObject.GetComponent<PlayerAttack>();
+    }
 
+    private void Start()
+    {
+        playerState = PlayerStates.Active;
     }
 
     private void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        playerInputHandle.HandleAllInputs();
-        playerMovement.HandleAllPlayerMovement();
-        rangedShootingHandler.HandleShootingAttack();
-        
+        switch (playerState)
+        {
+            case PlayerStates.Active:
+                Cursor.lockState = CursorLockMode.Locked;
+                playerInputHandle.HandleAllInputs();
+                playerMovement.HandleAllPlayerMovement();
+                rangedShootingHandler.HandleShootingAttack();
+                break;
+            case PlayerStates.Inventory:
+                playerInputHandle.HandleAllInventoryInputs();
+                break;
+        }
+
     }
 
     private void LateUpdate()
@@ -48,9 +66,15 @@ public class PlayerManager : MonoBehaviour
         cameraManager.HandleCameraFunctions();
     }
 
-    private void FixedUpdate()
+    //TODO: Observers when refactoring
+    public void SwitchToInventoryState()
     {
-        //movement should be fixed update -> unity guideline
-
+        playerState = PlayerStates.Inventory;
     }
+
+    public void SwitchToActiveState()
+    {
+        playerState = PlayerStates.Active;
+    }
+    
 }

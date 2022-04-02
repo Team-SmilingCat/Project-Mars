@@ -20,6 +20,9 @@ public class PlayerInputHandle : MonoBehaviour
     public bool rightClickInput;
     public bool dashInput;
     public bool hookInput;
+    
+    [Header("menu flags")]
+    public bool inventoryInput;
 
     public bool shieldInput;
 
@@ -32,12 +35,16 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
-    [SerializeField] private PlayerHookHandler playerHookHandler;
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
     [Header("action flags")] 
     public bool flagCombo;
+
+    private void Start()
+    {
+        inventoryInput = false;
+    }
 
     public void OnEnable()
     {
@@ -63,6 +70,9 @@ public class PlayerInputHandle : MonoBehaviour
             playerControls.PlayerActions.Hook.canceled += i => hookInput = false;
             playerControls.PlayerActions.ShieldButton.performed += i => shieldInput = true;
             playerControls.PlayerActions.ShieldButton.canceled += i => shieldInput = false;
+            
+            //inventory inputs
+            playerControls.MenuControls.InventoryInstance.performed += i => inventoryInput = true;
         }
         playerControls.Enable();
     }
@@ -90,6 +100,21 @@ public class PlayerInputHandle : MonoBehaviour
         HandleDashInput();
         HandleAimingInput();
         HandleAttackInput();
+        HandleInventoryInput();
+    }
+
+    public void HandleAllInventoryInputs()
+    {
+        HandleInventoryInput();
+    }
+
+    private void HandleInventoryInput()
+    {
+        if (inventoryInput)
+        {
+            playerManager.SwitchToInventoryState();
+        }
+
     }
 
     private void MoveInput()

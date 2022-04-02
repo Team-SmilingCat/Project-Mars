@@ -399,6 +399,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""InventoryInstance"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5f2727d-fa6b-41a9-b646-f2ebe410ad68"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -410,6 +418,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edc5c038-84b8-4e8c-8917-cd97487939da"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryInstance"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -434,6 +453,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         // Menu Controls
         m_MenuControls = asset.FindActionMap("Menu Controls", throwIfNotFound: true);
         m_MenuControls_Escape = m_MenuControls.FindAction("Escape", throwIfNotFound: true);
+        m_MenuControls_InventoryInstance = m_MenuControls.FindAction("InventoryInstance", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -606,11 +626,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_MenuControls;
     private IMenuControlsActions m_MenuControlsActionsCallbackInterface;
     private readonly InputAction m_MenuControls_Escape;
+    private readonly InputAction m_MenuControls_InventoryInstance;
     public struct MenuControlsActions
     {
         private @PlayerControls m_Wrapper;
         public MenuControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Escape => m_Wrapper.m_MenuControls_Escape;
+        public InputAction @InventoryInstance => m_Wrapper.m_MenuControls_InventoryInstance;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -623,6 +645,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Escape.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnEscape;
                 @Escape.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnEscape;
                 @Escape.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnEscape;
+                @InventoryInstance.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnInventoryInstance;
+                @InventoryInstance.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnInventoryInstance;
+                @InventoryInstance.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnInventoryInstance;
             }
             m_Wrapper.m_MenuControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -630,6 +655,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Escape.started += instance.OnEscape;
                 @Escape.performed += instance.OnEscape;
                 @Escape.canceled += instance.OnEscape;
+                @InventoryInstance.started += instance.OnInventoryInstance;
+                @InventoryInstance.performed += instance.OnInventoryInstance;
+                @InventoryInstance.canceled += instance.OnInventoryInstance;
             }
         }
     }
@@ -652,5 +680,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     public interface IMenuControlsActions
     {
         void OnEscape(InputAction.CallbackContext context);
+        void OnInventoryInstance(InputAction.CallbackContext context);
     }
 }
