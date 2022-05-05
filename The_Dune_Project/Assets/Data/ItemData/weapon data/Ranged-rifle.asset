@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Ranged-rifle
   m_EditorClassIdentifier: 
   itemName: gunname
+  Description: 
+  Icon: {fileID: 0}
   isInCombat: 0
   type: ranged
   damage: 20
