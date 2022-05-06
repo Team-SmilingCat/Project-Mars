@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mob
   - sword
+  - inventory
   layers:
   - Default
   - TransparentFX

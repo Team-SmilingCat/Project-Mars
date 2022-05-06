@@ -1,0 +1,18 @@
+{
+    "name": "Fighter",
+    "rootNamespace": "",
+    "references": [
+        "GUID:130aa654c362b8047a54e1be368be9c8",
+        "GUID:a0332a857c98c4a40bf760120bf0377a",
+        "GUID:9a5c48e6fc6aec0429b95d442b052211"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
