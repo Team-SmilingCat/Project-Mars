@@ -98,7 +98,6 @@ public class PlayerInputHandle : MonoBehaviour
         MoveInput();
         HandleForcedWalk();
         HandleDashInput();
-        HandleAimingInput();
         HandleAttackInput();
     }
 

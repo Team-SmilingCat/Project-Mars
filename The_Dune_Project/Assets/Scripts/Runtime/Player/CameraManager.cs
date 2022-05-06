@@ -46,8 +46,10 @@ public class CameraManager : MonoBehaviour
     {
         HandleHookCamera();
         HandleCameraAim();
-        if(inputHandle.hookInput) return;
-        RotateCamera();
+        if (!inputHandle.rightClickInput)
+        {
+            RotateCamera();   
+        }
     }
     
     private void RotateCamera()
