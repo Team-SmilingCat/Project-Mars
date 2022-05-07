@@ -44,12 +44,9 @@ public class CameraManager : MonoBehaviour
 
     public void HandleCameraFunctions()
     {
-        HandleHookCamera();
         HandleCameraAim();
-        if (!inputHandle.rightClickInput)
-        {
-            RotateCamera();   
-        }
+        RotateCamera();   
+        
     }
     
     private void RotateCamera()
@@ -79,16 +76,7 @@ public class CameraManager : MonoBehaviour
             camSpeed = originalCamSpeed;
         }
     }
-
-    private void HandleHookCamera(){
-        if(inputHandle.hookInput){
-            hookCam.gameObject.SetActive(true);
-        }
-        else{
-            hookCam.gameObject.SetActive(false);
-        }
-
-    }
+    
 
     private void setSensitivity(float d)
     {

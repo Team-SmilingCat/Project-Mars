@@ -97,6 +97,7 @@ public class PlayerInputHandle : MonoBehaviour
         HandleJumping();
         MoveInput();
         HandleForcedWalk();
+        HandleAimingInput();
         HandleDashInput();
         HandleAttackInput();
     }
@@ -153,7 +154,7 @@ public class PlayerInputHandle : MonoBehaviour
                 }
             }
 
-            if (rightClickInput && !leftClickInput && playerMovement.isGrounded)
+            if (rightClickInput && !leftClickInput && playerMovement.isGrounded && playerInventoryManager.weapon.type.Equals("melee"))
             {
                 if (playerManager.isInteracting) return;
                 playerAttack.HandleHeavyMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
