@@ -51,7 +51,6 @@ public class PlayerManager : MonoBehaviour
                 playerInputHandle.HandleAllInputs();
                 playerUIManager.CheckForInventoryInput();
                 playerMovement.HandleAllPlayerMovement();
-                rangedShootingHandler.HandleShootingAttack();
                 break;
             case PlayerStates.Inventory:
                 //check for condition
