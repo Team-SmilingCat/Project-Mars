@@ -44,7 +44,6 @@ public class CameraManager : MonoBehaviour
 
     public void HandleCameraFunctions()
     {
-        HandleCameraAim();
         RotateCamera();   
         
     }
@@ -63,9 +62,9 @@ public class CameraManager : MonoBehaviour
         cinemachineTarget.transform.rotation = Quaternion.Euler(camPitch + angleOffset, camYaw, 0.0f);
     }
 
-    private void HandleCameraAim()
+    public void HandleCameraAim(bool rightClickInput)
     {
-        if (inputHandle.rightClickInput)
+        if (rightClickInput)
         {
             aimCamera.gameObject.SetActive(true);
             camSpeed = aimSensitivity;
@@ -78,7 +77,7 @@ public class CameraManager : MonoBehaviour
     }
     
 
-    private void setSensitivity(float d)
+    public void setSensitivity(float d)
     {
         camSpeed = d;
     }

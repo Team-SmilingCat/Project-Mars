@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Scriptable_Objects;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerInputHandle : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PlayerInputHandle : MonoBehaviour
     [SerializeField] private PlayerInventoryManager playerInventoryManager;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
+    [SerializeField] private CameraManager cameraManager;
+    
     private Vector2 movementInput;
     private Vector2 cameraInput;
 
@@ -102,6 +105,11 @@ public class PlayerInputHandle : MonoBehaviour
         HandleAttackInput();
     }
 
+    public void HandleAllLateInputs()
+    {
+        HandleAimingInput();
+    }
+
     private void MoveInput()
     {
         //initialize inputs
@@ -150,7 +158,7 @@ public class PlayerInputHandle : MonoBehaviour
                     if (playerManager.isInteracting) return;
                     if (playerManager.canCombo) return;
                     playerAttack.handleMeleeAttack((MeleeWeapon)playerInventoryManager.weapon);
-                    //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+                     //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
                 }
             }
 
@@ -165,8 +173,9 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleAimingInput()
     {
-        if(!playerMovement.isJumping)
+        if(playerMovement.isGrounded)
         {
+            cameraManager.HandleCameraAim(rightClickInput);
             rangedShootingHandler.HandleShootingAttack();
         }
     }

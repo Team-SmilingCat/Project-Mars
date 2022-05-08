@@ -188,7 +188,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (rangedShootingHandler.isAiming)
         {
-            transform.rotation = rangedShootingHandler.aimVector;
             return;
         }
         
@@ -259,6 +258,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(sphereCaster, debugRadius, layers, QueryTriggerInteraction.Ignore);
         animatorManager.ModifyBoolParams("canLand", isGrounded);
         animatorManager.ModifyBoolParams("isJumping", !isGrounded);
+        isJumping = !isGrounded;
     }
 
     private Vector3 AdjustOnUnevenTerrain(Vector3 velocity)
