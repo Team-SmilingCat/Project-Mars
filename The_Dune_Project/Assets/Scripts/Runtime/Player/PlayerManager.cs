@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviour
         switch (playerState)
         {
             case PlayerStates.Active:
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
                 playerInputHandle.HandleAllInputs();
                 playerUIManager.CheckForInventoryInput();
                 playerMovement.HandleAllPlayerMovement();

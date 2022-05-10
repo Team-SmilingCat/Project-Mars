@@ -34,10 +34,12 @@ public class Inventory : MonoBehaviour
         consumableSlots = inventoryUI.transform.GetChild(1).transform.GetComponentsInChildren<InventorySlot>();
 
         // TODO: Remove when done testing.
+        /*
         Consumable con = ScriptableObject.CreateInstance<Consumable>();
         con.itemName = "test";
         con.Count = 1;
         Add(con);
+        */
     }
 
     public bool Add(Items item){
