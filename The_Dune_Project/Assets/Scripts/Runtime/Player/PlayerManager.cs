@@ -44,6 +44,12 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if (!PlayerHasAllRequiredScripts())
+        {
+            Debug.Log("missing scripts! check player manager");
+            return;
+        }
+
         switch (playerState)
         {
             case PlayerStates.Active:
@@ -69,6 +75,24 @@ public class PlayerManager : MonoBehaviour
         animator.SetBool("isGrounded", playerMovement.isGrounded);
         playerInputHandle.leftClickInput = false;
         cameraManager.HandleCameraFunctions();
+    }
+
+    private bool PlayerHasAllRequiredScripts()
+    {
+        if (
+            playerInputHandle != null &&
+            playerMovement != null &&
+            rangedShootingHandler != null &&
+            animator != null &&
+            playerAttack != null 
+            )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     

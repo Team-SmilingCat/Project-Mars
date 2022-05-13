@@ -67,7 +67,7 @@ Material:
     - _LightFalloffSize: 0.0001
     - _LightmapDirectionPitch: 0
     - _LightmapDirectionYaw: 0
-    - _OutlineDepthOffset: 0
+    - _OutlineDepthOffset: 1
     - _OutlineEnabled: 1
     - _OutlineScale: 1
     - _OutlineWidth: 1
