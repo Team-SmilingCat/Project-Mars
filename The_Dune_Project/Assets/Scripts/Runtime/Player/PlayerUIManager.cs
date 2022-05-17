@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -18,6 +19,13 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera invCam;
     [SerializeField] private float inventoryCD;
     [SerializeField] private float closeCD;
+
+    [Header("combat aiming UI elements")]
+    [SerializeField] GameObject reticle;
+    [SerializeField] GameObject ammoText;
+    [SerializeField] TextMeshProUGUI currentAmmoCount;
+    [SerializeField] TextMeshProUGUI maxCap;
+
 
     [Header("Flag")] 
     [SerializeField] private bool inventoryIsOpen;
@@ -73,7 +81,7 @@ public class PlayerUIManager : MonoBehaviour
         {
             //inputHandle.HandleInventoryInput();
             SetInventoryWindow();
-            playerManager.SwitchToInventoryState();
+            playerManager.SwitchStates(PlayerManager.PlayerStates.Inventory);
         }
     }
 
@@ -84,6 +92,12 @@ public class PlayerUIManager : MonoBehaviour
             RemoveInventoryWindow();
             StartCoroutine(EnsureInventoryClosing());
         }
+    }
+
+    public void InitAimingUIContent(bool b)
+    {
+        reticle.SetActive(b);
+        ammoText.SetActive(b);
     }
 
     private void SetInventoryWindow()
@@ -130,7 +144,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(closeCD);
         //player can move only after cd seconds, this is to ensure the inventory is closed before hand.
-        playerManager.SwitchToActiveState();
+        playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
     }
     
 }

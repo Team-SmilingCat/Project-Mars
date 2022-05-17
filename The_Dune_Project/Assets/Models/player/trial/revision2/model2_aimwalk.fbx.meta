@@ -1,0 +1,274 @@
+fileFormatVersion: 2
+guid: a8128b98d3f4c48539978fbeb0cb2300
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: -1422011007694221501
+    second: Armature|ArmatureAction.001
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|ArmatureAction.001
+      takeName: Armature|ArmatureAction.001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/hand.R.001
+        weight: 1
+      - path: Armature/hand.R.001/hand.R.001_end
+        weight: 1
+      - path: Armature/hand.R.001/Sniper_1
+        weight: 1
+      - path: Armature/hip.L
+        weight: 1
+      - path: Armature/hip.L/shin.L
+        weight: 1
+      - path: Armature/hip.L/shin.L/foot.L
+        weight: 1
+      - path: Armature/hip.L/shin.L/foot.L/toe.L
+        weight: 1
+      - path: Armature/hip.L/shin.L/foot.L/toe.L/toe.L_end
+        weight: 1
+      - path: Armature/hip.R
+        weight: 1
+      - path: Armature/hip.R/shin.R
+        weight: 1
+      - path: Armature/hip.R/shin.R/foot.R
+        weight: 1
+      - path: Armature/hip.R/shin.R/foot.R/toe.R
+        weight: 1
+      - path: Armature/hip.R/shin.R/foot.R/toe.R/toe.R_end
+        weight: 1
+      - path: Armature/spine1
+        weight: 1
+      - path: Armature/spine1/spine
+        weight: 1
+      - path: Armature/spine1/spine/spine3
+        weight: 1
+      - path: Armature/spine1/spine/spine3/neck
+        weight: 1
+      - path: Armature/spine1/spine/spine3/neck/head
+        weight: 1
+      - path: Armature/spine1/spine/spine3/neck/head/head_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/index1.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/index1.L/index2.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/index1.L/index2.L/index3.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/index1.L/index2.L/index3.L/index3.L_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/middle1.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/middle1.L/middle2.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/middle1.L/middle2.L/middle3.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/middle1.L/middle2.L/middle3.L/middle3.L_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pinky1.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pinky1.L/pinky2.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pinky1.L/pinky2.L/pinky3.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pinky1.L/pinky2.L/pinky3.L/pinky3.L_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pointer1.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pointer1.L/pointer2.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pointer1.L/pointer2.L/pointer3.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/pointer1.L/pointer2.L/pointer3.L/pointer3.L_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/thumb.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/thumb.L/thumb2.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/thumb.L/thumb2.L/thumb3.L
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.L/bicep.L/forearm.L/hand.L/thumb.L/thumb2.L/thumb3.L/thumb3.L_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/index1.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/index1.R/index2.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/index1.R/index2.R/index3.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/index1.R/index2.R/index3.R/index3.R_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/middle1.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/middle1.R/middle2.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/middle1.R/middle2.R/middle3.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/middle1.R/middle2.R/middle3.R/middle3.R_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pinky1.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pinky1.R/pinky2.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pinky1.R/pinky2.R/pinky3.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pinky1.R/pinky2.R/pinky3.R/pinky3.R_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pointer1.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pointer1.R/pointer2.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pointer1.R/pointer2.R/pointer3.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/pointer1.R/pointer2.R/pointer3.R/pointer3.R_end
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/thumb.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/thumb.R/thumb2.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/thumb.R/thumb2.R/thumb3.R
+        weight: 1
+      - path: Armature/spine1/spine/spine3/shoulder.R/bicep.R/forearm.R/hand.R/thumb.R/thumb2.R/thumb3.R/thumb3.R_end
+        weight: 1
+      - path: Eyes.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

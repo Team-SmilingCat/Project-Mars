@@ -18,6 +18,7 @@ public class RangedShootingHandler : MonoBehaviour
     [Header("character manager scripts accessor")]
     [SerializeField] private PlayerInputHandle playerInputHandle;
     [SerializeField] private AnimatorManager animatorManager;
+    private PlayerInventoryManager playerInventoryManager;
     
     [Header("range of the ranged attack")] 
     [SerializeField] private float rangedDistance;
@@ -37,9 +38,40 @@ public class RangedShootingHandler : MonoBehaviour
 
     [SerializeField] private float minDistanceAllowedToAim;
 
+    [Header("Shooting props")]
+    [SerializeField] PlayerUIManager playerUIManager;
+    private float shotCoolDown;
+    [SerializeField] private float reloadCD;
+    [SerializeField] private int bulletCount;
+    [SerializeField] private int capacity;
+    [SerializeField] private bool canShoot;
+
+    private void Awake()
+    {
+        playerInventoryManager = GetComponent<PlayerInventoryManager>();
+    }
+
     void Start(){
         currentPlayerRotation = spineToRotate.transform.rotation;
+        RangedWeapon typedWeapon;
+        if (playerInventoryManager.weapon.type.Equals("ranged"))
+        {
+            typedWeapon = (RangedWeapon)playerInventoryManager.weapon;
+            shotCoolDown = typedWeapon.coolDownTime;
+        }
+        canShoot = true;
     }
+
+    public void AddAmmunition(int n) {
+        capacity += n;
+    }
+
+    public void SetAmmunition(int n) {
+        capacity = n;
+    }
+    
+
+
     public void HandleShootingAttack()
     { 
         Vector3 worldTarget = Vector3.zero;
@@ -53,34 +85,49 @@ public class RangedShootingHandler : MonoBehaviour
             if (playerInputHandle.rightClickInput)
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
-                aimningCrossHair.gameObject.SetActive(true);
+
+                playerUIManager.InitAimingUIContent(true);
+
                 worldTarget = hit.point;
-                //worldTarget.y = gameObject.transform.position.y;
                 Vector3 aimDirection = (worldTarget - gameObject.transform.position).normalized;
 
                 var rotation = Quaternion.LookRotation(aimDirection);
                 aimVector = rotation;
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
                 isAiming = true;
-                if(playerInputHandle.leftClickInput)
-                {
-                    Debug.Log("only shooting");
-                    animatorManager.PlayTargetAnimation("shoot", true);
-                    GameObject clone = (GameObject) Instantiate(particle, rayConfirmer.position, Quaternion.identity);
-                    Destroy(clone, 1.5f);
-                    //checks if the target of the raycast is a attackable emnemy
-                    if (hit.collider.gameObject.tag.Equals("Mob"))
-                    {
-                        hit.collider.gameObject.GetComponent<Fighter>().TakeDamage(10);
-                    }
-                }
+                ShootRifle(hit);
             }
             else
             {
                 gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
                 isAiming = false;
-                aimningCrossHair.gameObject.SetActive(false);
+
+                playerUIManager.InitAimingUIContent(false);
             }
         }
+    }
+
+    private void ShootRifle(RaycastHit target)
+    {
+        if (playerInputHandle.leftClickInput && canShoot)
+        {
+            animatorManager.PlayTargetAnimation("shoot", true);
+            GameObject clone = (GameObject)Instantiate(particle, rayConfirmer.position, Quaternion.identity);
+            Destroy(clone, 1.5f);
+            //checks if the target of the raycast is a attackable emnemy
+            if (target.collider.gameObject.tag.Equals("Mob"))
+            {
+                target.collider.gameObject.GetComponent<Fighter>().TakeDamage(10);
+            }
+
+            StartCoroutine(RefreshShotCD());
+        }
+    }
+
+    private IEnumerator RefreshShotCD()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(shotCoolDown);
+        canShoot = true;
     }
 }

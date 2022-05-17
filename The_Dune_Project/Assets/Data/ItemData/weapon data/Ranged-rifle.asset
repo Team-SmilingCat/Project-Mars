@@ -21,3 +21,4 @@ MonoBehaviour:
   weaponMesh: {fileID: 234576111256210880, guid: a0293dd68163eb2489fe5894cca8c2bf, type: 3}
   handsUsed: 2
   shootAnimation: shoot
+  coolDownTime: 2

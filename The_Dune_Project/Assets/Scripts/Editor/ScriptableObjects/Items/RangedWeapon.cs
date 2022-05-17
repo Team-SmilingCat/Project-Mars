@@ -5,5 +5,6 @@ using UnityEngine;
 public class RangedWeapon : Weapons
 {
     public string shootAnimation;
+    public float coolDownTime;
 
 }

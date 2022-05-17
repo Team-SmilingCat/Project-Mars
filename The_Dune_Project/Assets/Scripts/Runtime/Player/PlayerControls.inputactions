@@ -342,6 +342,17 @@
                 },
                 {
                     "name": "",
+                    "id": "bdeee759-cea5-4ef3-be7c-412a6407e40d",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lclick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "aabef1c1-63b8-497f-ac7f-22faeaa0bfab",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",

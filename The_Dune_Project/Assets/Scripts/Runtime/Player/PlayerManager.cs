@@ -23,7 +23,9 @@ public class PlayerManager : MonoBehaviour
     public enum PlayerStates
     {
         Active,
-        Inventory
+        Inventory,
+        Aim,
+        Shoot
     };
     
     public PlayerStates playerState;
@@ -93,6 +95,11 @@ public class PlayerManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void SwitchStates(PlayerStates state)
+    {
+        playerState = state;
     }
     
     
