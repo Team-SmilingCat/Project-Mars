@@ -70,6 +70,10 @@ public class PlayerManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!PlayerHasAllRequiredScripts())
+        {
+            return;
+        }
         isInteracting = animator.GetBool("isInteracting");
         canCombo = animator.GetBool("canCombo");
         canRotateDuringAttack = animator.GetBool("canRotateDuringAttack");

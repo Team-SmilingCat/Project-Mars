@@ -136,8 +136,6 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void HandleJumping()
     {
-
-
     }
 
     private void HandleAttackInput()

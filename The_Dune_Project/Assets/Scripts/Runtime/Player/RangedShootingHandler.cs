@@ -93,7 +93,7 @@ public class RangedShootingHandler : MonoBehaviour
 
                 var rotation = Quaternion.LookRotation(aimDirection);
                 aimVector = rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
                 isAiming = true;
                 ShootRifle(hit);
             }
