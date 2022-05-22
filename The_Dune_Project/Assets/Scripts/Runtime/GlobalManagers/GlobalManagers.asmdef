@@ -1,0 +1,16 @@
+{
+    "name": "GlobalManagers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6c907de5584fd93408f5b2c72fab5afe"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

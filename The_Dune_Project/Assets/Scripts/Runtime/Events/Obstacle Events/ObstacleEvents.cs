@@ -1,18 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleEvents : MonoBehaviour
+public abstract class ObstacleEvents : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static ObstacleEvents current;
+    public event Action TriggerBridgeCutScene;
+    private ActivateCutscene activateCutscene;
+    private void Awake()
     {
-        
+        current = this;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    
 }

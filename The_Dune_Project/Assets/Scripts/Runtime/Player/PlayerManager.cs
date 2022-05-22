@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
         Shoot
     };
     
-    public PlayerStates playerState;
+    public PlayerStates playerState; 
     
     private void Awake()
     {
@@ -43,8 +43,26 @@ public class PlayerManager : MonoBehaviour
     {
         playerState = PlayerStates.Active;
     }
+    
+    private bool PlayerHasAllRequiredScripts()
+    {
+        if (
+            playerInputHandle != null &&
+            playerMovement != null &&
+            rangedShootingHandler != null &&
+            animator != null &&
+            playerAttack != null 
+            )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-    private void Update()
+    public void PlayerLoop()
     {
         if (!PlayerHasAllRequiredScripts())
         {
@@ -65,10 +83,9 @@ public class PlayerManager : MonoBehaviour
                 playerUIManager.CheckForInventoryClosingInput();
                 break;
         }
-
     }
 
-    private void LateUpdate()
+    public void PlayerLateUpdate()
     {
         if (!PlayerHasAllRequiredScripts())
         {
@@ -81,24 +98,6 @@ public class PlayerManager : MonoBehaviour
         animator.SetBool("isGrounded", playerMovement.isGrounded);
         playerInputHandle.leftClickInput = false;
         cameraManager.HandleCameraFunctions();
-    }
-
-    private bool PlayerHasAllRequiredScripts()
-    {
-        if (
-            playerInputHandle != null &&
-            playerMovement != null &&
-            rangedShootingHandler != null &&
-            animator != null &&
-            playerAttack != null 
-            )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     public void SwitchStates(PlayerStates state)
