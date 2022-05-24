@@ -54,4 +54,13 @@ public class GlobalGameManager : MonoBehaviour
                 break;
         }
     }
+    
+    
+    
+    /* public methods available */
+
+    public void SwitchStates(GameStates state)
+    {
+        currentState = state;
+    }
 }

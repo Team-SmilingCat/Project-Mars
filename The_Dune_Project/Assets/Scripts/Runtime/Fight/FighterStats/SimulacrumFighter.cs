@@ -13,5 +13,6 @@ public class SimulacrumFighter : Fighter
                 animator.Play("death");
             }
         }
+        
     }
 }

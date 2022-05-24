@@ -1,18 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActivateSwitch : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private ActivateCutscene activateCutscene;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        RangedShootingHandler.OnHitEvent += OnHit;
+
     }
+
+    private void OnDisable()
+    {
+        RangedShootingHandler.OnHitEvent -= OnHit;
+    }
+
+    private void OnHit(RangedShootingHandler r)
+    {
+        DetectHit();
+    }
+
+    private void DetectHit()
+    {
+        activateCutscene.ExecuteEvent();
+        OnDisable();
+    }
+    
+    
+    
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Diagnostics.Tracing;
+using System.Runtime.Serialization;
 using UnityEngine;
 using Fight;
 using UnityEngine.InputSystem;
@@ -45,6 +47,9 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] private int bulletCount;
     [SerializeField] private int capacity;
     [SerializeField] private bool canShoot;
+    
+    /* Event notifier for obstacles */
+    public static event Action<RangedShootingHandler> OnHitEvent;
 
     private void Awake()
     {
@@ -118,6 +123,10 @@ public class RangedShootingHandler : MonoBehaviour
             if (target.collider.gameObject.tag.Equals("Mob"))
             {
                 target.collider.gameObject.GetComponent<Fighter>().TakeDamage(10);
+            }
+            else
+            {
+                if (OnHitEvent != null) OnHitEvent(this);
             }
 
             StartCoroutine(RefreshShotCD());
