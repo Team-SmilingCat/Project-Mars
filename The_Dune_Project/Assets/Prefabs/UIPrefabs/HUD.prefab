@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 290662448001145691}
   m_RootOrder: 0
@@ -103,6 +104,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8634649, y: 5.629, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 290662447251581946}
   m_RootOrder: 0
@@ -178,6 +180,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.7, y: 2.58, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290662447216554376}
   m_Father: {fileID: 905915029826961094}
@@ -254,6 +257,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 905915029826961094}
   m_RootOrder: 1
@@ -329,6 +333,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 290662447072039568}
   m_RootOrder: 0
@@ -463,6 +468,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290662447030911031}
   m_Father: {fileID: 905915029826961094}
@@ -537,6 +543,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 290662447251581944}
+  player: {fileID: 0}
+  inventory: {fileID: 0}
+  invCam: {fileID: 0}
+  inventoryCD: 0
+  closeCD: 0
+  reticle: {fileID: 0}
+  ammoText: {fileID: 0}
+  currentAmmoCount: {fileID: 0}
+  maxCap: {fileID: 0}
+  inventoryIsOpen: 0
+  canOpenInventory: 0
+  canCloseInventory: 0
 --- !u!1 &290662448001145690
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +583,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290662446618607764}
   m_Father: {fileID: 905915029826961094}
@@ -639,6 +658,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 290662448001145689}
+  player: {fileID: 0}
+  inventory: {fileID: 0}
+  invCam: {fileID: 0}
+  inventoryCD: 0
+  closeCD: 0
+  reticle: {fileID: 0}
+  ammoText: {fileID: 0}
+  currentAmmoCount: {fileID: 0}
+  maxCap: {fileID: 0}
+  inventoryIsOpen: 0
+  canOpenInventory: 0
+  canCloseInventory: 0
 --- !u!1 &905915028156979332
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +698,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 905915028246693748}
   m_RootOrder: 1
@@ -742,6 +774,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 905915029779223091}
   - {fileID: 905915028156979339}
@@ -817,6 +850,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 905915028246693755}
+  player: {fileID: 0}
+  inventory: {fileID: 0}
+  invCam: {fileID: 0}
+  inventoryCD: 0
+  closeCD: 0
+  reticle: {fileID: 0}
+  ammoText: {fileID: 0}
+  currentAmmoCount: {fileID: 0}
+  maxCap: {fileID: 0}
+  inventoryIsOpen: 0
+  canOpenInventory: 0
+  canCloseInventory: 0
 --- !u!1 &905915029779223052
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +890,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 905915028246693748}
   m_RootOrder: 0
@@ -921,6 +967,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 905915028246693748}
   - {fileID: 290662447135712962}
@@ -953,6 +1000,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
