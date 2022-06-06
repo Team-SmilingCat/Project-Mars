@@ -12,7 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _COLORMODE_GRADIENT_TEXTURE
+  - _COLORMODE_LINEAR
   - _FOAMMODE_TEXTURE
   - _WAVEMODE_GRID
   m_InvalidKeywords:
@@ -99,7 +99,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _ColorMode: 1
+    - _ColorMode: 0
     - _CrestSharpness: 0.198
     - _CrestSize: 0.51
     - _Cull: 2
@@ -108,7 +108,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FadeDistance: 3.81
+    - _FadeDistance: -3.67
     - _FoamAmount: 0.25
     - _FoamDepth: 2.85
     - _FoamDirection: -0.23
@@ -140,7 +140,7 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _WaterClearness: 0
-    - _WaterDepth: 10
+    - _WaterDepth: 14.51
     - _WaveAmplitude: 0.25
     - _WaveDirection: 0
     - _WaveFrequency: 1
@@ -152,8 +152,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDeep: {r: 0.72156864, g: 0.735849, b: 0.71289265, a: 1}
-    - _ColorShallow: {r: 0.15174441, g: 0.18675792, b: 0.20754719, a: 0.8}
+    - _ColorDeep: {r: 0.29644018, g: 0.1713243, b: 0.4716981, a: 1}
+    - _ColorShallow: {r: 0.5298594, g: 0.764151, b: 0.764151, a: 1}
     - _CrestColor: {r: 0.43164828, g: 0.9433962, b: 0.73640245, a: 0.9}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
