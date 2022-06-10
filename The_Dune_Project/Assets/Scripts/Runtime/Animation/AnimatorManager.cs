@@ -116,4 +116,9 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool(s, b);
     }
 
+    public void ChangeSubstate()
+    {
+        
+    }
+
 }
