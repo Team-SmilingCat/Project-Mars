@@ -81,7 +81,6 @@ public class PlayerUIManager : MonoBehaviour
         {
             //inputHandle.HandleInventoryInput();
             SetInventoryWindow();
-            playerManager.SwitchStates(PlayerManager.PlayerStates.Inventory);
         }
     }
 
@@ -112,6 +111,8 @@ public class PlayerUIManager : MonoBehaviour
             inventoryIsOpen = true;
             animatorManager.PlayTargetAnimation("openbag", true);
             inventory.SetActive(true);
+            Debug.Log("inventory open");
+            playerManager.SwitchStates(PlayerManager.PlayerStates.Inventory);
             StartCoroutine(CheckInventoryTimer());
         }
     }
@@ -144,6 +145,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(closeCD);
         //player can move only after cd seconds, this is to ensure the inventory is closed before hand.
+        Debug.Log("is going back");
         playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
     }
     

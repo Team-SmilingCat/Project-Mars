@@ -18,14 +18,18 @@ public class PlayerManager : MonoBehaviour
     public bool isInteracting;
     public bool canCombo;
     public bool canRotateDuringAttack;
-    
-    
+
+    [SerializeField] private List<PlayerActions> playerActionsList;
+
+
     public enum PlayerStates
     {
         Active,
         Inventory,
         Aim,
-        Shoot
+        Shoot,
+        Pushing,
+        Climbing
     };
     
     public PlayerStates playerState; 
@@ -81,6 +85,14 @@ public class PlayerManager : MonoBehaviour
             case PlayerStates.Inventory:
                 //check for condition
                 playerUIManager.CheckForInventoryClosingInput();
+                break;
+            case PlayerStates.Pushing:
+                playerInputHandle.HandleAllPushInputs();
+                playerActionsList[0].Action();
+                break;
+            case PlayerStates.Climbing:
+                playerInputHandle.HandleAllPushInputs();
+                playerActionsList[1].Action();
                 break;
         }
     }

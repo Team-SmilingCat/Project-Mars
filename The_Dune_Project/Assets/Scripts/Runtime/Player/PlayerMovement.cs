@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Quaternion = UnityEngine.Quaternion;
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private RangedShootingHandler rangedShootingHandler;
+    [SerializeField] private MoveObjectAction moveObjectAction;
 
     private Transform camera;
     private PlayerInputHandle playerInputHandle;
@@ -88,12 +90,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AnimationCurve kbCurve;
     private bool isKnockedBack;
 
+    [Header("Move with Object")] [SerializeField]
+    private Transform rayStartPosition;
+    [SerializeField] private LayerMask pushableLayer;
+    [SerializeField] private float maxRangeDetect;
+    [SerializeField] [CanBeNull] private Rigidbody pushedTarget;
+
 
     private void Awake()
     {
         playerInputHandle = gameObject.GetComponent<PlayerInputHandle>();
         camera = Camera.main.transform;
         controller = gameObject.GetComponent<CharacterController>();
+        moveObjectAction = GetComponent<MoveObjectAction>();
     }
 
     private void Start()
@@ -145,9 +154,36 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isDashing) return;
         if (isKnockedBack) return;
+        CheckForMovableObstacle();
         HandleCCJumping();
         HandleMovement();
         HandleTurns();
+    }
+    
+    private void CheckForMovableObstacle()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(rayStartPosition.position, rayStartPosition.forward, out hit, maxRangeDetect, pushableLayer,
+                QueryTriggerInteraction.Collide))
+        {
+            if (hit.transform.gameObject.CompareTag("Moveable"))
+            {
+                animatorManager.animator.SetLayerWeight(3, 1);
+                if (hit.rigidbody.TryGetComponent(out Rigidbody rb))
+                {
+                    pushedTarget = hit.rigidbody;   
+                }
+                playerManager.SwitchStates(PlayerManager.PlayerStates.Pushing);
+                return;
+            }
+            else if (hit.transform.gameObject.CompareTag("Ladder"))
+            {
+                animatorManager.animator.SetLayerWeight(4,1);
+                playerManager.SwitchStates(PlayerManager.PlayerStates.Climbing);
+            }
+        }
+        animatorManager.animator.SetLayerWeight(3,0);
+        pushedTarget = null;
     }
 
     private void HandleMovement()
@@ -183,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(moveVector * Time.deltaTime);
         }
     }
-
+    
     private void HandleTurns()
     {
         if (rangedShootingHandler.isAiming)
@@ -336,6 +372,11 @@ public class PlayerMovement : MonoBehaviour
         velocityY = 0;
     }
 
+    public Rigidbody GetPushTarget()
+    {
+        return pushedTarget;
+    }
+
     void OnDrawGizmosSelected()
     {
         Vector3 debugVec3 = new Vector3(gameObject.transform.position.x,
@@ -343,5 +384,7 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.position.z);
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(debugVec3, debugRadius);
+
+        Gizmos.DrawRay(rayStartPosition.position, Vector3.forward * maxRangeDetect);
     }
 }

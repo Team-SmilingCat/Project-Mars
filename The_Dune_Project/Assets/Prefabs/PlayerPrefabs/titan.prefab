@@ -245,6 +245,8 @@ GameObject:
   - component: {fileID: 992499204202667967}
   - component: {fileID: 992499204202667964}
   - component: {fileID: 992499204202667965}
+  - component: {fileID: 5618719952608223615}
+  - component: {fileID: 5471595026052766339}
   - component: {fileID: 992499204202667954}
   - component: {fileID: 992499204202667955}
   m_Layer: 6
@@ -337,6 +339,7 @@ MonoBehaviour:
   playerManager: {fileID: 992499204202667961}
   animatorManager: {fileID: 992499204202667962}
   rangedShootingHandler: {fileID: 992499204202667964}
+  moveObjectAction: {fileID: 0}
   transform: {fileID: 472245089136788747}
   isSprinting: 0
   isWalking: 0
@@ -423,6 +426,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rayStartPosition: {fileID: 472245089136788747}
+  pushableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  maxRangeDetect: 5
+  pushedTarget: {fileID: 0}
 --- !u!114 &992499204202667960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +482,7 @@ MonoBehaviour:
   isInteracting: 0
   canCombo: 0
   canRotateDuringAttack: 0
+  playerActionsList: []
   playerState: 0
 --- !u!114 &992499204202667966
 MonoBehaviour:
@@ -557,6 +567,39 @@ MonoBehaviour:
   animator: {fileID: 992499204202667952}
   curTarget: {fileID: 0}
   animatorManager: {fileID: 992499204202667962}
+--- !u!114 &5618719952608223615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992499204202667953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a09b6150ceaf43df97a54b6904f389f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushSpeed: 5
+  rayStartPosition: {fileID: 0}
+  pushableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  maxRangeDetect: 6
+  pushedTarget: {fileID: 0}
+  pushMagnitude: 7.5
+--- !u!114 &5471595026052766339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992499204202667953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1667999a6654e62b8bb805bf0fbdcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  climbingSpeed: 7.6
 --- !u!143 &992499204202667954
 CharacterController:
   m_ObjectHideFlags: 0

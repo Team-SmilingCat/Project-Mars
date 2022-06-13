@@ -7,6 +7,8 @@ TagManager:
   - Mob
   - sword
   - inventory
+  - Moveable
+  - Ladder
   layers:
   - Default
   - TransparentFX
