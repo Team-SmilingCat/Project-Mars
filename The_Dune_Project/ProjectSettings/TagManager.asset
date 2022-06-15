@@ -9,6 +9,7 @@ TagManager:
   - inventory
   - Moveable
   - Ladder
+  - EndClimb
   layers:
   - Default
   - TransparentFX

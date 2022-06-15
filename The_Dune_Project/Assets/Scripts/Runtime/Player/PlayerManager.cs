@@ -91,7 +91,7 @@ public class PlayerManager : MonoBehaviour
                 playerActionsList[0].Action();
                 break;
             case PlayerStates.Climbing:
-                playerInputHandle.HandleAllPushInputs();
+                playerInputHandle.HandleAllClimbInputs();
                 playerActionsList[1].Action();
                 break;
         }
@@ -114,20 +114,13 @@ public class PlayerManager : MonoBehaviour
 
     public void SwitchStates(PlayerStates state)
     {
-        playerState = state;
-    }
-    
-    
-
-    //TODO: Observers when refactoring
-    public void SwitchToInventoryState()
-    {
-        playerState = PlayerStates.Inventory;
+        if (!Equals(playerState, state)) playerState = state;
     }
 
-    public void SwitchToActiveState()
+    public PlayerStates GetCurrentState()
     {
-        playerState = PlayerStates.Active;
+        return this.playerState;
     }
+    
     
 }

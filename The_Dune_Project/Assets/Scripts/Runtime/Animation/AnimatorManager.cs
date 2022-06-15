@@ -8,6 +8,7 @@ public class AnimatorManager : MonoBehaviour
     public Animator animator;
     private int horizontal;
     private int vertical;
+    [SerializeField] private int overrideLayer;
     
 
     private void Awake()
@@ -116,9 +117,13 @@ public class AnimatorManager : MonoBehaviour
         animator.SetBool(s, b);
     }
 
-    public void ChangeSubstate()
+    public void DisableOverrideLayer()
     {
-        
+        animator.SetLayerWeight(overrideLayer, 0);
     }
 
+    public void EnableOverrideLayer()
+    {
+        animator.SetLayerWeight(overrideLayer, 1);
+    }
 }

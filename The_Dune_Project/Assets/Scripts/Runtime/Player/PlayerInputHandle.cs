@@ -110,6 +110,12 @@ public class PlayerInputHandle : MonoBehaviour
         MoveInput();
     }
 
+    public void HandleAllClimbInputs()
+    {
+        MoveInput();
+        
+    }
+
     public void HandleAllLateInputs()
     {
         HandleAimingInput();

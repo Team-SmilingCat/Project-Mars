@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (hit.transform.gameObject.CompareTag("Moveable"))
             {
-                animatorManager.animator.SetLayerWeight(3, 1);
+                animatorManager.animator.SetLayerWeight(4, 1);
                 if (hit.rigidbody.TryGetComponent(out Rigidbody rb))
                 {
                     pushedTarget = hit.rigidbody;   
@@ -178,11 +178,14 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (hit.transform.gameObject.CompareTag("Ladder"))
             {
-                animatorManager.animator.SetLayerWeight(4,1);
+                animatorManager.animator.SetLayerWeight(3,1);
+                animatorManager.DisableOverrideLayer();
                 playerManager.SwitchStates(PlayerManager.PlayerStates.Climbing);
+                return;
             }
         }
         animatorManager.animator.SetLayerWeight(3,0);
+        animatorManager.animator.SetLayerWeight(4,0);
         pushedTarget = null;
     }
 
@@ -385,6 +388,6 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(debugVec3, debugRadius);
 
-        Gizmos.DrawRay(rayStartPosition.position, Vector3.forward * maxRangeDetect);
+        Gizmos.DrawRay(rayStartPosition.position, rayStartPosition.forward * maxRangeDetect);
     }
 }
