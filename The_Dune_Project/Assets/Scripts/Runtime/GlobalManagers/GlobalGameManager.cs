@@ -6,6 +6,8 @@ using UnityEngine;
 public class GlobalGameManager : MonoBehaviour
 {
     [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private LevelManager levelManager;
+    
     public enum GameStates
     {
         StartGame,
@@ -19,7 +21,7 @@ public class GlobalGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentState = GameStates.MainLoop;
+        currentState = GameStates.StartGame;
     }
 
     // Update is called once per frame
@@ -28,6 +30,8 @@ public class GlobalGameManager : MonoBehaviour
         switch (currentState)
         {
             case GameStates.StartGame:
+                levelManager.LoadLevelData();
+                SwitchStates(GameStates.MainLoop);
                 break;
             case GameStates.InMenu:
                 break;
