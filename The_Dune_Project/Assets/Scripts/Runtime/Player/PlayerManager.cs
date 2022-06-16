@@ -106,7 +106,7 @@ public class PlayerManager : MonoBehaviour
         isInteracting = animator.GetBool("isInteracting");
         canCombo = animator.GetBool("canCombo");
         canRotateDuringAttack = animator.GetBool("canRotateDuringAttack");
-        animator.SetBool("isJumping", playerMovement.isJumping);
+        //animator.SetBool("isJumping", playerMovement.isJumping);
         animator.SetBool("isGrounded", playerMovement.isGrounded);
         playerInputHandle.leftClickInput = false;
         cameraManager.HandleCameraFunctions();

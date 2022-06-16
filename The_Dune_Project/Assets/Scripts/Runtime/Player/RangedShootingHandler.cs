@@ -89,27 +89,27 @@ public class RangedShootingHandler : MonoBehaviour
             rayConfirmer.position = hit.point;
             if (playerInputHandle.rightClickInput)
             {
-                gameObject.GetComponent<Animator>().SetLayerWeight(2,1);
-
+                animatorManager.ModifyBoolParams("isAiming", true);
                 playerUIManager.InitAimingUIContent(true);
 
                 worldTarget = hit.point;
                 Vector3 aimDirection = (worldTarget - gameObject.transform.position).normalized;
-
                 var rotation = Quaternion.LookRotation(aimDirection);
                 aimVector = rotation;
                 //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * gunRotationSpeed);
-                isAiming = true;
+                isAiming = true;    
                 ShootRifle(hit);
+                return;
             }
             else
             {
-                gameObject.GetComponent<Animator>().SetLayerWeight(2,0);
+                animatorManager.ModifyBoolParams("isAiming", false);
                 isAiming = false;
-
                 playerUIManager.InitAimingUIContent(false);
+                return;
             }
         }
+        animatorManager.ModifyBoolParams("isAiming", false);
     }
 
     private void ShootRifle(RaycastHit target)

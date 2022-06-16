@@ -4,18 +4,18 @@ namespace Fight
 {
     public class PlayerFighter : Fighter
     {
-        [Header("Animator")] [SerializeField] private AnimatorManager animatorManager;
+        [Header("Animator")] [SerializeField] public AnimatorManager animatorManager;
 
         protected override void Init()
         {
             base.Init();
-            
+
         }
-        
+
         protected override void KillEntity()
         {
             base.KillEntity();
-            
+
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb)
             {

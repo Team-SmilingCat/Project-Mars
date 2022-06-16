@@ -10,6 +10,7 @@ TagManager:
   - Moveable
   - Ladder
   - EndClimb
+  - ObstacleTrigger
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - UI
   - Character
   - environment
-  - climbable
+  - hardsurface
   - slope
   - mob
   - nolight

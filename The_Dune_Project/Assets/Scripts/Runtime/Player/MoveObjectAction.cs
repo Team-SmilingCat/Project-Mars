@@ -12,8 +12,8 @@ public class MoveObjectAction : PlayerActions
     private Vector3 moveVector;
     private CharacterController playerController;
     
-    [Header("Move with Object")] [SerializeField]
-    private Transform rayStartPosition;
+    [Header("Move with Object")] 
+    [SerializeField] private Vector3 offset;
     [SerializeField] private LayerMask pushableLayer;
     [SerializeField] private float maxRangeDetect;
     [SerializeField] [CanBeNull] private Rigidbody pushedTarget;
@@ -22,6 +22,8 @@ public class MoveObjectAction : PlayerActions
     private PlayerInputHandle playerInputHandle;
     private PlayerManager playerManager;
     private PlayerMovement playerMovement;
+    private AnimatorManager animatorManager;
+
     private void Start()
     {
         playerController = GetComponent<CharacterController>();
@@ -32,9 +34,35 @@ public class MoveObjectAction : PlayerActions
         playerInputHandle = GetComponent<PlayerInputHandle>();
         playerManager = GetComponent<PlayerManager>();
         playerMovement = GetComponent<PlayerMovement>();
+        animatorManager = GetComponent<AnimatorManager>();
     }
 
-    public void MoveObject(Rigidbody targetRb, Transform player, float magnitude)
+    private void CheckIfStillPushing()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position - offset,
+                transform.forward, out hit,
+                maxRangeDetect, pushableLayer,
+                QueryTriggerInteraction.Collide))
+        {
+            if (hit.transform.gameObject.CompareTag("Moveable"))
+            {
+                animatorManager.ModifyBoolParams("isPushing", true);
+                return;
+            }
+            animatorManager.ModifyBoolParams("isPushing", false);
+            playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
+        }
+        else
+        {
+            animatorManager.ModifyBoolParams("isPushing", false);
+            playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
+        }
+
+    }
+            
+
+    private void MoveObject(Rigidbody targetRb, Transform player, float magnitude)
     {
         Vector3 directionOfForce = targetRb.gameObject.transform.position - player.position;
         directionOfForce.y = 0;
@@ -46,10 +74,11 @@ public class MoveObjectAction : PlayerActions
     
     private void HandlePushMovement()
     {
-        moveVector = transform.forward * playerInputHandle.vertical;
+        moveVector = transform.forward;
         moveVector.y = 0;
         if (playerInputHandle.vertical < 0 || playerInputHandle.horizontal != 0)
         {
+            animatorManager.ModifyBoolParams("isPushing", false);
             playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
         }
         if (playerInputHandle.vertical >= 0.5f)
@@ -63,7 +92,17 @@ public class MoveObjectAction : PlayerActions
 
     public override void Action()
     {
+        CheckIfStillPushing();
         HandlePushMovement();
         MoveObject(playerMovement.GetPushTarget(), transform, pushSpeed);
     }
+
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawRay(transform.position - offset, transform.forward * maxRangeDetect);
+        Gizmos.color = Color.red;
+    }
 }
+
+

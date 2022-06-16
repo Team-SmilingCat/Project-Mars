@@ -44,11 +44,19 @@ public class ClimbingAction : PlayerActions
                 rayLenght, layer,
                 QueryTriggerInteraction.Collide))
         {
-            if (!hit.transform.gameObject.CompareTag("EndClimb")) return;
-            Debug.Log("out of view");
-            animatorManager.EnableOverrideLayer();
-            StartCoroutine(LerpPosition(transform.position + moveAmount, lerpSpeed));
-            playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
+            if (hit.transform.gameObject.CompareTag("EndClimb"))
+            {
+                Debug.Log("out of view");
+                animatorManager.ModifyBoolParams("isClimbing", false);
+                animatorManager.EnableOverrideLayer();
+                StartCoroutine(LerpPosition(transform.position + moveAmount, lerpSpeed));
+                playerManager.SwitchStates(PlayerManager.PlayerStates.Active);
+                return;
+            }
+            else if (hit.transform.gameObject.CompareTag("Ladder"))
+            {
+                animatorManager.ModifyBoolParams("isClimbing", true);
+            }
         }
     }
 
@@ -70,7 +78,7 @@ public class ClimbingAction : PlayerActions
         if (playerInputHandle.jumpInput)
         {
             transform.Rotate(transform.up, 180);
-            animatorManager.animator.SetLayerWeight(3,0);
+            animatorManager.ModifyBoolParams("isClimbing", false);
             animatorManager.EnableOverrideLayer();
             animatorManager.ModifyBoolParams("isJumping", true);
             moveVector.y += Mathf.Sqrt(-2f * -9.8f * jumpLenght);

@@ -29,7 +29,8 @@ public class WeaponManager : MonoBehaviour
         weaponDamage = rightHand.GetComponentInChildren<WeaponDamage>();
         if (weapon.type.Equals("ranged"))
         {
-            animator.SetLayerWeight(1, 1);
+            //animatorManager.ModifyBoolParams("hasRifle", true);
+            animator.SetBool("hasRifle", true);
         }
     }
 
