@@ -23,9 +23,9 @@ public class ActivateSwitch : MonoBehaviour
         RangedShootingHandler.OnHitEvent -= OnHit;
     }
 
-    private void OnHit(RangedShootingHandler r)
+    private void OnHit(RangedShootingHandler r, int id)
     {
-        DetectHit();
+        if(id == gameObject.GetInstanceID()) DetectHit();
     }
 
     private void DetectHit()

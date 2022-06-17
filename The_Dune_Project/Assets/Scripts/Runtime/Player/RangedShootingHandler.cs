@@ -49,7 +49,7 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] private bool canShoot;
     
     /* Event notifier for obstacles */
-    public static event Action<RangedShootingHandler> OnHitEvent;
+    public static event Action<RangedShootingHandler, int> OnHitEvent;
 
     private void Awake()
     {
@@ -126,7 +126,7 @@ public class RangedShootingHandler : MonoBehaviour
             }
             else
             {
-                if (OnHitEvent != null) OnHitEvent(this);
+                if (OnHitEvent != null) OnHitEvent(this, target.transform.gameObject.GetInstanceID());
             }
 
             StartCoroutine(RefreshShotCD());

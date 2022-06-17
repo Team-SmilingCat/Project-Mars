@@ -635,6 +635,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   footstepSounds: []
+  soundEffects: []
 --- !u!143 &992499204202667954
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3874,8 +3875,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: -0.022428222, z: -0.03644435}
-    m_Extent: {x: 0.0551796, y: 0.05662898, z: 0.04071729}
+    m_Center: {x: 0.0006805323, y: -0.022485735, z: -0.035275906}
+    m_Extent: {x: 0.055901546, y: 0.05668649, z: 0.04045026}
   m_DirtyAABB: 0
 --- !u!183 &8885902376244993991
 Cloth:

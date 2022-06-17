@@ -20,6 +20,26 @@ public class LevelRequirement : ScriptableObject
     {
         clearFlag = b;
     }
+
+    public void SetFlagForRequirement(string requirementName, bool b)
+    {
+        foreach(Requirement r in listOfRequirementsForlevel)
+        {
+            if(r.name.Equals(requirementName))
+            {
+                SetFlag(r, b);
+            }
+            else
+            {
+                Debug.Log($"Requirement not found");
+            }
+        }
+    }
+
+    private void SetFlag(Requirement r, bool b)
+    {
+        r.flagStatus = b;
+    }
 }
 
 [Serializable]

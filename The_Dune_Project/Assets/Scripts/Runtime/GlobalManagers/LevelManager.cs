@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -28,6 +29,26 @@ public class LevelManager : MonoBehaviour
         
         Debug.Log($"Loaded Level Data");
     }
-    
 
+    public void SetLevelRequirement(string sectionname, string requirementName, bool flagToSet)
+    {
+        foreach (LevelRequirement i in levelData)
+        {
+            if (i.sectionName.Equals(sectionname))
+            {
+                i.SetFlagForRequirement(requirementName, flagToSet);
+            }
+        }
+    }
+
+    public void ClearSubSection(string subsection)
+    {
+        foreach(LevelRequirement l in levelData)
+        {
+            if (l.sectionName.Equals(subsection))
+            {
+                l.SetClearFlag(true);
+            }
+        }
+    }
 }

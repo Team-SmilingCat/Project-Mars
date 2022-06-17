@@ -57,7 +57,6 @@ public class PlayPlayerSounds : MonoBehaviour
 
     private void PlayFootStepSound()
     {
-        Debug.Log("try sound ray");
         RaycastHit raycastHit;
         if (Physics.Raycast(transform.position + offset,
             -transform.up,
@@ -70,7 +69,6 @@ public class PlayPlayerSounds : MonoBehaviour
             if (raycastHit.transform.gameObject.layer ==
                 LayerMask.NameToLayer("hardsurface"))
             {
-                Debug.Log("play sound");
                 audioSource.PlayOneShot(GetRandomClip(GetGroup()));
             }
         }
