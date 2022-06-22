@@ -17,8 +17,6 @@ MonoBehaviour:
     flagStatus: 0
   - name: fourpuzzle
     flagStatus: 0
-  - name: killflyers
-    flagStatus: 0
   - name: killgolemn
     flagStatus: 0
   clearFlag: 0
