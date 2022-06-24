@@ -6,43 +6,21 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class CompleteFourPuzzle : MonoBehaviour
 {
-    [SerializeField] private List<PuzzleMatchPiece> listOfPieces;
-    
+    [SerializeField] TriggerEvent triggerEvent;
+    [SerializeField] private int numberOfPiecesDone;
+
     public event Action<CompleteFourPuzzle, int> puzzleEvent;
+
+    public void incrementDonePieceCount()
+    {
+        numberOfPiecesDone++;
+    }
+
+    public int GetNumPieces()
+    {
+        return numberOfPiecesDone;
+    }
+ 
     
-    private void Start()
-    {
-        
-    }
-
-}
-
-public class PuzzleMatchPiece
-{
-
-    public Collider tombLinker
-    {
-        get => tombLinker;
-        set => tombLinker = value;
-    }
-    public int uniqueID
-    {
-        get => uniqueID;
-        set => uniqueID = value;
-
-    }
-    public Material shinyMat
-    {
-        get => shinyMat;
-        set => shinyMat = value;
-    }
-    
-
-    public PuzzleMatchPiece(Collider sensorCollider, int uid, Material mat)
-    {
-        this.tombLinker = sensorCollider;
-        this.uniqueID = uid;
-        this.shinyMat = mat;
-    }
 }
 

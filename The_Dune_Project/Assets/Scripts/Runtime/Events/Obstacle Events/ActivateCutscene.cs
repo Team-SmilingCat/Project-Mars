@@ -8,8 +8,12 @@ public class ActivateCutscene : MonoBehaviour
 {
 	[SerializeField] private GlobalGameManager globalGameManager;
     [SerializeField] private PlayableDirector cutscene;
-    private bool hasPlayed;
     
+    private bool hasPlayed;
+
+    [SerializeField] private bool shouldRunOnContact;
+    
+
     [SerializeField] private GameObject HUD;
 
     private void Start()
@@ -36,7 +40,7 @@ public class ActivateCutscene : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {  
-        if (other.tag.Equals("Player") && !hasPlayed)
+        if (other.tag.Equals("Player") && !hasPlayed && shouldRunOnContact)
         {
             ExecuteEvent();
         }

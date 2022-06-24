@@ -30,6 +30,7 @@ public class HitBarrel : MonoBehaviour
     {
         if (id == gameObject.GetInstanceID())
         {
+            //trigger event calls freeobject
             triggerEvent.OnNotify();
         }
     }
