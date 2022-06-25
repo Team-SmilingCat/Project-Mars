@@ -25,6 +25,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] GameObject ammoText;
     [SerializeField] TextMeshProUGUI currentAmmoCount;
     [SerializeField] TextMeshProUGUI maxCap;
+    private RangedShootingHandler rangedShootingHandler;
 
 
     [Header("Flag")] 
@@ -38,6 +39,7 @@ public class PlayerUIManager : MonoBehaviour
         animatorManager = player.GetComponent<AnimatorManager>();
         playerManager = player.GetComponent<PlayerManager>();
         inputHandle = player.GetComponent<PlayerInputHandle>();
+        rangedShootingHandler = player.GetComponent<RangedShootingHandler>();
     }
 
     private void Start()
@@ -49,6 +51,8 @@ public class PlayerUIManager : MonoBehaviour
 
     private void Update()
     {
+        currentAmmoCount.text = rangedShootingHandler.GetBulletCount().ToString();
+        maxCap.text = rangedShootingHandler.GetCapcity().ToString();
 
     }
 

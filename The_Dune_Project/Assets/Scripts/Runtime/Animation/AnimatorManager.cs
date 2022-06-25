@@ -126,4 +126,9 @@ public class AnimatorManager : MonoBehaviour
     {
         animator.SetLayerWeight(overrideLayer, 1);
     }
+
+    public void ResetReloadLayer()
+    {
+        animator.SetLayerWeight(2, 0);
+    }
 }

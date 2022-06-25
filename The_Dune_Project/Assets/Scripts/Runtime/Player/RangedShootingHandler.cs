@@ -46,6 +46,7 @@ public class RangedShootingHandler : MonoBehaviour
     [SerializeField] private float reloadCD;
     [SerializeField] private int bulletCount;
     [SerializeField] private int capacity;
+    [SerializeField] private int reloadAmount;
     [SerializeField] private bool canShoot;
     
     /* Event notifier for obstacles */
@@ -67,12 +68,41 @@ public class RangedShootingHandler : MonoBehaviour
         canShoot = true;
     }
 
+    public void SetCanShoot()
+    {
+        canShoot = true;
+    }
+
     public void AddAmmunition(int n) {
         capacity += n;
     }
 
     public void SetAmmunition(int n) {
         capacity = n;
+    }
+
+    public int GetCapcity()
+    {
+        return capacity;
+    }
+
+    public int GetBulletCount()
+    {
+        return bulletCount;
+    }
+
+    public void ResetAmmoCount()
+    {
+        if (bulletCount <= 0)
+        {
+            bulletCount = reloadAmount;
+            capacity -= reloadAmount;
+        }
+        else if (bulletCount <= 0 && reloadAmount >= capacity)
+        {
+            bulletCount = capacity;
+            capacity = 0;
+        }
     }
     
 
@@ -114,9 +144,16 @@ public class RangedShootingHandler : MonoBehaviour
 
     private void ShootRifle(RaycastHit target)
     {
-        if (playerInputHandle.leftClickInput && canShoot)
+        if (playerInputHandle.leftClickInput && canShoot && bulletCount <= 0)
+        {
+            canShoot = false;
+            animatorManager.animator.SetLayerWeight(2, 1);
+            animatorManager.PlayTargetAnimation("Reloading", false);
+        }
+        if (playerInputHandle.leftClickInput && canShoot && bulletCount >= 0)
         {
             animatorManager.PlayTargetAnimation("shoot", true);
+            bulletCount -= 1;
             GameObject clone = (GameObject)Instantiate(particle, rayConfirmer.position, Quaternion.identity);
             Destroy(clone, 1.5f);
             //checks if the target of the raycast is a attackable emnemy
