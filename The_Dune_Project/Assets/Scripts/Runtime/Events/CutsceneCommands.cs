@@ -43,4 +43,9 @@ public class CutsceneCommands : MonoBehaviour
         audioBGM.clip = bgm;
         audioBGM.Play();
     }
+
+    public void SetAnimatorBool(GameObject a)
+    {
+
+    }
 }
