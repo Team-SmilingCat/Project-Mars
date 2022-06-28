@@ -7,6 +7,8 @@ public class GolemController : EnemyController
     private EnemyAnimatorManager enemyAnimatorManager;
     public bool enemyIsInteracting;
 
+    [SerializeField] private List<Transform> potentialGoalPoints;
+
     private void Start()
     {
         LoadAgentProperties(this);
