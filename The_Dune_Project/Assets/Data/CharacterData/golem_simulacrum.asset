@@ -15,4 +15,4 @@ MonoBehaviour:
   name: simulacrum
   maxHealth: 150
   damage: 20
-  moveSpeed: 2
+  moveSpeed: 20
