@@ -14252,7 +14252,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: f4ae6f5a8edaa11488eb807be57a48f7, type: 2}
+  sharedProfile: {fileID: 11400000, guid: aa295372fe8e6460ca704fad614578af, type: 2}
 --- !u!4 &511911914
 Transform:
   m_ObjectHideFlags: 0
@@ -15359,7 +15359,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7846154, y: 1}
+    m_SensorSize: {x: 1.7772567, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
