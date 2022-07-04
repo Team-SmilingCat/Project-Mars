@@ -14,6 +14,7 @@ public class MeleeEnemyController : EnemyController
     private void Start()
     {
         LoadAgentProperties(this);
+        this.myAgent.speed = myFighter.GetEnemySpeed();
         enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
     }
 

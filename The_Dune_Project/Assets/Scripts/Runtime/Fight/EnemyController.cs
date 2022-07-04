@@ -26,7 +26,10 @@ public abstract class EnemyController : MonoBehaviour
     protected void LoadAgentProperties(EnemyController e)
     {
         target = FindObjectOfType<PlayerFighter>().transform;
-        myAgent = GetComponent<NavMeshAgent>();
+        if (TryGetComponent(out NavMeshAgent m))
+        {
+            myAgent = m;
+        }
         myFighter = GetComponent<Fighter>();
         homeLocation = transform.position; // when player runs away, enemy goes back to their initial location
     }

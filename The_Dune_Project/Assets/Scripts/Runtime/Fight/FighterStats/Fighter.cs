@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Scriptable_Objects;
+using System;
 
 namespace Fight
 {
@@ -20,18 +21,28 @@ namespace Fight
         {
             Init();
         }
+
+        public float GetEnemySpeed()
+        {
+            if (stats is EnemyStats)
+            {
+                EnemyStats w = (EnemyStats)stats;
+                return w.moveSpeed;
+            }
+                return 0f;
+        }
         
         protected virtual void Init()
         {
             inCombat = false;
             isHittable = true;
             curHealth = stats.maxHealth;
-            if (!animator)
+            if (animator != null)
             {
                 animator = GetComponent<Animator>();
             }
         }
-        
+
         public virtual void GainHealth(int healthBonus)
         {
             curHealth += healthBonus;
@@ -79,5 +90,6 @@ namespace Fight
             yield return new WaitForSeconds(time);
             inCombat = false;
         }
+
     }
 }

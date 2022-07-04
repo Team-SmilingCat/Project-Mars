@@ -5,6 +5,7 @@ namespace Fight
     public class PlayerFighter : Fighter
     {
         [Header("Animator")] [SerializeField] public AnimatorManager animatorManager;
+        
 
         protected override void Init()
         {
